@@ -1,0 +1,10 @@
+FROM php:8.2-apache
+
+# Install ekstensi yang umum dipakai untuk MySQL
+RUN docker-php-ext-install pdo pdo_mysql mysqli
+
+# Aktifkan mod_rewrite (penting kalau pakai framework atau .htaccess)
+RUN a2enmod rewrite
+
+# (Opsional) set Workdir
+WORKDIR /var/www/html

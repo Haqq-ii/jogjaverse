@@ -30,6 +30,7 @@ services:
       - '3307:3306' # kalau mau diakses dari luar Docker (opsional)
     volumes:
       - db_data:/var/lib/mysql
+      - ./db/jogjaverse.sql:/docker-entrypoint-initdb.d/01-jogjaverse.sql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin

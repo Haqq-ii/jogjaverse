@@ -41,12 +41,6 @@ if ($user['status_aktif'] != 1) {
     exit();
 }
 
-if ($user['peran'] !== 'admin') {
-    $_SESSION['login_error'] = "Akun ini bukan admin.";
-    header("Location: " . BASE_URL . "/public/login.php");
-    exit();
-}
-
 // cek password (MD5)
 if (md5($password) !== $user['kata_sandi_hash']) {
     $_SESSION['login_error'] = "Password salah.";
@@ -54,12 +48,24 @@ if (md5($password) !== $user['kata_sandi_hash']) {
     exit();
 }
 
-// LOGIN SUKSES
+// LOGIN SUKSES - Set session
 $_SESSION['login'] = true;
 $_SESSION['id_pengguna'] = $user['id_pengguna'];
 $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
 $_SESSION['username'] = $user['username'];
-$_SESSION['role'] = 'admin';
+$_SESSION['email'] = $user['email'];
+$_SESSION['role'] = $user['peran'];
 
-header("Location: " . BASE_URL . "/admin/dashboard.php");
+// Update waktu login terakhir
+$stmt = $koneksi->prepare("UPDATE pengguna SET diubah_pada = NOW() WHERE id_pengguna = ?");
+$stmt->bind_param("i", $user['id_pengguna']);
+$stmt->execute();
+
+// Redirect berdasarkan role
+if ($user['peran'] === 'admin') {
+    header("Location: " . BASE_URL . "/admin/dashboard.php");
+} else {
+    header("Location: " . BASE_URL . "/public/dashboard_user.php");
+}
 exit();
+?>

@@ -6,7 +6,7 @@ if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
     if (($_SESSION['role'] ?? '') === 'admin') {
         header("Location: " . BASE_URL . "/admin/dashboard.php");
     } else {
-        header("Location: " . BASE_URL . "/public/dashboard_user.php");
+        header("Location: " . BASE_URL . "/public/user/php/langingPage.php");
     }
     exit();
 }

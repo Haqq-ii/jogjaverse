@@ -1,0 +1,105 @@
+#background {
+    background-image: 
+    linear-gradient(
+  to bottom, 
+  rgba(255, 255, 255, 0) 50%, 
+  #FFFFFF 100% ), 
+    url(../img/hero-yogyakarta.jpg);
+    background-size: cover;
+    border-radius: 0 0 40px 40px;
+    background-repeat: no-repeat;
+     background-size: cover;
+    background-position: center center; /* gambar selalu di tengah */
+}
+
+html {
+    background-color: #332920;
+}
+
+.desk {
+    margin-top: 4rem;
+}
+
+.destinasi {
+    text-decoration: none;
+    color:#6F202D;
+    background-color: #EBE1E1;
+    padding: 5px 10px 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+.title{
+ font-size: 3.5rem;
+ color:#321B1F;
+
+}
+
+.sub-title {
+    font-size: 2rem;
+    color:#846267;
+}
+
+.card-text {
+    font-size: 12px;
+}
+
+.bi {
+    font-size: 12px;
+    font-style: normal;
+}
+
+.card:hover {
+    transform: scale(1.01);
+    transition: .4s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.deskripsi {
+    border-radius: 20px;
+    margin: 40px;
+}
+
+.scale-down {
+  transform: scale(0.88);
+}
+
+.card {
+  transition: transform .3s ease, opacity .3s ease;
+}
+
+
+.detail-destinasi {
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+}
+
+.detail-destinasi a{
+    text-decoration: none;
+}
+
+.detail-destinasi i {
+    text-decoration: none;
+    color: #6F202D;
+    font-size: 0.9rem;
+    padding: 12px 28px 12px 28px;
+    border-radius: 12px;
+    border: #6F202D 2px solid;
+}
+
+.detail-destinasi i:hover {
+    background-color: #6F202D;
+    color: #EBE1E1;
+
+}
+
+.nav-item {
+    font-size: 2rem;
+}
+
+.jumbo {
+    
+}
+
+

@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-transparent fixed-top" data-aos="fade-down">
   <div class="container">
     
-    <a class="navbar-brand fw-bold" href="#" >JogjaVerse</a>
+    <a class="navbar-brand fw-bold" href="./langingPage.php" >JogjaVerse</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>

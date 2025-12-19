@@ -22,7 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <body>
 
-<?php include "../html/homepage.php"; ?>
+<?php include "../php/homepage.php"; ?>
 <?php include "../html/deskripsi.html"; ?>
 <?php include "../html/destinasi.html"; ?>
 <?php include "../html/evenAtraksi.html"; ?>

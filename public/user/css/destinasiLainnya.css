@@ -1,0 +1,14 @@
+#background {
+    background-image: url(../img/pinus.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    min-height: 350px;
+    padding-top: 80px; /* kompensasi navbar fixed */
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

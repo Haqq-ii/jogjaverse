@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg navbar-dark navbar-transparent fixed-top" data-aos="fade-down">
   <div class="container">
     
@@ -25,7 +26,21 @@
       </ul>
 
       <div class="d-flex justify-content-center">
-        <a href="/public/login.php" class="btn btn-outline-light px-3 py-1 rounded-3 fw-medium">Login</a>
+        <?php
+        if (session_status() === PHP_SESSION_NONE) {
+          session_start();
+        }
+        if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
+          $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? ($_SESSION['username'] ?? 'User'));
+          $avatarPath = '/public/user/img/default_avatar.png';
+          echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none">';
+          echo '<img src="' . $avatarPath . '" alt="Profile" style="width:38px;height:38px;border-radius:50%;object-fit:cover;margin-right:8px;">';
+          echo '<span class="text-white fw-medium d-none d-md-inline">' . $displayName . '</span>';
+          echo '</a>';
+        } else {
+          echo '<a href="/public/login.php" class="btn btn-outline-light px-3 py-1 rounded-3 fw-medium">Login</a>';
+        }
+        ?>
       </div>
 
     </div>

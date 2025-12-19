@@ -86,6 +86,7 @@ unset($_SESSION['old_register_data']);
                placeholder="Ketik ulang password" required>
       </div>
 
+      <!--
       <div class="form-group">
         <label>Daftar Sebagai</label>
         <select name="peran" required>
@@ -94,6 +95,7 @@ unset($_SESSION['old_register_data']);
         </select>
         <small>Pilih peran akun Anda</small>
       </div>
+    -->
 
       <button class="btn-register" type="submit">Daftar Sekarang</button>
     </form>

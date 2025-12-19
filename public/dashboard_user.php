@@ -200,6 +200,11 @@ if (!$user) {
         background: #4ecdc4;
         color: white;
     }
+
+    .clean-link {
+        text-decoration: none;
+        color: white;
+    }
     
     @media (max-width: 768px) {
         .navbar {
@@ -221,7 +226,9 @@ if (!$user) {
 <body>
 
 <div class="navbar">
-    <h1>🏛️ JogjaVerse</h1>
+    <h1>
+        <a href="/public/user/php/langingPage.php" class="clean-link">🏛️ JogjaVerse</a>
+    </h1>
     <div class="user-info">
         <span>Halo, <strong><?= htmlspecialchars($user['nama_lengkap']) ?></strong></span>
         <span class="badge"><?= strtoupper($user['peran']) ?></span>

@@ -61,11 +61,7 @@ $stmt = $koneksi->prepare("UPDATE pengguna SET diubah_pada = NOW() WHERE id_peng
 $stmt->bind_param("i", $user['id_pengguna']);
 $stmt->execute();
 
-// Redirect berdasarkan role
-if ($user['peran'] === 'admin') {
-    header("Location: " . BASE_URL . "/admin/dashboard.php");
-} else {
-    header("Location: " . BASE_URL . "/public/dashboard_user.php");
-}
+// Redirect
+header("Location: " . BASE_URL . "/public/dashboard_user.php");
 exit();
 ?>

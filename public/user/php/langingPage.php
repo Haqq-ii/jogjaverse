@@ -1,3 +1,8 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +22,7 @@
 
 <body>
 
-<?php include "../html/homepage.html"; ?>
+<?php include "../html/homepage.php"; ?>
 <?php include "../html/deskripsi.html"; ?>
 <?php include "../html/destinasi.html"; ?>
 <?php include "../html/evenAtraksi.html"; ?>

@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . "/../../../config/koneksi.php";
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
 /*
   AMBIL DATA PUBLIK DESTINASI + NAMA KATEGORI
@@ -57,7 +60,18 @@ if (!$result) {
         <li class="nav-item"><a class="nav-link fw-bold text-dark" href="#event">Event</a></li>
         <li class="nav-item"><a class="nav-link fw-bold text-dark" href="#kuliner">Kuliner</a></li>
       </ul>
-      <a href="#login" class="btn btn-outline-dark rounded-3">Login</a>
+        <?php
+        if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
+          $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? $_SESSION['username']);
+          $avatarPath = '/public/user/img/default_avatar.png';
+          echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none text-dark">';
+          echo '<img src="'.$avatarPath.'" alt="Profile" style="width:38px;height:38px;border-radius:50%;object-fit:cover;margin-right:8px;">';
+          echo '<span class="fw-medium d-none d-md-inline">'. $displayName .'</span>';
+          echo '</a>';
+        } else {
+          echo '<a href="/public/login.php" class="btn btn-outline-dark rounded-3">Login</a>';
+        }
+        ?>
     </div>
   </div>
 </nav>

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Waktu pembuatan: 16 Des 2025 pada 15.33
--- Versi server: 8.0.44
--- Versi PHP: 8.3.26
+-- Generation Time: Jan 02, 2026 at 04:56 PM
+-- Server version: 8.0.44
+-- PHP Version: 8.3.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Basis data: `jogjaverse`
+-- Database: `jogjaverse`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `atraksi`
+-- Table structure for table `atraksi`
 --
 
 CREATE TABLE `atraksi` (
@@ -46,7 +46,7 @@ CREATE TABLE `atraksi` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `destinasi`
+-- Table structure for table `destinasi`
 --
 
 CREATE TABLE `destinasi` (
@@ -70,16 +70,18 @@ CREATE TABLE `destinasi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `destinasi`
+-- Dumping data for table `destinasi`
 --
 
 INSERT INTO `destinasi` (`id_destinasi`, `id_kategori`, `nama`, `slug`, `deskripsi`, `alamat`, `kota`, `latitude`, `longitude`, `jam_operasional`, `harga_tiket`, `nomor_kontak`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
-(6, NULL, 'Prambanan', 'prambanan', 'saya aoijsjoifaoiaoihoihnveoujvhnveovuihv[osbojaio[jr goiajgoirjisjgiueh9 vonrdoonoivdjhijvoi ej', 'Yogyakarta', 'Sleman', -7.7521040, 110.4914540, '08:00-16:00', 50000, '08675324533', '/assets/uploads/dest_693f0d79643443.67776680.jpg', 'draft', NULL, '2025-12-14 19:18:17', '2025-12-14 19:18:36');
+(6, 2, 'Prambanan', 'prambanan', 'aoijsjoifaoiaoihoihnveoujvhnveovuihv[osbojaio[jr goiajgoirjisjgiueh9 vonrdoonoivdjhijvoi ej', 'Yogyakarta', 'Sleman', -7.7521040, 110.4914540, '08:00-16:00', 50000, '08675324533', '/assets/uploads/dest_693f0d79643443.67776680.jpg', 'publish', NULL, '2025-12-14 19:18:17', '2025-12-26 20:26:39'),
+(7, 2, 'Heha Sky View', 'dest_693f08c738b2d4.35672802.jpg', 'lorem ipsum dolor sit amet', NULL, NULL, -7.7956000, 110.3695000, '9:00 - 21:00', NULL, NULL, '/assets/uploads/dest_694eef2eec2ec2.01692125.jpg', 'publish', NULL, '2025-12-18 17:51:55', '2025-12-26 20:25:19'),
+(9, 1, 'Pantai Drini', '.', 'Pantai yang indah dengan suarah tabrakn ombak ', NULL, 'Sleman', -7.7956000, 110.3695000, '7:00 - 16:00', NULL, NULL, '/assets/uploads/dest_694eefe2878625.49001356.jpg', 'publish', NULL, '2025-12-26 20:28:18', '2026-01-02 13:29:03');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `event`
+-- Table structure for table `event`
 --
 
 CREATE TABLE `event` (
@@ -103,10 +105,20 @@ CREATE TABLE `event` (
   `diubah_pada` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`id_event`, `id_destinasi`, `id_kategori`, `judul`, `slug`, `deskripsi`, `lokasi`, `latitude`, `longitude`, `mulai_pada`, `selesai_pada`, `kuota`, `harga`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
+(2, 6, NULL, 'Konser ', '.', NULL, 'Prambanan', NULL, NULL, '2026-01-02 03:02:00', '2026-01-02 03:02:00', 200, 75, '/assets/uploads/evt_6957b4a30ce3e8.54306731.png', 'publish', NULL, '2026-01-01 20:03:24', '2026-01-02 12:05:55'),
+(4, NULL, NULL, 'Teater', '-', NULL, 'Malioboro', NULL, NULL, '2026-01-02 14:50:00', '2026-01-02 21:50:00', NULL, NULL, NULL, 'publish', NULL, '2026-01-02 07:51:15', '2026-01-02 11:20:41'),
+(6, NULL, NULL, 'Pentas Seni', '--', NULL, 'Titik 0Km', 0.0000000, NULL, '2026-01-02 18:22:00', '2026-01-02 18:22:00', 200, 25, NULL, 'publish', NULL, '2026-01-02 11:23:07', NULL),
+(7, NULL, NULL, 'Pagelaran Wayang', '---', NULL, 'Alun-Alun Utara', NULL, NULL, '2026-01-03 19:07:00', '2026-01-03 22:07:00', NULL, NULL, NULL, 'publish', NULL, '2026-01-02 12:07:50', NULL);
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `galeri`
+-- Table structure for table `galeri`
 --
 
 CREATE TABLE `galeri` (
@@ -122,7 +134,7 @@ CREATE TABLE `galeri` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kategori`
+-- Table structure for table `kategori`
 --
 
 CREATE TABLE `kategori` (
@@ -133,7 +145,7 @@ CREATE TABLE `kategori` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `kategori`
+-- Dumping data for table `kategori`
 --
 
 INSERT INTO `kategori` (`id_kategori`, `nama`, `tipe`, `dibuat_pada`) VALUES
@@ -143,7 +155,7 @@ INSERT INTO `kategori` (`id_kategori`, `nama`, `tipe`, `dibuat_pada`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kuliner`
+-- Table structure for table `kuliner`
 --
 
 CREATE TABLE `kuliner` (
@@ -165,10 +177,19 @@ CREATE TABLE `kuliner` (
   `diubah_pada` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `kuliner`
+--
+
+INSERT INTO `kuliner` (`id_kuliner`, `id_destinasi`, `id_kategori`, `nama`, `deskripsi`, `alamat`, `latitude`, `longitude`, `rentang_harga`, `jam_operasional`, `nomor_kontak`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
+(1, NULL, NULL, 'Gudeg Bu Yuyun', 'Gudeg enak', 'Yogyakarta', NULL, NULL, '25.000', NULL, NULL, '/assets/uploads/kul_695774de70cd97.21269305.jpg', 'publish', NULL, '2026-01-02 07:33:50', '2026-01-02 11:46:38'),
+(2, NULL, 1, 'Bakpia Patok', 'Bakpia kukus', 'Malioboro', NULL, NULL, '20.000 ', NULL, NULL, '/assets/uploads/kul_6957a9e8b4a3c8.71126961.jpg', 'publish', NULL, '2026-01-02 11:20:08', '2026-01-02 11:49:35'),
+(3, NULL, NULL, 'Lupis mba setimen', 'Lupis', 'Klaten', NULL, NULL, '15.000', NULL, NULL, '/assets/uploads/kul_6957b564bf8679.52669425.jpg', 'publish', NULL, '2026-01-02 12:09:08', '2026-01-02 12:10:18');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kunjungan`
+-- Table structure for table `kunjungan`
 --
 
 CREATE TABLE `kunjungan` (
@@ -182,7 +203,7 @@ CREATE TABLE `kunjungan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `kunjungan`
+-- Dumping data for table `kunjungan`
 --
 
 INSERT INTO `kunjungan` (`id_kunjungan`, `id_pengguna`, `jenis_halaman`, `id_target`, `user_agent`, `ip_hash`, `dibuat_pada`) VALUES
@@ -191,7 +212,7 @@ INSERT INTO `kunjungan` (`id_kunjungan`, `id_pengguna`, `jenis_halaman`, `id_tar
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `log_admin`
+-- Table structure for table `log_admin`
 --
 
 CREATE TABLE `log_admin` (
@@ -207,7 +228,7 @@ CREATE TABLE `log_admin` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pelaporan`
+-- Table structure for table `pelaporan`
 --
 
 CREATE TABLE `pelaporan` (
@@ -224,7 +245,7 @@ CREATE TABLE `pelaporan` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pembayaran`
+-- Table structure for table `pembayaran`
 --
 
 CREATE TABLE `pembayaran` (
@@ -241,7 +262,7 @@ CREATE TABLE `pembayaran` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pengguna`
+-- Table structure for table `pengguna`
 --
 
 CREATE TABLE `pengguna` (
@@ -259,17 +280,19 @@ CREATE TABLE `pengguna` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data untuk tabel `pengguna`
+-- Dumping data for table `pengguna`
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `username`, `email`, `kata_sandi_hash`, `peran`, `nomor_hp`, `foto_profil_url`, `status_aktif`, `dibuat_pada`, `diubah_pada`) VALUES
-(8, 'Administrator', 'admin', 'admin@jogjaverse.com', '0192023a7bbd73250516f069df18b500', 'admin', '081234567890', NULL, 1, '2025-12-16 15:17:22', '2025-12-16 15:18:19'),
-(9, 'User Example', 'user', 'user@jogjaverse.com', '6ad14ba9986e3615423dfca256d04e3f', 'user', '081234567891', NULL, 1, '2025-12-16 15:17:22', '2025-12-16 15:23:13');
+(8, 'Administrator', 'admin', 'admin@jogjaverse.com', '0192023a7bbd73250516f069df18b500', 'admin', '081234567890', NULL, 1, '2025-12-16 15:17:22', '2025-12-17 06:41:30'),
+(9, 'User Example', 'user', 'user@jogjaverse.com', '6ad14ba9986e3615423dfca256d04e3f', 'user', '081234567891', NULL, 1, '2025-12-16 15:17:22', '2025-12-16 15:23:13'),
+(10, 'adminn', 'adminn', 'uadyi@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin', '09123456789', NULL, 1, '2025-12-18 17:42:59', '2026-01-02 07:31:58'),
+(11, 'userrr', 'userrr', 'user@113.com', '96e79218965eb72c92a549dd5a330112', 'user', '0887982747214', NULL, 1, '2025-12-26 18:35:30', '2025-12-26 18:35:58');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `relasi_tag`
+-- Table structure for table `relasi_tag`
 --
 
 CREATE TABLE `relasi_tag` (
@@ -282,7 +305,7 @@ CREATE TABLE `relasi_tag` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `reservasi_event`
+-- Table structure for table `reservasi_event`
 --
 
 CREATE TABLE `reservasi_event` (
@@ -302,7 +325,7 @@ CREATE TABLE `reservasi_event` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tag`
+-- Table structure for table `tag`
 --
 
 CREATE TABLE `tag` (
@@ -313,7 +336,7 @@ CREATE TABLE `tag` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tiket_event`
+-- Table structure for table `tiket_event`
 --
 
 CREATE TABLE `tiket_event` (
@@ -328,7 +351,7 @@ CREATE TABLE `tiket_event` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `ulasan`
+-- Table structure for table `ulasan`
 --
 
 CREATE TABLE `ulasan` (
@@ -343,11 +366,11 @@ CREATE TABLE `ulasan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Indeks untuk tabel yang dibuang
+-- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `atraksi`
+-- Indexes for table `atraksi`
 --
 ALTER TABLE `atraksi`
   ADD PRIMARY KEY (`id_atraksi`),
@@ -357,7 +380,7 @@ ALTER TABLE `atraksi`
   ADD KEY `idx_atr_status` (`status`);
 
 --
--- Indeks untuk tabel `destinasi`
+-- Indexes for table `destinasi`
 --
 ALTER TABLE `destinasi`
   ADD PRIMARY KEY (`id_destinasi`),
@@ -368,7 +391,7 @@ ALTER TABLE `destinasi`
   ADD KEY `idx_dest_lokasi` (`kota`);
 
 --
--- Indeks untuk tabel `event`
+-- Indexes for table `event`
 --
 ALTER TABLE `event`
   ADD PRIMARY KEY (`id_event`),
@@ -380,21 +403,21 @@ ALTER TABLE `event`
   ADD KEY `idx_evt_status` (`status`);
 
 --
--- Indeks untuk tabel `galeri`
+-- Indexes for table `galeri`
 --
 ALTER TABLE `galeri`
   ADD PRIMARY KEY (`id_galeri`),
   ADD KEY `idx_gal_target` (`jenis_target`,`id_target`);
 
 --
--- Indeks untuk tabel `kategori`
+-- Indexes for table `kategori`
 --
 ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id_kategori`),
   ADD UNIQUE KEY `nama` (`nama`);
 
 --
--- Indeks untuk tabel `kuliner`
+-- Indexes for table `kuliner`
 --
 ALTER TABLE `kuliner`
   ADD PRIMARY KEY (`id_kuliner`),
@@ -404,7 +427,7 @@ ALTER TABLE `kuliner`
   ADD KEY `idx_kul_status` (`status`);
 
 --
--- Indeks untuk tabel `kunjungan`
+-- Indexes for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
   ADD PRIMARY KEY (`id_kunjungan`),
@@ -412,7 +435,7 @@ ALTER TABLE `kunjungan`
   ADD KEY `idx_kunjungan_target` (`jenis_halaman`,`id_target`);
 
 --
--- Indeks untuk tabel `log_admin`
+-- Indexes for table `log_admin`
 --
 ALTER TABLE `log_admin`
   ADD PRIMARY KEY (`id_log`),
@@ -420,7 +443,7 @@ ALTER TABLE `log_admin`
   ADD KEY `idx_log_admin` (`id_admin`);
 
 --
--- Indeks untuk tabel `pelaporan`
+-- Indexes for table `pelaporan`
 --
 ALTER TABLE `pelaporan`
   ADD PRIMARY KEY (`id_pelaporan`),
@@ -428,7 +451,7 @@ ALTER TABLE `pelaporan`
   ADD KEY `idx_pelaporan_target` (`jenis_target`,`id_target`);
 
 --
--- Indeks untuk tabel `pembayaran`
+-- Indexes for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
   ADD PRIMARY KEY (`id_pembayaran`),
@@ -436,7 +459,7 @@ ALTER TABLE `pembayaran`
   ADD KEY `idx_bayar_status` (`status`);
 
 --
--- Indeks untuk tabel `pengguna`
+-- Indexes for table `pengguna`
 --
 ALTER TABLE `pengguna`
   ADD PRIMARY KEY (`id_pengguna`),
@@ -444,7 +467,7 @@ ALTER TABLE `pengguna`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indeks untuk tabel `relasi_tag`
+-- Indexes for table `relasi_tag`
 --
 ALTER TABLE `relasi_tag`
   ADD PRIMARY KEY (`id_relasi_tag`),
@@ -452,7 +475,7 @@ ALTER TABLE `relasi_tag`
   ADD KEY `idx_reltag_target` (`jenis_target`,`id_target`);
 
 --
--- Indeks untuk tabel `reservasi_event`
+-- Indexes for table `reservasi_event`
 --
 ALTER TABLE `reservasi_event`
   ADD PRIMARY KEY (`id_reservasi`),
@@ -461,14 +484,14 @@ ALTER TABLE `reservasi_event`
   ADD KEY `idx_res_status` (`status`);
 
 --
--- Indeks untuk tabel `tag`
+-- Indexes for table `tag`
 --
 ALTER TABLE `tag`
   ADD PRIMARY KEY (`id_tag`),
   ADD UNIQUE KEY `nama` (`nama`);
 
 --
--- Indeks untuk tabel `tiket_event`
+-- Indexes for table `tiket_event`
 --
 ALTER TABLE `tiket_event`
   ADD PRIMARY KEY (`id_tiket`),
@@ -476,7 +499,7 @@ ALTER TABLE `tiket_event`
   ADD KEY `idx_tiket_res` (`id_reservasi`);
 
 --
--- Indeks untuk tabel `ulasan`
+-- Indexes for table `ulasan`
 --
 ALTER TABLE `ulasan`
   ADD PRIMARY KEY (`id_ulasan`),
@@ -484,111 +507,111 @@ ALTER TABLE `ulasan`
   ADD KEY `idx_ulasan_pengguna` (`id_pengguna`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `atraksi`
+-- AUTO_INCREMENT for table `atraksi`
 --
 ALTER TABLE `atraksi`
   MODIFY `id_atraksi` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `destinasi`
+-- AUTO_INCREMENT for table `destinasi`
 --
 ALTER TABLE `destinasi`
-  MODIFY `id_destinasi` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_destinasi` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `event`
+-- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `id_event` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_event` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT untuk tabel `galeri`
+-- AUTO_INCREMENT for table `galeri`
 --
 ALTER TABLE `galeri`
   MODIFY `id_galeri` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `kategori`
+-- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
   MODIFY `id_kategori` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `kuliner`
+-- AUTO_INCREMENT for table `kuliner`
 --
 ALTER TABLE `kuliner`
-  MODIFY `id_kuliner` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kuliner` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `kunjungan`
+-- AUTO_INCREMENT for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
   MODIFY `id_kunjungan` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `log_admin`
+-- AUTO_INCREMENT for table `log_admin`
 --
 ALTER TABLE `log_admin`
   MODIFY `id_log` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `pelaporan`
+-- AUTO_INCREMENT for table `pelaporan`
 --
 ALTER TABLE `pelaporan`
   MODIFY `id_pelaporan` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `pembayaran`
+-- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
   MODIFY `id_pembayaran` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `pengguna`
+-- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_pengguna` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `relasi_tag`
+-- AUTO_INCREMENT for table `relasi_tag`
 --
 ALTER TABLE `relasi_tag`
   MODIFY `id_relasi_tag` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `reservasi_event`
+-- AUTO_INCREMENT for table `reservasi_event`
 --
 ALTER TABLE `reservasi_event`
   MODIFY `id_reservasi` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `tag`
+-- AUTO_INCREMENT for table `tag`
 --
 ALTER TABLE `tag`
   MODIFY `id_tag` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `tiket_event`
+-- AUTO_INCREMENT for table `tiket_event`
 --
 ALTER TABLE `tiket_event`
   MODIFY `id_tiket` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `ulasan`
+-- AUTO_INCREMENT for table `ulasan`
 --
 ALTER TABLE `ulasan`
   MODIFY `id_ulasan` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `atraksi`
+-- Constraints for table `atraksi`
 --
 ALTER TABLE `atraksi`
   ADD CONSTRAINT `fk_atr_destinasi` FOREIGN KEY (`id_destinasi`) REFERENCES `destinasi` (`id_destinasi`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -596,14 +619,14 @@ ALTER TABLE `atraksi`
   ADD CONSTRAINT `fk_atr_kategori` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `destinasi`
+-- Constraints for table `destinasi`
 --
 ALTER TABLE `destinasi`
   ADD CONSTRAINT `fk_dest_dibuat_oleh` FOREIGN KEY (`dibuat_oleh`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_dest_kategori` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `event`
+-- Constraints for table `event`
 --
 ALTER TABLE `event`
   ADD CONSTRAINT `fk_evt_destinasi` FOREIGN KEY (`id_destinasi`) REFERENCES `destinasi` (`id_destinasi`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -611,7 +634,7 @@ ALTER TABLE `event`
   ADD CONSTRAINT `fk_evt_kategori` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `kuliner`
+-- Constraints for table `kuliner`
 --
 ALTER TABLE `kuliner`
   ADD CONSTRAINT `fk_kul_destinasi` FOREIGN KEY (`id_destinasi`) REFERENCES `destinasi` (`id_destinasi`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -619,38 +642,38 @@ ALTER TABLE `kuliner`
   ADD CONSTRAINT `fk_kul_kategori` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `log_admin`
+-- Constraints for table `log_admin`
 --
 ALTER TABLE `log_admin`
   ADD CONSTRAINT `fk_log_admin` FOREIGN KEY (`id_admin`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `pembayaran`
+-- Constraints for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
   ADD CONSTRAINT `fk_bayar_res` FOREIGN KEY (`id_reservasi`) REFERENCES `reservasi_event` (`id_reservasi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `relasi_tag`
+-- Constraints for table `relasi_tag`
 --
 ALTER TABLE `relasi_tag`
   ADD CONSTRAINT `fk_reltag_tag` FOREIGN KEY (`id_tag`) REFERENCES `tag` (`id_tag`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `reservasi_event`
+-- Constraints for table `reservasi_event`
 --
 ALTER TABLE `reservasi_event`
   ADD CONSTRAINT `fk_res_evt` FOREIGN KEY (`id_event`) REFERENCES `event` (`id_event`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_res_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tiket_event`
+-- Constraints for table `tiket_event`
 --
 ALTER TABLE `tiket_event`
   ADD CONSTRAINT `fk_tiket_res` FOREIGN KEY (`id_reservasi`) REFERENCES `reservasi_event` (`id_reservasi`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `ulasan`
+-- Constraints for table `ulasan`
 --
 ALTER TABLE `ulasan`
   ADD CONSTRAINT `fk_ulasan_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE ON UPDATE CASCADE;

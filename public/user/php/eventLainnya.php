@@ -1,0 +1,457 @@
+<?php
+require_once __DIR__ . "/../../../config/koneksi.php";
+
+// -----------------------------------------------------------
+// 1. LOGIKA FILTER & PAGINATION
+// -----------------------------------------------------------
+
+// A. Konfigurasi Pagination
+$limit = 12; 
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = ($page < 1) ? 1 : $page;
+$offset = ($page - 1) * $limit;
+
+// B. Tangkap Filter Kategori
+$kategori_id = isset($_GET['kategori']) ? (int)$_GET['kategori'] : 0;
+
+// C. Query Dasar (Base Query)
+// Asumsi tabel bernama 'event' dan memiliki relasi ke tabel 'kategori'
+// Kita filter tipe kategori khusus untuk event/atraksi jika perlu, atau ambil semua
+$where_clause = "WHERE e.status = 'publish'";
+
+// Jika ingin memisahkan event dan atraksi berdasarkan tipe kategori, tambahkan kondisi ini:
+// $where_clause .= " AND k.tipe IN ('event', 'atraksi')"; 
+
+if ($kategori_id > 0) {
+    $where_clause .= " AND e.id_kategori = $kategori_id";
+}
+
+// D. Hitung Total Data
+$query_count = "
+    SELECT COUNT(*) as total 
+    FROM event e
+    LEFT JOIN kategori k ON e.id_kategori = k.id_kategori
+    $where_clause
+";
+$result_count = mysqli_query($koneksi, $query_count);
+$row_count = mysqli_fetch_assoc($result_count);
+$total_data = $row_count['total'];
+$total_pages = ceil($total_data / $limit);
+
+// E. Ambil Data Event
+// Kolom disesuaikan untuk kebutuhan Event: Tanggal, Lokasi, Harga
+$query_data = "
+    SELECT 
+        e.id_event,
+        e.judul AS nama_event,
+        e.deskripsi AS deskripsi_singkat,
+        k.nama AS kategori,
+        e.gambar_sampul_url AS gambar,
+        e.mulai_pada,    -- Pastikan kolom ini ada di DB (atau 'mulai_pada')
+        e.lokasi,
+        e.harga       -- Pastikan kolom ini ada di DB
+    FROM event e
+    LEFT JOIN kategori k ON e.id_kategori = k.id_kategori
+    $where_clause
+    ORDER BY e.mulai_pada ASC
+    LIMIT $limit OFFSET $offset
+";
+$result = mysqli_query($koneksi, $query_data);
+
+// Error Handling Sederhana
+if (!$result) {
+    // Fallback jika tabel/kolom tidak sesuai (untuk debugging)
+    die('Query error: ' . mysqli_error($koneksi));
+}
+
+// F. Ambil Daftar Kategori untuk Dropdown (Tipe Event/Atraksi)
+$query_kategori = "SELECT * FROM kategori WHERE tipe IN ('event', 'atraksi') ORDER BY nama ASC";
+$result_kategori = mysqli_query($koneksi, $query_kategori);
+
+// Helper Function: Format Tanggal Indonesia
+function formatTanggal($date) {
+    if (empty($date)) return ['tgl' => '??', 'bln' => '???'];
+    $timestamp = strtotime($date);
+    $bulan = array (
+        1 =>   'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
+        'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'
+    );
+    return [
+        'hari' => date('d', $timestamp),
+        'bulan' => $bulan[(int)date('m', $timestamp)],
+        'tahun' => date('Y', $timestamp),
+        'full' => date('d F Y', $timestamp)
+    ];
+}
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event & Atraksi - JogjaVerse</title>
+
+  <!-- CSS Libraries -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+        --primary-color: #2D1B20; /* Dark Maroon */
+        --secondary-color: #C69C6D; /* Gold */
+    }
+    
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #FDFBF7;
+    }
+
+    h1, h2, h3, .navbar-brand, .font-serif {
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* --- NAVBAR STYLING --- */
+    .navbar {
+        transition: all 0.4s ease;
+        padding: 1.75rem 0;
+    }
+    .navbar-brand { font-size: 2rem; }
+    .nav-link {
+        font-size: 1.4rem;
+        margin: 0 15px;
+        font-weight: 500;
+        position: relative;
+    }
+    .btn-login-custom {
+        padding: 14px 36px;
+        font-size: 1.25rem;
+        font-weight: 600;
+        border-radius: 50px;
+    }
+    .nav-link::after {
+        content: ''; position: absolute; width: 0; height: 3px; bottom: 0px; left: 50%;
+        background-color: var(--secondary-color); transition: all 0.3s ease; transform: translateX(-50%);
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 80%; }
+
+    /* --- HEADER BACKGROUND (Event Theme) --- */
+    #background {
+        /* Ganti URL gambar dengan gambar konser/festival/budaya */
+        background: linear-gradient(rgba(45, 27, 32, 0.7), rgba(45, 27, 32, 0.7)), url('https://images.unsplash.com/photo-1514525253440-b39345208668?q=80&w=1920&auto=format&fit=crop'); 
+        background-size: cover;
+        background-position: center;
+        height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 108px;
+    }
+
+    /* --- DATE BADGE STYLING (Khas Event Card) --- */
+    .date-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 8px 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        z-index: 10;
+        min-width: 60px;
+    }
+    .date-badge .day {
+        display: block;
+        font-size: 1.4rem;
+        font-weight: 800;
+        line-height: 1;
+        color: var(--primary-color);
+        font-family: 'Playfair Display', serif;
+    }
+    .date-badge .month {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--secondary-color);
+        letter-spacing: 1px;
+    }
+
+    /* --- CARD STYLING --- */
+    .card-event {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    }
+    .card-event:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    .price-tag {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        background-color: var(--primary-color);
+        color: #fff;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    /* --- TOMBOL DETAIL ANIMATED --- */
+    .link-gold-animated {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;       
+        color: var(--primary-color);         
+        text-decoration: none;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;      
+        transition: color 0.3s ease;
+        padding-bottom: 2px;
+    }
+    .link-gold-animated i { font-size: 1rem; transition: transform 0.3s ease; }
+    .link-gold-animated:hover { color: var(--secondary-color); }
+    .link-gold-animated:hover i { transform: translateX(4px); }
+    .link-gold-animated::after {
+        content: ''; position: absolute; width: 0; height: 2px; bottom: 0px; left: 50%;
+        background-color: var(--secondary-color); transition: all 0.3s ease; transform: translateX(-50%);
+    }
+    .link-gold-animated:hover::after { width: 100%; }
+
+    /* --- PAGINATION --- */
+    .pagination .page-link {
+        color: var(--primary-color);
+        border: 1px solid #dee2e6;
+        margin: 0 3px;
+        border-radius: 5px;
+    }
+    .pagination .page-link:hover {
+        background-color: #f8f9fa;
+        color: var(--secondary-color);
+        border-color: var(--secondary-color);
+    }
+    .pagination .page-item.active .page-link {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-dark" href="landingpageclean.php">
+        Jogja<span style="color: var(--secondary-color);">Verse.</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto text-center">
+        <li class="nav-item"><a class="nav-link fw-bold text-dark" href="destinasiLainnya.php">Destinasi</a></li>
+        <li class="nav-item"><a class="nav-link fw-bold text-dark active" href="eventlainnya.php">Event&Atraksi</a></li>
+        <li class="nav-item"><a class="nav-link fw-bold text-dark" href="kulinerlainnya.php">Kuliner</a></li>
+      </ul>
+      <a href="#login" class="btn btn-outline-dark btn-login-custom">Login</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER BACKGROUND -->
+<section id="background">
+  <div class="text-center" data-aos="fade-up">
+    <h1 class="fw-bold text-white display-4 mb-2">Agenda & Atraksi</h1>
+    <p class="text-white-50 fs-5">Saksikan kemeriahan budaya dan hiburan di Yogyakarta</p>
+  </div>
+</section>
+
+<!-- CONTENT SECTION -->
+<section class="py-5">
+  <div class="container" data-aos="fade-up">
+
+      <!-- FILTER BAR -->
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 pb-3 border-bottom gap-3">
+          <div class="text-muted">
+              Menampilkan <strong><?= mysqli_num_rows($result) ?></strong> event mendatang
+          </div>
+
+          <!-- Dropdown Filter -->
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle rounded-pill px-4 text-dark border-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-funnel me-2"></i><?= ($kategori_id > 0) ? 'Kategori Terpilih' : 'Semua Jenis Event' ?>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2">
+                <li><a class="dropdown-item rounded-2 <?= ($kategori_id == 0) ? 'active' : '' ?>" href="eventLainnya.php">Semua Event</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <?php while($kat = mysqli_fetch_assoc($result_kategori)): ?>
+                    <li>
+                        <a class="dropdown-item rounded-2 <?= ($kategori_id == $kat['id_kategori']) ? 'active' : '' ?>" 
+                           href="?kategori=<?= $kat['id_kategori'] ?>">
+                           <?= htmlspecialchars($kat['nama']) ?>
+                        </a>
+                    </li>
+                <?php endwhile; ?>
+            </ul>
+          </div>
+      </div>
+
+      <!-- EVENT CARDS GRID -->
+      <div class="row g-4">
+        <?php if (mysqli_num_rows($result) > 0): ?>
+            <?php while ($row = mysqli_fetch_assoc($result)): 
+                $date_info = formatTanggal($row['mulai_pada']);
+                $img_url = !empty($row['gambar_sampul_url']) ? $row['gambar_sampul_url'] : 'https://placehold.co/600x400?text=Event+Jogja';
+                $price_display = ($row['harga'] == 0) ? 'Gratis' : 'Rp ' . number_format($row['harga'], 0, ',', '.');
+            ?>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="card card-event h-100 bg-white">
+                
+                <!-- Gambar & Badge Tanggal -->
+                <div class="position-relative overflow-hidden" style="height: 220px;">
+                  <img src="<?= htmlspecialchars($img_url) ?>"
+                       class="w-100 h-100 object-fit-cover"
+                       alt="<?= htmlspecialchars($row['nama_event']) ?>"
+                       onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+                  
+                  <!-- Badge Tanggal Khas Event -->
+                  <div class="date-badge">
+                      <span class="day"><?= $date_info['hari'] ?></span>
+                      <span class="month"><?= $date_info['bulan'] ?></span>
+                  </div>
+
+                  <!-- Badge Harga di Kanan Bawah Gambar -->
+                  <div class="price-tag shadow-sm">
+                      <?= $price_display ?>
+                  </div>
+                </div>
+
+                <div class="card-body p-4 d-flex flex-column">
+                  <!-- Kategori Kecil -->
+                  <div class="mb-2">
+                      <span class="badge bg-light text-secondary border fw-normal">
+                          <?= htmlspecialchars($row['kategori'] ?? 'Umum') ?>
+                      </span>
+                  </div>
+
+                  <h5 class="fw-bold mb-2 fs-5 font-serif text-dark lh-sm">
+                    <?= htmlspecialchars($row['nama_event']) ?>
+                  </h5>
+
+                  <!-- Info Lokasi & Waktu -->
+                  <div class="text-muted small mb-3 flex-grow-1">
+                      <div class="d-flex align-items-center mb-1">
+                          <i class="bi bi-geo-alt-fill text-warning me-2"></i>
+                          <span class="text-truncate"><?= htmlspecialchars($row['lokasi']) ?></span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                          <i class="bi bi-calendar-event text-warning me-2"></i>
+                          <span><?= $date_info['full'] ?></span>
+                      </div>
+                  </div>
+
+                  <!-- Tombol Detail -->
+                  <div class="pt-3 border-top text-center">
+                    <a href="detailEvent.php?id=<?= $row['id_event'] ?>" class="link-gold-animated">
+                       Lihat Detail <i class="bi bi-arrow-right"></i>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-calendar-x display-1 text-muted opacity-25"></i>
+                <div class="text-muted fs-5 mt-3">Belum ada event atau atraksi yang tersedia.</div>
+                <a href="eventLainnya.php" class="btn btn-outline-dark mt-3 rounded-pill">Reset Filter</a>
+            </div>
+        <?php endif; ?>
+      </div>
+
+      <!-- PAGINATION -->
+      <?php if ($total_pages > 1): ?>
+      <div class="mt-5 d-flex justify-content-center">
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+              <a class="page-link" href="?page=<?= $page - 1 ?>&kategori=<?= $kategori_id ?>">
+                <i class="bi bi-chevron-left"></i>
+              </a>
+            </li>
+            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+              <li class="page-item <?= ($page == $i) ? 'active' : '' ?>">
+                <a class="page-link" href="?page=<?= $i ?>&kategori=<?= $kategori_id ?>"><?= $i ?></a>
+              </li>
+            <?php endfor; ?>
+            <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
+              <a class="page-link" href="?page=<?= $page + 1 ?>&kategori=<?= $kategori_id ?>">
+                <i class="bi bi-chevron-right"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <?php endif; ?>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-custom text-light pt-5" style="background-color: #321B1F;">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center mb-3">
+          <h5 class="mb-0 fw-bold font-serif">Jogja<span style="color: var(--secondary-color);">Verse.</span></h5>
+        </div>
+        <p class="small text-light opacity-75">
+          Platform informasi event dan atraksi wisata terlengkap di Yogyakarta.
+        </p>
+        <ul class="list-unstyled small opacity-75">
+          <li class="mb-2"><i class="bi bi-geo-alt me-2 text-warning"></i> Jl. Malioboro No. 1, Yogyakarta</li>
+          <li><i class="bi bi-telephone me-2 text-warning"></i> (0274) 123456</li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-6">
+        <h6 class="fw-bold mb-3">Wisata</h6>
+        <ul class="list-unstyled small opacity-75">
+          <li><a href="destinasiLainnya.php" class="text-white text-decoration-none">Destinasi</a></li>
+          <li><a href="#" class="text-white text-decoration-none">Event</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-6">
+        <h6 class="fw-bold mb-3">Layanan</h6>
+        <ul class="list-unstyled small opacity-75">
+            <li><a href="#" class="text-white text-decoration-none">Reservasi Tiket</a></li>
+            <li><a href="#" class="text-white text-decoration-none">Panduan</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-6">
+        <h6 class="fw-bold mb-3">Tentang</h6>
+        <ul class="list-unstyled small opacity-75">
+            <li><a href="#" class="text-white text-decoration-none">Kebijakan Privasi</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="border-light opacity-25 my-4">
+    <div class="text-center pb-4 small opacity-50">
+      &copy; 2025 JogjaVerse. Disponsori oleh Pemerintah Kota Yogyakarta
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

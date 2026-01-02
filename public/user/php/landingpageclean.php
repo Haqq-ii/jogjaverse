@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../../../config/koneksi.php';
-
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
 /* 3 DESTINASI POPULER (Dibiarkan Sesuai Request) */
 $destinasi = [];
@@ -96,19 +98,30 @@ if ($res) {
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
         <li class="nav-item">
           <!-- Menggunakan link sesuai request awal Anda tapi dengan style baru -->
-          <a class="nav-link" href="../html/destinasiLainnya.php">Destinasi</a>
+          <a class="nav-link" href="destinasiLainnya.php">Destinasi</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#atraksi">Event & Atraksi</a>
+          <a class="nav-link" href="eventLainnya.php">Event & Atraksi</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#kuliner">Kuliner</a>
+          <a class="nav-link" href="kulinerlainnya.php">Kuliner</a>
         </li>
       </ul>
 
       <!-- Tombol Login -->
       <div class="d-flex justify-content-center">
-        <a href="/public/login.php" class="btn btn-gold px-4">Login</a>
+        <?php
+        if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
+          $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? ($_SESSION['username'] ?? 'User'));
+          $avatarPath = '/public/user/img/default_avatar.png';
+          echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none">';
+          echo '<img src="' . $avatarPath . '" alt="Profile" style="width:38px;height:38px;border-radius:50%;object-fit:cover;margin-right:8px;">';
+          echo '<span class="text-white fw-medium d-none d-md-inline">' . $displayName . '</span>';
+          echo '</a>';
+        } else {
+          echo '<a href="/public/login.php" class="btn btn-gold px-4">Login</a>';
+        }
+        ?>
       </div>
     </div>
   </div>

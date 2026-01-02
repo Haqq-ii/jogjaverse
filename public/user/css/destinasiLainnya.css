@@ -1,14 +1,88 @@
-#background {
-    background-image: url(../img/pinus.jpg);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    min-height: 350px;
-    padding-top: 80px; /* kompensasi navbar fixed */
+    :root {
+        --primary-color: #2D1B20; /* Dark Maroon */
+        --secondary-color: #C69C6D; /* Gold */
+    }
     
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #FDFBF7;
+    }
+
+    h1, h2, h3, .navbar-brand, .font-serif {
+        font-family: 'Playfair Display', serif;
+    }
+
+    /* Style Header Background */
+    #background {
+        background: linear-gradient(rgba(45, 27, 32, 0.6), rgba(45, 27, 32, 0.6)), url('../assets/img/hero-destinasi.jpg'); /* Pastikan ada gambar fallback atau URL valid */
+        background-color: var(--primary-color);
+        background-size: cover;
+        background-position: center;
+        height: 300px; /* Tinggi header */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 70px; /* Jarak dari navbar fixed */
+    }
+
+    /* --- STYLE TOMBOL DETAIL (ANIMATED GOLD) --- */
+    .link-gold-animated {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;       
+        color: var(--primary-color);         
+        text-decoration: none;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;      
+        transition: color 0.3s ease;
+        padding-bottom: 2px;
+    }
+
+    .link-gold-animated i {
+        font-size: 1rem;
+        transition: transform 0.3s ease;
+    }
+
+    .link-gold-animated:hover {
+        color: var(--secondary-color);
+    }
+
+    .link-gold-animated:hover i {
+        transform: translateX(4px); /* Efek panah maju */
+    }
+
+    .link-gold-animated::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0px;
+        left: 50%;
+        background-color: var(--secondary-color);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .link-gold-animated:hover::after {
+        width: 100%;
+    }
+
+    /* --- PAGINATION CUSTOM STYLE --- */
+    .pagination .page-link {
+        color: var(--primary-color);
+        border: 1px solid #dee2e6;
+        margin: 0 3px;
+        border-radius: 5px;
+    }
+    .pagination .page-link:hover {
+        background-color: #f8f9fa;
+        color: var(--secondary-color);
+        border-color: var(--secondary-color);
+    }
+    .pagination .page-item.active .page-link {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: #fff;
+    }

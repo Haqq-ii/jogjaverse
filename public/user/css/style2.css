@@ -79,20 +79,7 @@ html {
     text-decoration: none;
 }
 
-.detail-destinasi i {
-    text-decoration: none;
-    color: #6F202D;
-    font-size: 0.9rem;
-    padding: 12px 28px 12px 28px;
-    border-radius: 12px;
-    border: #6F202D 2px solid;
-}
 
-.detail-destinasi i:hover {
-    background-color: #6F202D;
-    color: #EBE1E1;
-
-}
 
 /* Variabel Warna (Jika belum ada di global CSS) */
 :root {
@@ -171,4 +158,95 @@ html {
         color: #fff;
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(198, 156, 109, 0.4);
+    }
+
+    /* --- STYLING FOOTER (Baru) --- */
+    .footer-custom {
+        background-color: var(--primary-nav); /* Menggunakan warna yang sama dengan Navbar */
+        color: #fff;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        border-top: 1px solid rgba(198, 156, 109, 0.2); /* Garis emas tipis di atas */
+    }
+
+    .footer-brand {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        color: #fff;
+    }
+
+    .footer-link a {
+        color: rgba(255,255,255,0.7);
+        text-decoration: none;
+        transition: all 0.3s;
+        display: inline-block;
+        margin-bottom: 8px;
+    }
+
+    .footer-link a:hover {
+        color: var(--secondary-nav); /* Hover Emas */
+        transform: translateX(5px);
+    }
+
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 50%;
+        color: #fff;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+
+    .social-icon:hover {
+        background-color: var(--secondary-nav);
+        border-color: var(--secondary-nav);
+        color: #fff;
+        transform: translateY(-3px);
+    }
+    
+    .icon-gold {
+        color: var(--secondary-nav);
+    }
+
+  /* --- CLASS BARU: LINK TEXT ANIMATED (Untuk Destinasi Lainnya) --- */
+    .link-gold-animated {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;       /* Tebal */
+        color: #2D1B20;         /* Warna Gelap */
+        text-decoration: none;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;              /* Jarak antara ikon dan teks sedikit diperlebar */
+        transition: color 0.3s ease;
+        font-size: 1.1rem;      /* Ukuran font teks utama */
+    }
+
+    /* Penyesuaian Ukuran Ikon Khusus */
+    .link-gold-animated i {
+        font-size: 1.4rem;      /* Ukuran ikon lebih besar dari teks */     line-height: 1;
+        margin-top: -2px;       /* Sedikit naik agar sejajar optik dengan teks */
+    }
+
+    .link-gold-animated:hover {
+        color: #C69C6D; /* Berubah Emas */
+    }
+
+    .link-gold-animated::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 50%;
+        background-color: #C69C6D;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .link-gold-animated:hover::after {
+        width: 100%; /* Melebar Penuh */
     }

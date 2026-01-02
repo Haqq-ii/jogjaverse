@@ -62,6 +62,6 @@ $stmt->bind_param("i", $user['id_pengguna']);
 $stmt->execute();
 
 // Redirect
-header("Location: " . BASE_URL . "/public/dashboard_user.php");
+header("Location: " . BASE_URL . "public/user/php/landingpageclean.php");
 exit();
 ?>

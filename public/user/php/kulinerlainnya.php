@@ -1,5 +1,8 @@
 <?php
 require_once __DIR__ . "/../../../config/koneksi.php";
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 
 // -----------------------------------------------------------
 // 1. LOGIKA FILTER & PAGINATION
@@ -211,10 +214,21 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto text-center">
         <li class="nav-item"><a class="nav-link fw-bold text-dark" href="destinasiLainnya.php">Destinasi</a></li>
-        <li class="nav-item"><a class="nav-link fw-bold text-dark" href="eventLainnya.php">Evenet&Atraksi</a></li>
+        <li class="nav-item"><a class="nav-link fw-bold text-dark" href="eventLainnya.php">Event&Atraksi</a></li>
         <li class="nav-item"><a class="nav-link fw-bold text-dark active" href="kulinerlainnya.php">Kuliner</a></li>
       </ul>
-      <a href="#login" class="btn btn-outline-dark btn-login-custom">Login</a>
+      <?php
+        if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
+          $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? $_SESSION['username']);
+          $avatarPath = '/public/user/img/default_avatar.png';
+          echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none text-dark">';
+          echo '<img src="'.$avatarPath.'" alt="Profile" style="width:38px;height:38px;border-radius:50%;object-fit:cover;margin-right:8px;">';
+          echo '<span class="fw-medium d-none d-md-inline">'. $displayName .'</span>';
+          echo '</a>';
+        } else {
+          echo '<a href="#login" class="btn btn-outline-dark btn-login-custom">Login</a>';
+        }
+        ?>
     </div>
   </div>
 </nav>

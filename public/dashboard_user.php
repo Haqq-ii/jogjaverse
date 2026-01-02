@@ -227,7 +227,7 @@ if (!$user) {
 
 <div class="navbar">
     <h1>
-        <a href="/public/user/php/langingPage.php" class="clean-link">🏛️ JogjaVerse</a>
+        <a href="/public/user/php/landingpageclean.php" class="clean-link">🏛️ JogjaVerse</a>
     </h1>
     <div class="user-info">
         <span>Halo, <strong><?= htmlspecialchars($user['nama_lengkap']) ?></strong></span>

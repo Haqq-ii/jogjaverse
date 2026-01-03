@@ -19,95 +19,45 @@ function format_harga($harga) {
   return 'Rp ' . number_format($harga, 0, ',', '.');
 }
 
+function format_datetime_label($value) {
+  if ($value === null || $value === '') {
+    return 'Belum tersedia';
+  }
+  $ts = strtotime($value);
+  if ($ts === false) {
+    return (string)$value;
+  }
+  return date('d M Y H:i', $ts);
+}
+
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-$destinasi = null;
+$event = null;
 
 if ($id) {
   $stmt = $koneksi->prepare("
-    SELECT 
-      d.id_destinasi,
-      d.id_kategori,
-      d.nama,
-      d.deskripsi,
-      d.alamat,
-      d.kota,
-      d.latitude,
-      d.longitude,
-      d.jam_operasional,
-      d.harga_tiket,
-      d.nomor_kontak,
-      d.gambar_sampul_url,
-      k.nama AS kategori
-    FROM destinasi d
-    JOIN kategori k ON d.id_kategori = k.id_kategori
-    WHERE d.id_destinasi = ? AND d.status = 'publish' AND k.tipe = 'destinasi'
+    SELECT e.*, k.nama AS kategori
+    FROM event e
+    LEFT JOIN kategori k ON e.id_kategori = k.id_kategori AND k.tipe = 'event'
+    WHERE e.id_event = ? AND e.status = 'publish'
     LIMIT 1
   ");
   $stmt->bind_param("i", $id);
   $stmt->execute();
-  $result = $stmt->get_result();
-  if ($result) {
-    $destinasi = $result->fetch_assoc();
+  $res = $stmt->get_result();
+  if ($res) {
+    $event = $res->fetch_assoc();
   }
   $stmt->close();
 }
 
-$not_found = !$id || !$destinasi;
+$not_found = !$id || !$event;
 if ($not_found) {
   http_response_code(404);
 }
 
-$related = [];
-if (!$not_found) {
-  $kategori_id = (int)($destinasi['id_kategori'] ?? 0);
-  if ($kategori_id > 0) {
-    $stmt_rel = $koneksi->prepare("
-      SELECT 
-        d.id_destinasi AS id,
-        d.nama AS nama_destinasi,
-        d.deskripsi AS deskripsi_singkat,
-        k.nama AS kategori,
-        d.gambar_sampul_url AS gambar,
-        d.jam_operasional AS estimasi_waktu
-      FROM destinasi d
-      JOIN kategori k ON d.id_kategori = k.id_kategori
-      WHERE d.status = 'publish' AND k.tipe = 'destinasi'
-        AND d.id_kategori = ? AND d.id_destinasi != ?
-      ORDER BY d.dibuat_pada DESC
-      LIMIT 3
-    ");
-    $stmt_rel->bind_param("ii", $kategori_id, $id);
-  } else {
-    $stmt_rel = $koneksi->prepare("
-      SELECT 
-        d.id_destinasi AS id,
-        d.nama AS nama_destinasi,
-        d.deskripsi AS deskripsi_singkat,
-        k.nama AS kategori,
-        d.gambar_sampul_url AS gambar,
-        d.jam_operasional AS estimasi_waktu
-      FROM destinasi d
-      JOIN kategori k ON d.id_kategori = k.id_kategori
-      WHERE d.status = 'publish' AND k.tipe = 'destinasi'
-        AND d.id_destinasi != ?
-      ORDER BY d.dibuat_pada DESC
-      LIMIT 3
-    ");
-    $stmt_rel->bind_param("i", $id);
-  }
-  $stmt_rel->execute();
-  $res_rel = $stmt_rel->get_result();
-  if ($res_rel) {
-    while ($row = $res_rel->fetch_assoc()) {
-      $related[] = $row;
-    }
-  }
-  $stmt_rel->close();
-}
-
 $detailGallery = [];
 if (!$not_found) {
-  $stmtGal = $koneksi->prepare("SELECT gambar_url, keterangan FROM galeri WHERE jenis_target = 'destinasi' AND id_target = ? ORDER BY urutan ASC, id_galeri ASC");
+  $stmtGal = $koneksi->prepare("SELECT gambar_url, keterangan FROM galeri WHERE jenis_target = 'event' AND id_target = ? ORDER BY urutan ASC, id_galeri ASC");
   $stmtGal->bind_param("i", $id);
   $stmtGal->execute();
   $resGal = $stmtGal->get_result();
@@ -119,42 +69,46 @@ if (!$not_found) {
   $stmtGal->close();
 }
 
-
 $hero_image = '../img/hero-yogyakarta.jpg';
-if (!$not_found && !empty($destinasi['gambar_sampul_url'])) {
-  $hero_image = $destinasi['gambar_sampul_url'];
+if (!$not_found && !empty($event['gambar_sampul_url'])) {
+  $hero_image = $event['gambar_sampul_url'];
 }
 
-$kategori_label = $destinasi ? ($destinasi['kategori'] ?? 'Destinasi') : 'Destinasi';
-$kota_label = $destinasi ? trim((string)($destinasi['kota'] ?? '')) : '';
-$jam_label = $destinasi ? trim((string)($destinasi['jam_operasional'] ?? '')) : '';
-$kontak_label = $destinasi ? trim((string)($destinasi['nomor_kontak'] ?? '')) : '';
-$alamat_label = $destinasi ? trim((string)($destinasi['alamat'] ?? '')) : '';
-$harga_label = $destinasi ? format_harga($destinasi['harga_tiket'] ?? null) : 'Belum tersedia';
+$kategori_label = $event ? ($event['kategori'] ?? 'Event') : 'Event';
+$lokasi_label = $event ? trim((string)($event['lokasi'] ?? '')) : '';
+$lokasi_display = $lokasi_label !== '' ? $lokasi_label : 'Yogyakarta';
+$mulai_label = $event ? format_datetime_label($event['mulai_pada'] ?? null) : 'Belum tersedia';
+$selesai_label = $event ? format_datetime_label($event['selesai_pada'] ?? null) : 'Belum tersedia';
+$harga_label = $event ? format_harga($event['harga'] ?? null) : 'Belum tersedia';
+$kuota_label = $event && isset($event['kuota']) && $event['kuota'] !== null && $event['kuota'] !== ''
+  ? ((int)$event['kuota'] . ' Orang')
+  : 'Belum tersedia';
 
-$kota_display = $kota_label !== '' ? $kota_label : 'Yogyakarta';
-$jam_display = $jam_label !== '' ? $jam_label : 'Belum tersedia';
-$kontak_display = $kontak_label !== '' ? $kontak_label : 'Belum tersedia';
-$alamat_display = $alamat_label !== '' ? $alamat_label : 'Belum tersedia';
-if ($alamat_label !== '' && $kota_label !== '' && stripos($alamat_label, $kota_label) === false) {
-  $alamat_display = $alamat_label . ", " . $kota_label;
-} elseif ($alamat_label === '' && $kota_label !== '') {
-  $alamat_display = $kota_label;
-}
-
-$deskripsi_display = $destinasi && trim((string)($destinasi['deskripsi'] ?? '')) !== ''
-  ? $destinasi['deskripsi']
+$deskripsi_display = $event && trim((string)($event['deskripsi'] ?? '')) !== ''
+  ? $event['deskripsi']
   : 'Deskripsi belum tersedia.';
 
-$lat_raw = $destinasi['latitude'] ?? '';
-$lng_raw = $destinasi['longitude'] ?? '';
-$has_map = $destinasi
+$lat_raw = $event['latitude'] ?? '';
+$lng_raw = $event['longitude'] ?? '';
+$has_map = $event
   && is_numeric($lat_raw)
   && is_numeric($lng_raw)
   && (float)$lat_raw != 0.0
   && (float)$lng_raw != 0.0;
 $map_lat = $has_map ? (float)$lat_raw : null;
 $map_lng = $has_map ? (float)$lng_raw : null;
+
+$can_reservasi = false;
+$button_label = 'Beli Tiket';
+if ($event) {
+  $harga = (int)($event['harga'] ?? 0);
+  $button_label = $harga <= 0 ? 'Reservasi Gratis' : 'Beli Tiket';
+  $mulai_ts = strtotime($event['mulai_pada'] ?? '');
+  $can_reservasi = true;
+  if ($mulai_ts && $mulai_ts < strtotime(date('Y-m-d 00:00:00'))) {
+    $can_reservasi = false;
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -162,43 +116,36 @@ $map_lng = $has_map ? (float)$lng_raw : null;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $not_found ? 'Destinasi Tidak Ditemukan - JogjaVerse' : h($destinasi['nama']) . ' - JogjaVerse' ?></title>
+  <title><?= $not_found ? 'Event Tidak Ditemukan - JogjaVerse' : h($event['judul']) . ' - JogjaVerse' ?></title>
 
-  <!-- CSS Libraries -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
-
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style2.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="/assets/css/leaflet.css">
 
   <style>
-    /* 1. VARIABLE WARNA */
     :root {
-        --primary-color: #2D1B20; /* Dark Maroon */
-        --secondary-color: #C69C6D; /* Gold */
+        --primary-color: #2D1B20;
+        --secondary-color: #C69C6D;
     }
-    
     body {
         font-family: 'Plus Jakarta Sans', sans-serif;
         background-color: #FDFBF7;
     }
-
     h1, h2, h3, .navbar-brand, .font-serif {
         font-family: 'Playfair Display', serif;
     }
-    /* 3. HERO & NAVBAR */
     .navbar {
         background: transparent;
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        z-index: 1050;
+        z-index: 10;
     }
-    .hero-destinasi {
+    .hero-event {
         width: 100%;
         height: 460px;
         background-repeat: no-repeat;
@@ -217,43 +164,6 @@ $map_lng = $has_map ? (float)$lng_raw : null;
         color: #fff;
         padding: 0 16px;
     }
-
-    /* 4. CARD STYLE KHUSUS DESTINASI (TETAP DIPERTAHANKAN) */
-    .card-destinasi {
-        border: none;
-        border-radius: 16px;
-        overflow: hidden;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-        background: #fff;
-    }
-    .card-destinasi:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    }
-
-    /* 5. TOMBOL DETAIL ANIMATED */
-    .link-gold-animated {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 700;       
-        color: var(--primary-color);         
-        text-decoration: none;
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.85rem;      
-        transition: color 0.3s ease;
-        padding-bottom: 2px;
-    }
-    .link-gold-animated i { font-size: 1rem; transition: transform 0.3s ease; }
-    .link-gold-animated:hover { color: var(--secondary-color); }
-    .link-gold-animated:hover i { transform: translateX(4px); }
-    .link-gold-animated::after {
-        content: ''; position: absolute; width: 0; height: 2px; bottom: 0px; left: 50%;
-        background-color: var(--secondary-color); transition: all 0.3s ease; transform: translateX(-50%);
-    }
-  .link-gold-animated:hover::after { width: 100%; }
-
     .detail-gambar img {
         width: 100%;
         height: auto;
@@ -265,40 +175,29 @@ $map_lng = $has_map ? (float)$lng_raw : null;
     .detail-gambar img:last-child {
         margin-bottom: 0;
     }
-    #mapDestinasi {
+    #mapEvent {
         width: 100%;
-        height: 280px;
+        height: 300px;
         border-radius: 16px;
-        position: relative;
-        z-index: 1;
-    }
-    .leaflet-container {
-        z-index: 1;
     }
   </style>
-
 </head>
 <body>
 
 <!-- 2. STRUKTUR HTML -->
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
   <div class="container">
-    
-    <!-- Logo Brand -->
     <a class="navbar-brand fw-bold" href="#">
         Jogja<span style="color: #C69C6D;">Verse.</span>
     </a>
 
-    <!-- Tombol Toggle Mobile -->
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Menu Links -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
         <li class="nav-item">
-          <!-- Menggunakan link sesuai request awal Anda tapi dengan style baru -->
           <a class="nav-link" href="destinasiLainnya.php">Destinasi</a>
         </li>
         <li class="nav-item">
@@ -309,72 +208,63 @@ $map_lng = $has_map ? (float)$lng_raw : null;
         </li>
       </ul>
 
-      <!-- Tombol Login -->
-  <div class="d-flex justify-content-center">
-  <?php
-  if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
-    $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? ($_SESSION['username'] ?? 'User'));
-    $avatarPath = '/public/user/img/default_avatar.png';
-    
-    echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none">';
-    
-    // UPDATE: Ukuran gambar diubah jadi 35px agar pas dengan navbar kecil
-    echo '<img src="' . $avatarPath . '" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover; margin-right:8px;">';
-    
-    echo '<span class="text-white fw-medium d-none d-md-inline" style="font-size: 0.95rem;">' . $displayName . '</span>';
-    echo '</a>';
-  } else {
-    echo '<a href="/public/login.php" class="btn btn-gold px-4">Login</a>';
-  }
-  ?>
-</div>
+      <div class="d-flex justify-content-center">
+      <?php
+      if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
+        $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? ($_SESSION['username'] ?? 'User'));
+        $avatarPath = '/public/user/img/default_avatar.png';
+        
+        echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none">';
+        echo '<img src="' . $avatarPath . '" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover; margin-right:8px;">';
+        echo '<span class="text-white fw-medium d-none d-md-inline" style="font-size: 0.95rem;">' . $displayName . '</span>';
+        echo '</a>';
+      } else {
+        echo '<a href="/public/login.php" class="btn btn-gold px-4">Login</a>';
+      }
+      ?>
+    </div>
     </div>
   </div>
 </nav>
 
-
 <?php if ($not_found): ?>
-  <!-- HERO DESTINASI -->
-  <div class="hero-destinasi" style="background-image: url('../img/hero-yogyakarta.jpg');">
+  <div class="hero-event" style="background-image: url('../img/hero-yogyakarta.jpg');">
     <div class="hero-overlay">
       <div class="text-center">
-        <h1 class="fw-bold display-4 mb-2">Destinasi Tidak Ditemukan</h1>
-        <p class="text-white-50 fs-5">Data destinasi tidak tersedia atau belum dipublikasikan.</p>
+        <h1 class="fw-bold display-4 mb-2">Event Tidak Ditemukan</h1>
+        <p class="text-white-50 fs-5">Data event tidak tersedia atau belum dipublikasikan.</p>
       </div>
     </div>
   </div>
 
   <section class="py-5">
     <div class="container text-center">
-      <p class="text-muted mb-4">Coba kembali ke daftar destinasi untuk melihat pilihan lain.</p>
-      <a href="destinasiLainnya.php" class="btn btn-outline-dark rounded-pill px-4">Kembali ke Destinasi</a>
+      <p class="text-muted mb-4">Coba kembali ke daftar event untuk melihat pilihan lain.</p>
+      <a href="eventLainnya.php" class="btn btn-outline-dark rounded-pill px-4">Kembali ke Event</a>
     </div>
   </section>
 <?php else: ?>
-  <!-- HERO DESTINASI -->
-  <div class="hero-destinasi" style="background-image: url('<?= h($hero_image) ?>');">
+  <div class="hero-event" style="background-image: url('<?= h($hero_image) ?>');">
     <div class="hero-overlay">
       <div class="text-center">
-        <h1 class="fw-bold display-4 mb-2"><?= h($destinasi['nama']) ?></h1>
-        <p class="text-white-50 fs-5"><?= h($kota_display) ?></p>
+        <h1 class="fw-bold display-4 mb-2"><?= h($event['judul']) ?></h1>
+        <p class="text-white-50 fs-5"><?= h($lokasi_display) ?></p>
       </div>
     </div>
   </div>
 
-  <!-- BREADCRUMB -->
   <section class="py-4">
     <div class="container">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
           <li class="breadcrumb-item"><a href="landingpageclean.php" class="text-decoration-none text-dark">Home</a></li>
-          <li class="breadcrumb-item"><a href="destinasiLainnya.php" class="text-decoration-none text-dark">Destinasi</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><?= h($destinasi['nama']) ?></li>
+          <li class="breadcrumb-item"><a href="eventLainnya.php" class="text-decoration-none text-dark">Event</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><?= h($event['judul']) ?></li>
         </ol>
       </nav>
     </div>
   </section>
 
-  <!-- CONTENT SECTION -->
   <section class="pb-5">
     <div class="container">
       <div class="row g-4 align-items-start">
@@ -387,19 +277,19 @@ $map_lng = $has_map ? (float)$lng_raw : null;
               </span>
               <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
                 <i class="bi bi-geo-alt text-warning"></i>
-                <?= h($kota_display) ?>
+                <?= h($lokasi_display) ?>
               </span>
               <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-clock text-warning"></i>
-                <?= h($jam_display) ?>
+                <i class="bi bi-calendar-event text-warning"></i>
+                <?= h($mulai_label) ?>
               </span>
               <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
                 <i class="bi bi-ticket-perforated text-warning"></i>
                 <?= h($harga_label) ?>
               </span>
               <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-telephone text-warning"></i>
-                <?= h($kontak_display) ?>
+                <i class="bi bi-people text-warning"></i>
+                <?= h($kuota_label) ?>
               </span>
             </div>
           </div>
@@ -412,14 +302,13 @@ $map_lng = $has_map ? (float)$lng_raw : null;
           </div>
 
           <div class="bg-white rounded-4 p-4 shadow-sm">
-
             <div class="d-flex align-items-center justify-content-between mb-3">
               <h3 class="fw-bold font-serif mb-0">Peta Lokasi</h3>
-              <span class="text-muted small"><?= h($alamat_display) ?></span>
+              <span class="text-muted small"><?= h($lokasi_display) ?></span>
             </div>
             <?php if ($has_map): ?>
               <div class="rounded-4 overflow-hidden shadow-sm">
-                <div id="mapDestinasi"></div>
+                <div id="mapEvent"></div>
               </div>
             <?php else: ?>
               <div class="text-muted">Lokasi peta belum tersedia.</div>
@@ -432,12 +321,20 @@ $map_lng = $has_map ? (float)$lng_raw : null;
             <div class="card-body">
               <h5 class="fw-bold font-serif mb-3">Informasi</h5>
               <ul class="list-unstyled text-muted small mb-0">
-                <li class="mb-2"><i class="bi bi-geo-alt me-2 text-warning"></i><?= h($alamat_display) ?></li>
-                <li class="mb-2"><i class="bi bi-clock me-2 text-warning"></i><?= h($jam_display) ?></li>
+                <li class="mb-2"><i class="bi bi-geo-alt me-2 text-warning"></i><?= h($lokasi_display) ?></li>
+                <li class="mb-2"><i class="bi bi-calendar-event me-2 text-warning"></i><?= h($mulai_label) ?></li>
+                <li class="mb-2"><i class="bi bi-calendar-check me-2 text-warning"></i><?= h($selesai_label) ?></li>
                 <li class="mb-2"><i class="bi bi-ticket-perforated me-2 text-warning"></i><?= h($harga_label) ?></li>
-                <li class="mb-2"><i class="bi bi-telephone me-2 text-warning"></i><?= h($kontak_display) ?></li>
+                <li class="mb-2"><i class="bi bi-people me-2 text-warning"></i><?= h($kuota_label) ?></li>
                 <li><i class="bi bi-tag me-2 text-warning"></i><?= h($kategori_label) ?></li>
               </ul>
+              <?php if ($can_reservasi): ?>
+                <a class="btn btn-gold w-100 mt-3" href="checkoutEvent.php?id_event=<?= h($event['id_event']) ?>">
+                  <?= h($button_label) ?>
+                </a>
+              <?php else: ?>
+                <div class="text-muted small mt-3">Reservasi sudah ditutup.</div>
+              <?php endif; ?>
             </div>
           </div>
 
@@ -445,7 +342,7 @@ $map_lng = $has_map ? (float)$lng_raw : null;
             <h5 class="fw-bold font-serif mb-3">Detail Gambar</h5>
             <?php if (!empty($detailGallery)): ?>
               <?php foreach ($detailGallery as $img): ?>
-                <img src="<?= h($img['gambar_url']) ?>" alt="<?= h($img['keterangan'] ?? $destinasi['nama']) ?>" loading="lazy">
+                <img src="<?= h($img['gambar_url']) ?>" alt="<?= h($img['keterangan'] ?? $event['judul']) ?>" loading="lazy">
               <?php endforeach; ?>
             <?php else: ?>
               <small class="text-muted">Belum ada gambar detail.</small>
@@ -455,70 +352,11 @@ $map_lng = $has_map ? (float)$lng_raw : null;
       </div>
     </div>
   </section>
-
-  <!-- DESTINASI LAINNYA -->
-  <section class="py-5">
-    <div class="container">
-      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
-        <h2 class="fw-bold font-serif mb-0">Destinasi Lainnya</h2>
-        <a href="destinasiLainnya.php" class="link-gold-animated">Lihat Semua <i class="bi bi-arrow-right"></i></a>
-      </div>
-
-      <div class="row g-4">
-        <?php if (!empty($related)): ?>
-          <?php foreach ($related as $row): 
-            $img_url = !empty($row['gambar']) ? $row['gambar'] : 'https://placehold.co/600x400?text=Destinasi';
-          ?>
-          <div class="col-sm-6 col-lg-4">
-            <div class="card card-destinasi h-100">
-              <div class="position-relative overflow-hidden" style="height: 220px;">
-                <img src="<?= h($img_url) ?>"
-                     class="w-100 h-100 object-fit-cover"
-                     alt="<?= h($row['nama_destinasi']) ?>"
-                     onerror="this.src='https://placehold.co/600x400?text=No+Image'">
-
-                <span class="position-absolute top-0 start-0 m-3 px-3 py-1 bg-white rounded-pill fw-bold shadow-sm text-dark"
-                      style="font-size:0.7rem;">
-                  <?= h($row['kategori']) ?>
-                </span>
-              </div>
-
-              <div class="card-body p-4 d-flex flex-column">
-                <h5 class="fw-bold mb-2 fs-5 font-serif text-truncate">
-                  <?= h($row['nama_destinasi']) ?>
-                </h5>
-                <p class="text-muted mb-3 flex-grow-1 small" style="line-height:1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                  <?= h($row['deskripsi_singkat']) ?>
-                </p>
-                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
-                  <span class="text-muted small">
-                    <i class="bi bi-clock me-1 text-warning"></i>
-                    <?= h($row['estimasi_waktu']) ?>
-                  </span>
-                  <a href="detailDestinasi.php?id=<?= h($row['id']) ?>" class="link-gold-animated">
-                     Detail <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <?php endforeach; ?>
-        <?php else: ?>
-          <div class="col-12 text-center py-4">
-            <div class="text-muted">Belum ada destinasi lain di kategori ini.</div>
-          </div>
-        <?php endif; ?>
-      </div>
-    </div>
-  </section>
 <?php endif; ?>
 
-<!-- Footer (Ditambahkan di sini agar satu file style) -->
 <footer class="footer-custom pt-5 mt-5">
   <div class="container">
     <div class="row gy-4">
-
-      <!-- Brand & Info -->
       <div class="col-lg-4 pe-lg-5">
         <div class="d-flex align-items-center mb-3">
           <h5 class="mb-0 fw-bold footer-brand">
@@ -544,7 +382,6 @@ $map_lng = $has_map ? (float)$lng_raw : null;
         </ul>
       </div>
 
-      <!-- Links: Wisata -->
       <div class="col-lg-2 col-6">
         <h6 class="fw-bold mb-3 text-white">Jelajah</h6>
         <ul class="list-unstyled footer-link">
@@ -555,7 +392,6 @@ $map_lng = $has_map ? (float)$lng_raw : null;
         </ul>
       </div>
 
-      <!-- Links: Layanan -->
       <div class="col-lg-3 col-6">
         <h6 class="fw-bold mb-3 text-white">Layanan</h6>
         <ul class="list-unstyled footer-link">
@@ -566,7 +402,6 @@ $map_lng = $has_map ? (float)$lng_raw : null;
         </ul>
       </div>
 
-      <!-- Links: Tentang -->
       <div class="col-lg-3 col-6">
         <h6 class="fw-bold mb-3 text-white">Tentang</h6>
         <ul class="list-unstyled footer-link">
@@ -580,7 +415,6 @@ $map_lng = $has_map ? (float)$lng_raw : null;
 
     <hr class="border-light opacity-10 my-4">
 
-    <!-- Bottom Footer -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-4 gap-3">
       <small class="opacity-50">
         &copy; 2025 JogjaVerse. Disponsori oleh Pemerintah Kota Yogyakarta.
@@ -593,7 +427,6 @@ $map_lng = $has_map ? (float)$lng_raw : null;
         <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
       </div>
     </div>
-
   </div>
 </footer>
 
@@ -604,24 +437,23 @@ $map_lng = $has_map ? (float)$lng_raw : null;
     document.addEventListener("DOMContentLoaded", function () {
       const lat = parseFloat(<?= json_encode($map_lat) ?>);
       const lng = parseFloat(<?= json_encode($map_lng) ?>);
-      const mapEl = document.getElementById('mapDestinasi');
+      const mapEl = document.getElementById('mapEvent');
       if (!mapEl || Number.isNaN(lat) || Number.isNaN(lng)) {
         return;
       }
-      if (window._mapDestinasi) {
+      if (window._mapEvent) {
         return;
       }
-      window._mapDestinasi = L.map('mapDestinasi').setView([lat, lng], 14);
+      window._mapEvent = L.map('mapEvent').setView([lat, lng], 14);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap'
-      }).addTo(window._mapDestinasi);
-      L.marker([lat, lng]).addTo(window._mapDestinasi);
+      }).addTo(window._mapEvent);
+      L.marker([lat, lng]).addTo(window._mapEvent);
     });
   </script>
 <?php endif; ?>
 
-<!-- 3. JAVASCRIPT (Untuk Efek Scroll) -->
 <script>
     window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.navbar');
@@ -635,7 +467,3 @@ $map_lng = $has_map ? (float)$lng_raw : null;
 
 </body>
 </html>
-
-
-
-

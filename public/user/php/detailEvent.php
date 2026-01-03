@@ -97,6 +97,18 @@ $has_map = $event
   && (float)$lng_raw != 0.0;
 $map_lat = $has_map ? (float)$lat_raw : null;
 $map_lng = $has_map ? (float)$lng_raw : null;
+
+$can_reservasi = false;
+$button_label = 'Beli Tiket';
+if ($event) {
+  $harga = (int)($event['harga'] ?? 0);
+  $button_label = $harga <= 0 ? 'Reservasi Gratis' : 'Beli Tiket';
+  $mulai_ts = strtotime($event['mulai_pada'] ?? '');
+  $can_reservasi = true;
+  if ($mulai_ts && $mulai_ts < strtotime(date('Y-m-d 00:00:00'))) {
+    $can_reservasi = false;
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -316,6 +328,13 @@ $map_lng = $has_map ? (float)$lng_raw : null;
                 <li class="mb-2"><i class="bi bi-people me-2 text-warning"></i><?= h($kuota_label) ?></li>
                 <li><i class="bi bi-tag me-2 text-warning"></i><?= h($kategori_label) ?></li>
               </ul>
+              <?php if ($can_reservasi): ?>
+                <a class="btn btn-gold w-100 mt-3" href="checkoutEvent.php?id_event=<?= h($event['id_event']) ?>">
+                  <?= h($button_label) ?>
+                </a>
+              <?php else: ?>
+                <div class="text-muted small mt-3">Reservasi sudah ditutup.</div>
+              <?php endif; ?>
             </div>
           </div>
 

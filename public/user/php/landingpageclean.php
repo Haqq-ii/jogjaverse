@@ -23,9 +23,11 @@ if ($res) {
 // Mengambil 4 event teratas berdasarkan kuota (atau tanggal)
 $event = [];
 $res = $koneksi->query("
-  SELECT * FROM event
-  WHERE status = 'publish'
-  ORDER BY kuota DESC
+  SELECT e.*, k.nama AS kategori
+  FROM event e
+  LEFT JOIN kategori k ON e.id_kategori = k.id_kategori
+  WHERE e.status = 'publish'
+  ORDER BY e.kuota DESC
   LIMIT 4
 ");
 
@@ -321,7 +323,7 @@ if ($res) {
           <div class="mb-2">
             <span class="px-2 py-1 rounded-pill text-white border border-light border-opacity-25" 
                   style="font-size: 0.7rem; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px);">
-              <?= $mainEvent['kategori'] ?>
+              <?= $mainEvent['kategori'] ?? 'Event' ?>
             </span>
           </div>
 
@@ -372,7 +374,7 @@ if ($res) {
           <div class="d-flex justify-content-between align-items-center mb-2">
             <div class="d-flex align-items-center">
               <span class="badge border border-danger border-opacity-10 rounded-pill px-2 fw-normal" style="font-size: 0.7rem; background-color: #EBE1E1; color: #6F202D;">
-                <?= $e['kategori'] ?>
+                <?= $e['kategori'] ?? 'Event' ?>
               </span>
               <span class="ms-2 small" style="color: #846267; font-size: 0.8rem;">
                 <?= date('d M Y', strtotime($e['mulai_pada'])) ?>
@@ -651,3 +653,4 @@ if ($res) {
 
 </body>
 </html>
+

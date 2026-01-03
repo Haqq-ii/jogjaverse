@@ -49,7 +49,7 @@ $query_data = "
         e.judul AS nama_event,
         e.deskripsi AS deskripsi_singkat,
         k.nama AS kategori,
-        e.gambar_sampul_url AS gambar,
+        e.gambar_sampul_url,
         e.mulai_pada,    -- Pastikan kolom ini ada di DB (atau 'mulai_pada')
         e.lokasi,
         e.harga       -- Pastikan kolom ini ada di DB
@@ -102,151 +102,10 @@ function formatTanggal($date) {
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="../css/eventLainnya.css">
+
   <style>
-    :root {
-        --primary-color: #2D1B20; /* Dark Maroon */
-        --secondary-color: #C69C6D; /* Gold */
-    }
     
-    body {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        background-color: #FDFBF7;
-    }
-
-    h1, h2, h3, .navbar-brand, .font-serif {
-        font-family: 'Playfair Display', serif;
-    }
-
-    /* --- NAVBAR STYLING --- */
-    .navbar {
-        transition: all 0.4s ease;
-        padding: 1.75rem 0;
-    }
-    .navbar-brand { font-size: 2rem; }
-    .nav-link {
-        font-size: 1.4rem;
-        margin: 0 15px;
-        font-weight: 500;
-        position: relative;
-    }
-    .btn-login-custom {
-        padding: 14px 36px;
-        font-size: 1.25rem;
-        font-weight: 600;
-        border-radius: 50px;
-    }
-    .nav-link::after {
-        content: ''; position: absolute; width: 0; height: 3px; bottom: 0px; left: 50%;
-        background-color: var(--secondary-color); transition: all 0.3s ease; transform: translateX(-50%);
-    }
-    .nav-link:hover::after, .nav-link.active::after { width: 80%; }
-
-    /* --- HEADER BACKGROUND (Event Theme) --- */
-    #background {
-        /* Ganti URL gambar dengan gambar konser/festival/budaya */
-        background: linear-gradient(rgba(45, 27, 32, 0.7), rgba(45, 27, 32, 0.7)), url('https://images.unsplash.com/photo-1514525253440-b39345208668?q=80&w=1920&auto=format&fit=crop'); 
-        background-size: cover;
-        background-position: center;
-        height: 350px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 108px;
-    }
-
-    /* --- DATE BADGE STYLING (Khas Event Card) --- */
-    .date-badge {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        background-color: rgba(255, 255, 255, 0.95);
-        border-radius: 12px;
-        padding: 8px 12px;
-        text-align: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        z-index: 10;
-        min-width: 60px;
-    }
-    .date-badge .day {
-        display: block;
-        font-size: 1.4rem;
-        font-weight: 800;
-        line-height: 1;
-        color: var(--primary-color);
-        font-family: 'Playfair Display', serif;
-    }
-    .date-badge .month {
-        display: block;
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        color: var(--secondary-color);
-        letter-spacing: 1px;
-    }
-
-    /* --- CARD STYLING --- */
-    .card-event {
-        border: none;
-        border-radius: 16px;
-        overflow: hidden;
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-    }
-    .card-event:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    }
-    .price-tag {
-        position: absolute;
-        bottom: 15px;
-        right: 15px;
-        background-color: var(--primary-color);
-        color: #fff;
-        padding: 5px 15px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-
-    /* --- TOMBOL DETAIL ANIMATED --- */
-    .link-gold-animated {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        font-weight: 700;       
-        color: var(--primary-color);         
-        text-decoration: none;
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.85rem;      
-        transition: color 0.3s ease;
-        padding-bottom: 2px;
-    }
-    .link-gold-animated i { font-size: 1rem; transition: transform 0.3s ease; }
-    .link-gold-animated:hover { color: var(--secondary-color); }
-    .link-gold-animated:hover i { transform: translateX(4px); }
-    .link-gold-animated::after {
-        content: ''; position: absolute; width: 0; height: 2px; bottom: 0px; left: 50%;
-        background-color: var(--secondary-color); transition: all 0.3s ease; transform: translateX(-50%);
-    }
-    .link-gold-animated:hover::after { width: 100%; }
-
-    /* --- PAGINATION --- */
-    .pagination .page-link {
-        color: var(--primary-color);
-        border: 1px solid #dee2e6;
-        margin: 0 3px;
-        border-radius: 5px;
-    }
-    .pagination .page-link:hover {
-        background-color: #f8f9fa;
-        color: var(--secondary-color);
-        border-color: var(--secondary-color);
-    }
-    .pagination .page-item.active .page-link {
-        background-color: var(--primary-color);
-        border-color: var(--primary-color);
-        color: #fff;
-    }
   </style>
 </head>
 <body>
@@ -422,47 +281,87 @@ function formatTanggal($date) {
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer-custom text-light pt-5" style="background-color: #321B1F;">
+<!-- Footer (Ditambahkan di sini agar satu file style) -->
+<footer class="footer-custom pt-5 mt-5">
   <div class="container">
     <div class="row gy-4">
-      <div class="col-lg-4">
+
+      <!-- Brand & Info -->
+      <div class="col-lg-4 pe-lg-5">
         <div class="d-flex align-items-center mb-3">
-          <h5 class="mb-0 fw-bold font-serif">Jogja<span style="color: var(--secondary-color);">Verse.</span></h5>
+          <h5 class="mb-0 fw-bold footer-brand">
+             Jogja<span style="color: #C69C6D;">Verse.</span>
+          </h5>
         </div>
-        <p class="small text-light opacity-75">
-          Platform informasi event dan atraksi wisata terlengkap di Yogyakarta.
+        <p class="small text-light opacity-75 mb-4">
+          Platform pariwisata digital terlengkap untuk menjelajahi keistimewaan Yogyakarta, dari destinasi budaya hingga kuliner legendaris.
         </p>
         <ul class="list-unstyled small opacity-75">
-          <li class="mb-2"><i class="bi bi-geo-alt me-2 text-warning"></i> Jl. Malioboro No. 1, Yogyakarta</li>
-          <li><i class="bi bi-telephone me-2 text-warning"></i> (0274) 123456</li>
+          <li class="mb-2 d-flex align-items-start">
+            <i class="bi bi-geo-alt-fill icon-gold me-2 mt-1"></i>
+            <span>Jl. Malioboro No. 1, Yogyakarta 55271</span>
+          </li>
+          <li class="mb-2 d-flex align-items-center">
+            <i class="bi bi-envelope-fill icon-gold me-2"></i>
+            <span>halo@jogjaverse.id</span>
+          </li>
+          <li class="d-flex align-items-center">
+            <i class="bi bi-telephone-fill icon-gold me-2"></i>
+            <span>(0274) 123456</span>
+          </li>
         </ul>
       </div>
+
+      <!-- Links: Wisata -->
       <div class="col-lg-2 col-6">
-        <h6 class="fw-bold mb-3">Wisata</h6>
-        <ul class="list-unstyled small opacity-75">
-          <li><a href="destinasiLainnya.php" class="text-white text-decoration-none">Destinasi</a></li>
-          <li><a href="#" class="text-white text-decoration-none">Event</a></li>
+        <h6 class="fw-bold mb-3 text-white">Jelajah</h6>
+        <ul class="list-unstyled footer-link">
+          <li><a href="#destinasi">Destinasi Populer</a></li>
+          <li><a href="#event">Kalender Event</a></li>
+          <li><a href="#kuliner">Kuliner Khas</a></li>
+          <li><a href="#">Virtual Tour</a></li>
         </ul>
       </div>
+
+      <!-- Links: Layanan -->
       <div class="col-lg-3 col-6">
-        <h6 class="fw-bold mb-3">Layanan</h6>
-        <ul class="list-unstyled small opacity-75">
-            <li><a href="#" class="text-white text-decoration-none">Reservasi Tiket</a></li>
-            <li><a href="#" class="text-white text-decoration-none">Panduan</a></li>
+        <h6 class="fw-bold mb-3 text-white">Layanan</h6>
+        <ul class="list-unstyled footer-link">
+          <li><a href="#">Pusat Bantuan</a></li>
+          <li><a href="#">Panduan Perjalanan</a></li>
+          <li><a href="#">Kerjasama Mitra</a></li>
+          <li><a href="#">Kontak Kami</a></li>
         </ul>
       </div>
+
+      <!-- Links: Tentang -->
       <div class="col-lg-3 col-6">
-        <h6 class="fw-bold mb-3">Tentang</h6>
-        <ul class="list-unstyled small opacity-75">
-            <li><a href="#" class="text-white text-decoration-none">Kebijakan Privasi</a></li>
+        <h6 class="fw-bold mb-3 text-white">Tentang</h6>
+        <ul class="list-unstyled footer-link">
+          <li><a href="#">Tentang JogjaVerse</a></li>
+          <li><a href="#">Kebijakan Privasi</a></li>
+          <li><a href="#">Syarat & Ketentuan</a></li>
+          <li><a href="#">Karir</a></li>
         </ul>
       </div>
     </div>
-    <hr class="border-light opacity-25 my-4">
-    <div class="text-center pb-4 small opacity-50">
-      &copy; 2025 JogjaVerse. Disponsori oleh Pemerintah Kota Yogyakarta
+
+    <hr class="border-light opacity-10 my-4">
+
+    <!-- Bottom Footer -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-4 gap-3">
+      <small class="opacity-50">
+        &copy; 2025 JogjaVerse. Disponsori oleh Pemerintah Kota Yogyakarta.
+      </small>
+
+      <div class="d-flex gap-2">
+        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
+      </div>
     </div>
+
   </div>
 </footer>
 

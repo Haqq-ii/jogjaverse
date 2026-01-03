@@ -14,39 +14,33 @@
         font-family: 'Playfair Display', serif;
     }
 
-    /* 2. NAVBAR (UKURAN DIPERKECIL) */
+    /* 2. NAVBAR (Style Besar & Mewah) */
     .navbar {
         transition: all 0.4s ease;
-        padding: 0.75rem 0; /* DIUBAH: Padding diperkecil */
+        padding: 0.75rem 0; /* Padding Besar */
     }
-    
-    .navbar-brand { 
-        font-size: 2rem; /* TETAP: Ukuran logo JogjaVerse tetap besar */
-    }
-
+    .navbar-brand { font-size: 2rem; }
     .nav-link {
-        font-size: 1.2rem; /* DIUBAH: Ukuran font menu diperkecil ke standar */
+        font-size: 1.2rem;
         margin: 0 10px;
         font-weight: 500;
         position: relative;
     }
-
     .btn-login-custom {
-        padding: 8px 24px; /* DIUBAH: Padding tombol lebih kecil */
-        font-size: 1rem;   /* DIUBAH: Font tombol lebih kecil */
+        padding: 8px 24px;
+        font-size: 1rem;
         font-weight: 600;
         border-radius: 50px;
     }
-
     .nav-link::after {
         content: ''; position: absolute; width: 0; height: 3px; bottom: 0px; left: 50%;
         background-color: var(--secondary-color); transition: all 0.3s ease; transform: translateX(-50%);
     }
     .nav-link:hover::after, .nav-link.active::after { width: 80%; }
 
-    /* 3. HEADER BACKGROUND */
+    /* 3. HEADER BACKGROUND (Kuliner Theme) */
     #background {
-        background: linear-gradient(rgba(45, 27, 32, 0.7), rgba(45, 27, 32, 0.7)), url('../img/jelajahdestinasi.png'); 
+        background: linear-gradient(rgba(45, 27, 32, 0.7), rgba(45, 27, 32, 0.7)), url('https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=1920&auto=format&fit=crop'); 
         background-color: var(--primary-color);
         background-size: cover;
         background-position: center;
@@ -54,20 +48,32 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 80px; /* DIUBAH: Disesuaikan dengan tinggi navbar baru */
+        margin-top: 80px; /* Jarak Navbar Fixed */
     }
 
-    /* 4. CARD STYLE KHUSUS DESTINASI (TETAP DIPERTAHANKAN) */
-    .card-destinasi {
+    /* 4. CARD STYLE KHUSUS KULINER (Updated Font Sizes) */
+    .card-kuliner {
         border: none;
         border-radius: 16px;
         overflow: hidden;
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
         background: #fff;
     }
-    .card-destinasi:hover {
+    .card-kuliner:hover {
         transform: translateY(-8px);
         box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    /* Penyesuaian Font Content Card agar tidak kekecilan */
+    .card-body h5 {
+        font-size: 1.25rem; /* fs-5 equivalent, diperjelas */
+        line-height: 1.4;
+    }
+    .card-body p {
+        font-size: 0.95rem; /* Lebih besar dari small (0.875rem) */
+    }
+    .card-meta {
+        font-size: 0.9rem; /* Ukuran info lokasi & harga */
     }
 
     /* 5. TOMBOL DETAIL ANIMATED */
@@ -80,11 +86,11 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        font-size: 0.85rem;      
+        font-size: 0.95rem; /* Sedikit diperbesar */
         transition: color 0.3s ease;
         padding-bottom: 2px;
     }
-    .link-gold-animated i { font-size: 1rem; transition: transform 0.3s ease; }
+    .link-gold-animated i { font-size: 1.1rem; transition: transform 0.3s ease; }
     .link-gold-animated:hover { color: var(--secondary-color); }
     .link-gold-animated:hover i { transform: translateX(4px); }
     .link-gold-animated::after {
@@ -110,7 +116,6 @@
         border-color: var(--primary-color);
         color: #fff;
     }
-
 
     /* --- STYLING FOOTER (Baru) --- */
     .footer-custom {

@@ -1,6 +1,5 @@
- /* 1. VARIABLE WARNA */
-    :root {
-        --primary-nav: #2D1B20; /* Dark Maroon */
+:root {
+    --primary-nav: #2D1B20; /* Dark Maroon */
         --primary-color: #2D1B20; /* Dark Maroon */
         --secondary-color: #C69C6D; /* Gold */
     }
@@ -14,63 +13,98 @@
         font-family: 'Playfair Display', serif;
     }
 
-    /* 2. NAVBAR (UKURAN DIPERKECIL) */
+    /* --- NAVBAR STYLING --- */
     .navbar {
         transition: all 0.4s ease;
-        padding: 0.75rem 0; /* DIUBAH: Padding diperkecil */
+        padding: 0.75rem 0;
     }
-    
-    .navbar-brand { 
-        font-size: 2rem; /* TETAP: Ukuran logo JogjaVerse tetap besar */
-    }
+    .navbar-brand { font-size: 2rem; }
 
     .nav-link {
-        font-size: 1.2rem; /* DIUBAH: Ukuran font menu diperkecil ke standar */
+        font-size: 1.2rem;
         margin: 0 10px;
         font-weight: 500;
         position: relative;
     }
-
     .btn-login-custom {
-        padding: 8px 24px; /* DIUBAH: Padding tombol lebih kecil */
-        font-size: 1rem;   /* DIUBAH: Font tombol lebih kecil */
+        padding: 8px 24px;
+        font-size: 1rem;
         font-weight: 600;
         border-radius: 50px;
     }
-
     .nav-link::after {
         content: ''; position: absolute; width: 0; height: 3px; bottom: 0px; left: 50%;
         background-color: var(--secondary-color); transition: all 0.3s ease; transform: translateX(-50%);
     }
     .nav-link:hover::after, .nav-link.active::after { width: 80%; }
 
-    /* 3. HEADER BACKGROUND */
+    /* --- HEADER BACKGROUND (Event Theme) --- */
     #background {
-        background: linear-gradient(rgba(45, 27, 32, 0.7), rgba(45, 27, 32, 0.7)), url('../img/jelajahdestinasi.png'); 
-        background-color: var(--primary-color);
+        /* Ganti URL gambar dengan gambar konser/festival/budaya */
+        background: linear-gradient(rgba(45, 27, 32, 0.7), rgba(45, 27, 32, 0.7)), url('../img/eventlainnya.png'); 
         background-size: cover;
         background-position: center;
-        height: 350px; 
+        height: 350px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 80px; /* DIUBAH: Disesuaikan dengan tinggi navbar baru */
+        margin-top: 80px;
     }
 
-    /* 4. CARD STYLE KHUSUS DESTINASI (TETAP DIPERTAHANKAN) */
-    .card-destinasi {
+    /* --- DATE BADGE STYLING (Khas Event Card) --- */
+    .date-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        padding: 8px 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        z-index: 10;
+        min-width: 60px;
+    }
+    .date-badge .day {
+        display: block;
+        font-size: 1.4rem;
+        font-weight: 800;
+        line-height: 1;
+        color: var(--primary-color);
+        font-family: 'Playfair Display', serif;
+    }
+    .date-badge .month {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: var(--secondary-color);
+        letter-spacing: 1px;
+    }
+
+    /* --- CARD STYLING --- */
+    .card-event {
         border: none;
         border-radius: 16px;
         overflow: hidden;
         transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
-        background: #fff;
     }
-    .card-destinasi:hover {
+    .card-event:hover {
         transform: translateY(-8px);
         box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     }
+    .price-tag {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        background-color: var(--primary-color);
+        color: #fff;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
 
-    /* 5. TOMBOL DETAIL ANIMATED */
+    /* --- TOMBOL DETAIL ANIMATED --- */
     .link-gold-animated {
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 700;       
@@ -93,7 +127,7 @@
     }
     .link-gold-animated:hover::after { width: 100%; }
 
-    /* 6. PAGINATION */
+    /* --- PAGINATION --- */
     .pagination .page-link {
         color: var(--primary-color);
         border: 1px solid #dee2e6;
@@ -110,7 +144,6 @@
         border-color: var(--primary-color);
         color: #fff;
     }
-
 
     /* --- STYLING FOOTER (Baru) --- */
     .footer-custom {

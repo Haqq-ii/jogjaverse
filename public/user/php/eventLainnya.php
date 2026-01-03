@@ -134,7 +134,7 @@ function formatTanggal($date) {
           echo '<span class="fw-medium d-none d-md-inline">'. $displayName .'</span>';
           echo '</a>';
         } else {
-          echo '<a href="#login" class="btn btn-outline-dark btn-login-custom">Login</a>';
+          echo '<a href="/public/login.php" class="btn btn-outline-dark btn-login-custom">Login</a>';
         }
         ?>
     </div>

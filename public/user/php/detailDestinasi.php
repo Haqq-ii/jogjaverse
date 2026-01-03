@@ -196,7 +196,7 @@ $map_lng = $has_map ? (float)$lng_raw : null;
         top: 0;
         left: 0;
         width: 100%;
-        z-index: 10;
+        z-index: 1050;
     }
     .hero-destinasi {
         width: 100%;
@@ -269,6 +269,11 @@ $map_lng = $has_map ? (float)$lng_raw : null;
         width: 100%;
         height: 280px;
         border-radius: 16px;
+        position: relative;
+        z-index: 1;
+    }
+    .leaflet-container {
+        z-index: 1;
     }
   </style>
 
@@ -630,3 +635,7 @@ $map_lng = $has_map ? (float)$lng_raw : null;
 
 </body>
 </html>
+
+
+
+

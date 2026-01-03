@@ -2,10 +2,14 @@
 require_once __DIR__ . "/../config/config.php";
 require_once __DIR__ . "/../config/auth.php";
 require_once __DIR__ . "/../config/koneksi.php";
+require_once __DIR__ . "/../config/upload.php";
 require_once __DIR__ . "/_crud_helper.php";
 wajib_admin();
 
 $table = "destinasi";
+$galeriTable = "galeri";
+$galeriJenis = "destinasi";
+$detailPrefix = "dest_detail_";
 
 [$cols, $pk] = describe_table($koneksi, $table);
 if (!$pk) die("PK tidak ditemukan di tabel $table");
@@ -28,6 +32,26 @@ $q = trim($_GET['q'] ?? "");
 // handle delete
 if (isset($_GET['hapus'])) {
   $id = $_GET['hapus'];
+
+  $stmtGal = $koneksi->prepare("SELECT gambar_url FROM `$galeriTable` WHERE jenis_target = ? AND id_target = ?");
+  if ($stmtGal) {
+    $stmtGal->bind_param("ss", $galeriJenis, $id);
+    $stmtGal->execute();
+    $resGal = $stmtGal->get_result();
+    if ($resGal) {
+      while ($rowGal = $resGal->fetch_assoc()) {
+        delete_uploaded_image($rowGal['gambar_url'] ?? '');
+      }
+    }
+    $stmtGal->close();
+  }
+  $stmtDelGal = $koneksi->prepare("DELETE FROM `$galeriTable` WHERE jenis_target = ? AND id_target = ?");
+  if ($stmtDelGal) {
+    $stmtDelGal->bind_param("ss", $galeriJenis, $id);
+    $stmtDelGal->execute();
+    $stmtDelGal->close();
+  }
+
   $stmt = $koneksi->prepare("DELETE FROM `$table` WHERE `$pk` = ? LIMIT 1");
   $stmt->bind_param("s", $id);
   $stmt->execute();
@@ -35,6 +59,7 @@ if (isset($_GET['hapus'])) {
   header("Location: " . BASE_URL . "/admin/destinasi.php");
   exit();
 }
+
 
 // handle save (add/edit)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -65,41 +90,90 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $payload['gambar_sampul_url'] = BASE_URL . "/assets/uploads/" . $safeName;
     }
   }
-
-  if ($id !== "") {
-    $set = [];
-    $types = "";
-    $vals = [];
-    foreach($payload as $k=>$v){
-      $set[] = "`$k` = ?";
-      $types .= "s";
-      $vals[] = $v;
-    }
+$refId = "";
+if ($id !== "") {
+  $set = [];
+  $types = "";
+  $vals = [];
+  foreach ($payload as $k => $v) {
+    $set[] = "`$k` = ?";
     $types .= "s";
-    $vals[] = $id;
-
-    $sql = "UPDATE `$table` SET ".implode(", ", $set)." WHERE `$pk` = ? LIMIT 1";
-    $stmt = $koneksi->prepare($sql);
-    $stmt->bind_param($types, ...$vals);
-    $stmt->execute();
-
-    $_SESSION['flash'] = "Data berhasil diupdate.";
-  } else {
-    $colsIns = array_keys($payload);
-    $ph = array_fill(0, count($colsIns), "?");
-    $types = str_repeat("s", count($colsIns));
-    $vals = array_values($payload);
-
-    $sql = "INSERT INTO `$table` (`".implode("`,`",$colsIns)."`) VALUES (".implode(",",$ph).")";
-    $stmt = $koneksi->prepare($sql);
-    $stmt->bind_param($types, ...$vals);
-    $stmt->execute();
-
-    $_SESSION['flash'] = "Data berhasil ditambahkan.";
+    $vals[] = $v;
   }
+  $types .= "s";
+  $vals[] = $id;
 
-  header("Location: " . BASE_URL . "/admin/destinasi.php");
-  exit();
+  $sql = "UPDATE `$table` SET " . implode(", ", $set) . " WHERE `$pk` = ? LIMIT 1";
+  $stmt = $koneksi->prepare($sql);
+  $stmt->bind_param($types, ...$vals);
+  $stmt->execute();
+
+  $_SESSION['flash'] = "Data berhasil diupdate.";
+  $refId = (string)$id;
+} else {
+  $colsIns = array_keys($payload);
+  $ph = array_fill(0, count($colsIns), "?");
+  $types = str_repeat("s", count($colsIns));
+  $vals = array_values($payload);
+
+  $sql = "INSERT INTO `$table` (`" . implode("`,`", $colsIns) . "`) VALUES (" . implode(",", $ph) . ")";
+  $stmt = $koneksi->prepare($sql);
+  $stmt->bind_param($types, ...$vals);
+  $stmt->execute();
+
+  $_SESSION['flash'] = "Data berhasil ditambahkan.";
+  $refId = (string)$koneksi->insert_id;
+}
+
+if ($refId !== "" && !empty($_FILES['detail_gambar']) && isset($_FILES['detail_gambar']['name']) && is_array($_FILES['detail_gambar']['name'])) {
+  $hasDetail = false;
+  foreach ($_FILES['detail_gambar']['name'] as $n) {
+    if ($n !== '') {
+      $hasDetail = true;
+      break;
+    }
+  }
+  if ($hasDetail) {
+    $urutStart = 0;
+    $stmtUrut = $koneksi->prepare("SELECT COALESCE(MAX(urutan), 0) AS max_urut FROM `$galeriTable` WHERE jenis_target = ? AND id_target = ?");
+    if ($stmtUrut) {
+      $stmtUrut->bind_param("ss", $galeriJenis, $refId);
+      $stmtUrut->execute();
+      $rowUrut = $stmtUrut->get_result()->fetch_assoc();
+      $urutStart = (int)($rowUrut['max_urut'] ?? 0);
+      $stmtUrut->close();
+    }
+
+    $stmtIns = $koneksi->prepare("INSERT INTO `$galeriTable` (jenis_target, id_target, gambar_url, urutan) VALUES (?, ?, ?, ?)");
+    if ($stmtIns) {
+      $pos = 0;
+      $total = count($_FILES['detail_gambar']['name']);
+      for ($i = 0; $i < $total; $i++) {
+        if (($_FILES['detail_gambar']['error'][$i] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
+          continue;
+        }
+        $file = [
+          'name' => $_FILES['detail_gambar']['name'][$i] ?? '',
+          'tmp_name' => $_FILES['detail_gambar']['tmp_name'][$i] ?? '',
+          'error' => $_FILES['detail_gambar']['error'][$i] ?? UPLOAD_ERR_NO_FILE,
+        ];
+        $url = upload_image($file, $detailPrefix);
+        if (!$url) {
+          continue;
+        }
+        $urutan = $urutStart + $pos + 1;
+        $stmtIns->bind_param("sssi", $galeriJenis, $refId, $url, $urutan);
+        $stmtIns->execute();
+        $pos++;
+      }
+      $stmtIns->close();
+    }
+  }
+}
+
+header("Location: " . BASE_URL . "/admin/destinasi.php");
+exit();
+
 }
 
 // edit fetch
@@ -111,6 +185,23 @@ if (isset($_GET['edit'])) {
   $stmt->execute();
   $edit = $stmt->get_result()->fetch_assoc();
 }
+
+$detailImages = [];
+if ($edit) {
+  $stmtGal = $koneksi->prepare("SELECT id_galeri, gambar_url, keterangan, urutan FROM `$galeriTable` WHERE jenis_target = ? AND id_target = ? ORDER BY urutan ASC, id_galeri ASC");
+  if ($stmtGal) {
+    $stmtGal->bind_param("ss", $galeriJenis, $edit[$pk]);
+    $stmtGal->execute();
+    $resGal = $stmtGal->get_result();
+    if ($resGal) {
+      while ($rowGal = $resGal->fetch_assoc()) {
+        $detailImages[] = $rowGal;
+      }
+    }
+    $stmtGal->close();
+  }
+}
+
 
 $data = fetch_rows($koneksi, $table, $pk, $q, $cols);
 $kategoriOptions = fetch_options_by_table(
@@ -306,6 +397,20 @@ $penggunaOptions = fetch_options_by_table(
             <div style="margin-bottom:6px"><a href="<?= h($edit['gambar_sampul_url']) ?>" target="_blank">Lihat gambar saat ini</a></div>
           <?php endif; ?>
           <input type="file" accept="image/*" name="gambar_sampul_url">
+        </div>
+        <div class="full">
+          <label>detail_gambar (bisa lebih dari 1)</label>
+          <input type="file" name="detail_gambar[]" accept="image/*" multiple>
+          <?php if (!empty($detailImages)): ?>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin-top:10px;">
+              <?php foreach ($detailImages as $img): ?>
+                <div style="border:1px solid #eee;padding:6px;border-radius:10px;text-align:center;">
+                  <img src="<?= h($img['gambar_url']) ?>" alt="detail" style="width:100%;height:90px;object-fit:cover;border-radius:8px;">
+                  <a class="btn-sm danger" style="margin-top:6px;display:inline-block;" onclick="return confirm('Hapus gambar ini?')" href="<?= BASE_URL ?>/admin/delete_detail_gambar.php?id_galeri=<?= h($img['id_galeri']) ?>&redirect=destinasi&ref_id=<?= h($edit[$pk]) ?>">Hapus</a>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
         </div>
         <div>
           <label>status</label>

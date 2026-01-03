@@ -248,10 +248,7 @@ if ($res) {
         <?= $d['nama'] ?>
       </h5>
 
-      <p class="text-muted mb-3 flex-grow-1"
-         style="font-size: 0.7rem; line-height: 1.4;">
-        <?= $d['deskripsi'] ?? '' ?>
-      </p>
+      
 
       <div class="d-flex align-items-center justify-content-between mt-auto">
 

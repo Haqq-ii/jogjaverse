@@ -441,50 +441,87 @@ $map_lng = $has_map ? (float)$destinasi['longitude'] : null;
   </section>
 <?php endif; ?>
 
-<!-- FOOTER -->
-<footer class="footer-custom text-light pt-5" style="background-color: #321B1F;">
+<!-- Footer (Ditambahkan di sini agar satu file style) -->
+<footer class="footer-custom pt-5 mt-5">
   <div class="container">
     <div class="row gy-4">
-      <div class="col-lg-4">
+
+      <!-- Brand & Info -->
+      <div class="col-lg-4 pe-lg-5">
         <div class="d-flex align-items-center mb-3">
-          <h5 class="mb-0 fw-bold font-serif">Jogja<span style="color: var(--secondary-color);">Verse.</span></h5>
+          <h5 class="mb-0 fw-bold footer-brand">
+             Jogja<span style="color: #C69C6D;">Verse.</span>
+          </h5>
         </div>
-        <p class="small text-light opacity-75">
-          Sistem pariwisata cerdas terintegrasi untuk mendukung pengelolaan
-          destinasi yang efektif dan pengalaman wisatawan yang tak terlupakan.
+        <p class="small text-light opacity-75 mb-4">
+          Platform pariwisata digital terlengkap untuk menjelajahi keistimewaan Yogyakarta, dari destinasi budaya hingga kuliner legendaris.
         </p>
         <ul class="list-unstyled small opacity-75">
-          <li class="mb-2"><i class="bi bi-geo-alt me-2 text-warning"></i> Jl. Malioboro No. 1, Yogyakarta</li>
-          <li class="mb-2"><i class="bi bi-envelope me-2 text-warning"></i> info@wisatajogja.go.id</li>
-          <li><i class="bi bi-telephone me-2 text-warning"></i> (0274) 123456</li>
+          <li class="mb-2 d-flex align-items-start">
+            <i class="bi bi-geo-alt-fill icon-gold me-2 mt-1"></i>
+            <span>Jl. Malioboro No. 1, Yogyakarta 55271</span>
+          </li>
+          <li class="mb-2 d-flex align-items-center">
+            <i class="bi bi-envelope-fill icon-gold me-2"></i>
+            <span>halo@jogjaverse.id</span>
+          </li>
+          <li class="d-flex align-items-center">
+            <i class="bi bi-telephone-fill icon-gold me-2"></i>
+            <span>(0274) 123456</span>
+          </li>
         </ul>
       </div>
+
+      <!-- Links: Wisata -->
       <div class="col-lg-2 col-6">
-        <h6 class="fw-bold mb-3">Wisata</h6>
-        <ul class="list-unstyled small opacity-75">
-          <li><a href="destinasiLainnya.php" class="text-white text-decoration-none">Destinasi</a></li>
-          <li><a href="eventLainnya.php" class="text-white text-decoration-none">Event</a></li>
+        <h6 class="fw-bold mb-3 text-white">Jelajah</h6>
+        <ul class="list-unstyled footer-link">
+          <li><a href="#destinasi">Destinasi Populer</a></li>
+          <li><a href="#event">Kalender Event</a></li>
+          <li><a href="#kuliner">Kuliner Khas</a></li>
+          <li><a href="#">Virtual Tour</a></li>
         </ul>
       </div>
+
+      <!-- Links: Layanan -->
       <div class="col-lg-3 col-6">
-        <h6 class="fw-bold mb-3">Layanan</h6>
-        <ul class="list-unstyled small opacity-75">
-            <li><a href="#" class="text-white text-decoration-none">Reservasi Tiket</a></li>
-            <li><a href="#" class="text-white text-decoration-none">Panduan</a></li>
+        <h6 class="fw-bold mb-3 text-white">Layanan</h6>
+        <ul class="list-unstyled footer-link">
+          <li><a href="#">Pusat Bantuan</a></li>
+          <li><a href="#">Panduan Perjalanan</a></li>
+          <li><a href="#">Kerjasama Mitra</a></li>
+          <li><a href="#">Kontak Kami</a></li>
         </ul>
       </div>
+
+      <!-- Links: Tentang -->
       <div class="col-lg-3 col-6">
-        <h6 class="fw-bold mb-3">Tentang</h6>
-        <ul class="list-unstyled small opacity-75">
-            <li><a href="#" class="text-white text-decoration-none">Tentang Kami</a></li>
-            <li><a href="#" class="text-white text-decoration-none">Kebijakan Privasi</a></li>
+        <h6 class="fw-bold mb-3 text-white">Tentang</h6>
+        <ul class="list-unstyled footer-link">
+          <li><a href="#">Tentang JogjaVerse</a></li>
+          <li><a href="#">Kebijakan Privasi</a></li>
+          <li><a href="#">Syarat & Ketentuan</a></li>
+          <li><a href="#">Karir</a></li>
         </ul>
       </div>
     </div>
-    <hr class="border-light opacity-25 my-4">
-    <div class="text-center pb-4 small opacity-50">
-      &copy; 2025 JogjaVerse. Disponsori oleh Pemerintah Kota Yogyakarta
+
+    <hr class="border-light opacity-10 my-4">
+
+    <!-- Bottom Footer -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-4 gap-3">
+      <small class="opacity-50">
+        &copy; 2025 JogjaVerse. Disponsori oleh Pemerintah Kota Yogyakarta.
+      </small>
+
+      <div class="d-flex gap-2">
+        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
+      </div>
     </div>
+
   </div>
 </footer>
 

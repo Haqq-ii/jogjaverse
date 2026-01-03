@@ -69,6 +69,10 @@ if ($res) {
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
+    
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- AOS CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 
@@ -109,20 +113,24 @@ if ($res) {
       </ul>
 
       <!-- Tombol Login -->
-      <div class="d-flex justify-content-center">
-        <?php
-        if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
-          $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? ($_SESSION['username'] ?? 'User'));
-          $avatarPath = '/public/user/img/default_avatar.png';
-          echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none">';
-          echo '<img src="' . $avatarPath . '" alt="Profile" style="width:38px;height:38px;border-radius:50%;object-fit:cover;margin-right:8px;">';
-          echo '<span class="text-white fw-medium d-none d-md-inline">' . $displayName . '</span>';
-          echo '</a>';
-        } else {
-          echo '<a href="/public/login.php" class="btn btn-gold px-4">Login</a>';
-        }
-        ?>
-      </div>
+  <div class="d-flex justify-content-center">
+  <?php
+  if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
+    $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? ($_SESSION['username'] ?? 'User'));
+    $avatarPath = '/public/user/img/default_avatar.png';
+    
+    echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none">';
+    
+    // UPDATE: Ukuran gambar diubah jadi 35px agar pas dengan navbar kecil
+    echo '<img src="' . $avatarPath . '" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover; margin-right:8px;">';
+    
+    echo '<span class="text-white fw-medium d-none d-md-inline" style="font-size: 0.95rem;">' . $displayName . '</span>';
+    echo '</a>';
+  } else {
+    echo '<a href="/public/login.php" class="btn btn-gold px-4">Login</a>';
+  }
+  ?>
+</div>
     </div>
   </div>
 </nav>

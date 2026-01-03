@@ -11,116 +11,46 @@
      background-size: cover;
     background-position: center center; /* gambar selalu di tengah */
 }
-
-html {
-    background-color: #332920;
-}
-
-.desk {
-    margin-top: 4rem;
-}
-
-.destinasi {
-    text-decoration: none;
-    color:#6F202D;
-    background-color: #EBE1E1;
-    padding: 5px 10px 5px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-}
-
-.title{
- font-size: 3.5rem;
- color:#321B1F;
-
-}
-
-.sub-title {
-    font-size: 2rem;
-    color:#846267;
-}
-
-.card-text {
-    font-size: 12px;
-}
-
-.bi {
-    font-size: 12px;
-    font-style: normal;
-}
-
-.card:hover {
-    transform: scale(1.01);
-    transition: .4s ease;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-}
-
-.deskripsi {
-    border-radius: 20px;
-    margin: 40px;
-}
-
-.scale-down {
-  transform: scale(0.88);
-}
-
-.card {
-  transition: transform .3s ease, opacity .3s ease;
-}
-
-
-.detail-destinasi {
-    text-align: center;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
-}
-
-.detail-destinasi a{
-    text-decoration: none;
-}
-
-
-
-/* Variabel Warna (Jika belum ada di global CSS) */
-:root {
+/* Variabel Warna */
+    :root {
         --primary-nav: #2D1B20; /* Dark Maroon */
         --secondary-nav: #C69C6D; /* Gold */
     }
 
-    /* Styling Dasar Navbar */
+    /* Styling Dasar Navbar - DIUBAH MENJADI COMPACT */
     .navbar {
         transition: all 0.4s ease;
-        padding: 1.75rem 0; /* Padding diperbesar lagi agar proporsional */
+        padding: 0.6rem 0; /* Padding diperkecil (sebelumnya 1.75rem) */
     }
     
-    /* Styling Navbar saat di-scroll (Kelas .scrolled ditambahkan oleh JS) */
+    /* Styling Navbar saat di-scroll */
     .navbar.scrolled {
-        background-color: rgba(45, 27, 32, 0.95); /* Warna Primary dengan transparansi */
+        background-color: rgba(45, 27, 32, 0.95);
         backdrop-filter: blur(10px);
-        padding: 1.2rem 0; /* Padding saat scroll juga diperbesar */
+        padding: 0.75rem 0; /* Padding saat scroll dibuat lebih kecil lagi */
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
 
-    /* Brand / Logo */
+    /* Brand / Logo - TETAP BESAR */
     .navbar-brand {
-        font-family: 'Playfair Display', serif; /* Pastikan font ini di-load */
-        font-size: 2rem; /* Diperbesar signifikan dari 1.75rem */
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem; /* Tetap 2rem sesuai request */
     }
 
-    /* Link Navigasi */
+    /* Link Navigasi - UKURAN STANDAR */
     .nav-link {
         font-family: 'Plus Jakarta Sans', sans-serif;
         color: rgba(255,255,255,0.85) !important;
         font-weight: 500;
-        font-size: 1.4rem; /* Diperbesar lagi dari 1.25rem */
+        font-size: 1.2rem; /* Diperkecil menjadi 1rem (sebelumnya 1.4rem) */
         position: relative;
         transition: color 0.3s;
-        margin: 0 15px; /* Margin diperlebar untuk ruang antar menu */
+        margin: 0 10px; /* Margin dirapatkan (sebelumnya 15px) */
     }
 
     /* Efek Hover & Active */
     .nav-link:hover, .nav-link.active {
-        color: #C69C6D !important; /* Warna Gold */
+        color: #C69C6D !important;
     }
 
     /* Garis Bawah Animasi saat Hover */
@@ -128,8 +58,8 @@ html {
         content: '';
         position: absolute;
         width: 0;
-        height: 3px; /* Garis sedikit ditebalkan */
-        bottom: -2px;
+        height: 3px;
+        bottom: 0px; /* Disesuaikan ke 0px agar nempel */
         left: 50%;
         background-color: #C69C6D;
         transition: all 0.3s ease;
@@ -140,13 +70,13 @@ html {
         width: 80%;
     }
 
-    /* Tombol Login */
+    /* Tombol Login - DIPERKECIL */
     .btn-gold {
         background-color: #C69C6D;
         color: #fff;
         border-radius: 50px;
-        padding: 14px 36px; /* Padding tombol diperbesar */
-        font-size: 1.25rem; /* Font tombol diperbesar */
+        padding: 8px 24px; /* Padding diperkecil (sebelumnya 14px 36px) */
+        font-size: 1rem;   /* Font diperkecil (sebelumnya 1.25rem) */
         font-weight: 600;
         transition: all 0.3s;
         border: none;
@@ -157,7 +87,7 @@ html {
         background-color: #b08855;
         color: #fff;
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(198, 156, 109, 0.4);
+        box-shadow: 0 4px 10px rgba(198, 156, 109, 0.4);
     }
 
     /* --- STYLING FOOTER (Baru) --- */

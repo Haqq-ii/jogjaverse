@@ -39,7 +39,7 @@ $total_pages = ceil($total_data / $limit);
 // E. Ambil Data Destinasi
 $query_data = "
     SELECT 
-        d.id_destinasi,
+        d.id_destinasi AS id,
         d.nama AS nama_destinasi,
         d.deskripsi AS deskripsi_singkat,
         k.nama AS kategori,
@@ -303,7 +303,7 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
                     </span>
 
                     <!-- TOMBOL DETAIL -->
-                    <a href="detailDestinasi.php?id=<?= $row['id_destinasi'] ?>" class="link-gold-animated">
+                    <a href="detailDestinasi.php?id=<?= $row['id'] ?>" class="link-gold-animated">
                        Detail <i class="bi bi-arrow-right"></i>
                     </a>
                   </div>

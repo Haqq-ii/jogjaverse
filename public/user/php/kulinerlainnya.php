@@ -88,7 +88,7 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold text-dark" href="landingpageclena.php">
+    <a class="navbar-brand fw-bold text-dark" href="landingpageclean.php">
         Jogja<span style="color: var(--secondary-color);">Verse.</span>
     </a>
 
@@ -106,7 +106,7 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
         if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
           $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? $_SESSION['username']);
           $avatarPath = '/public/user/img/default_avatar.png';
-          echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none text-dark">';
+          echo '<a href="/public/user.php" class="d-flex align-items-center text-decoration-none text-dark">';
           echo '<img src="'.$avatarPath.'" alt="Profile" style="width:38px;height:38px;border-radius:50%;object-fit:cover;margin-right:8px;">';
           echo '<span class="fw-medium d-none d-md-inline">'. $displayName .'</span>';
           echo '</a>';

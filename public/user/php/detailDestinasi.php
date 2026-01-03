@@ -316,7 +316,7 @@ $map_lng = $has_map ? (float)$lng_raw : null;
     $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? ($_SESSION['username'] ?? 'User'));
     $avatarPath = '/public/user/img/default_avatar.png';
     
-    echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none">';
+    echo '<a href="/public/user.php" class="d-flex align-items-center text-decoration-none">';
     
     // UPDATE: Ukuran gambar diubah jadi 35px agar pas dengan navbar kecil
     echo '<img src="' . $avatarPath . '" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover; margin-right:8px;">';

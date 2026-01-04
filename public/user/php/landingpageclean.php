@@ -213,6 +213,10 @@ if ($res) {
 
       <!-- Card 1 -->
 <?php foreach ($destinasi as $d): ?>
+<?php
+  $destinasi_id = $d['id_destinasi'] ?? null;
+  $destinasi_href = $destinasi_id ? "detailDestinasi.php?id_destinasi=" . $destinasi_id : "destinasiLainnya.php";
+?>
 <div class="col-6 col-sm-6 col-md-4 col-lg-3"
      data-aos="zoom-in"
      data-aos-delay="200">
@@ -260,7 +264,7 @@ if ($res) {
             </span>
         </div>
 
-        <a href="#"
+        <a href="<?= $destinasi_href ?>"
            class="text-decoration-none fw-bold text-dark
                   icon-link icon-link-hover"
            style="font-size: 0.75rem;">
@@ -301,6 +305,10 @@ if ($res) {
     <!-- LEFT COLUMN: BIG CARD (Event Pertama/Unggulan) -->
     <div class="col-lg-6">
       <?php if(isset($event[0])): $mainEvent = $event[0]; ?>
+      <?php
+        $event_id = $mainEvent['id_event'] ?? null;
+        $event_href = $event_id ? "detailEvent.php?id_event=" . $event_id : "eventLainnya.php";
+      ?>
       <div class="card h-100 border-0 rounded-4 p-3 p-lg-4 text-white position-relative overflow-hidden shadow-lg">
         
         <img src="<?= $mainEvent['gambar_sampul_url'] ?>" 
@@ -348,7 +356,7 @@ if ($res) {
           </div>
 
           <div>
-            <a href="#" class="btn btn-sm fw-bold rounded-pill px-4 py-2 w-100 w-md-auto shadow" 
+            <a href="<?= $event_href ?>" class="btn btn-sm fw-bold rounded-pill px-4 py-2 w-100 w-md-auto shadow" 
                style="background-color: #EEB32B; color: #321B1F;">
               Pesan Tiket <i class="bi bi-arrow-right ms-2"></i>
             </a>
@@ -367,6 +375,8 @@ if ($res) {
         // Loop dari index 1 sampai 3 (3 item)
         $listEvents = array_slice($event, 1, 3);
         foreach($listEvents as $e): 
+          $event_id = $e['id_event'] ?? null;
+          $event_href = $event_id ? "detailEvent.php?id_event=" . $event_id : "eventLainnya.php";
         ?>
         <div class="card border-0 rounded-4 p-3 shadow-sm card-event-hover" style="background-color: #F9F7F5;">
           <div class="d-flex justify-content-between align-items-center mb-2">
@@ -378,7 +388,7 @@ if ($res) {
                 <?= date('d M Y', strtotime($e['mulai_pada'])) ?>
               </span>
             </div>
-            <a href="#" class="text-dark"><i class="bi bi-arrow-right"></i></a>
+            <a href="<?= $event_href ?>" class="text-dark"><i class="bi bi-arrow-right"></i></a>
           </div>
           <h6 class="fw-bold font-serif mb-1 fs-5" style="color: #4A1B22;"><?= $e['judul'] ?></h6>
           <div class="text-muted d-flex gap-3" style="font-size: 0.8rem;">
@@ -418,37 +428,48 @@ if ($res) {
 
       <!-- Kuliner Dynamic Loop -->
     <?php foreach ($kuliner as $k): ?>
+    <?php
+      $kuliner_id = $k['id_kuliner'] ?? null;
+      $kuliner_href = $kuliner_id ? "detailKuliner.php?id_kuliner=" . $kuliner_id : "kulinerLainnya.php";
+      $kategori = $k['kategori'] ?? 'Kuliner';
+      $nama = $k['nama'] ?? 'Kuliner';
+      $alamat = trim((string)($k['alamat'] ?? ''));
+      $alamat = $alamat !== '' ? $alamat : '-';
+      $harga_raw = $k['rentang_harga'] ?? '';
+      $harga = $harga_raw !== '' ? number_format((float)$harga_raw, 0, ',', '.') : '-';
+      $gambar = $k['gambar_sampul_url'] ?? '';
+    ?>
     <div class="col-6 col-md-4 col-lg-3">
-      <div class="card border-0 shadow rounded-4 overflow-hidden h-100">
+      <a href="<?= $kuliner_href ?>" class="card border-0 shadow rounded-4 overflow-hidden h-100 text-decoration-none text-dark">
 
         <!-- Menggunakan 'gambar_url' sesuai table -->
-        <img src="<?= $k['gambar_sampul_url'] ?>" class="card-img-top" style="height:200px; object-fit:cover;">
+        <img src="<?= $gambar ?>" class="card-img-top" style="height:200px; object-fit:cover;" alt="<?= $nama ?>">
 
         <div class="card-body">
-          <span class="badge bg-light text-dark small"><?= $k['kategori'] ?></span>
+          <span class="badge bg-light text-dark small"><?= $kategori ?></span>
 
-          <h6 class="fw-bold mt-2"><?= $k['nama'] ?></h6>
+          <h6 class="fw-bold mt-2"><?= $nama ?></h6>
 
-          <!-- Menggunakan 'deskripsi' yang dipotong karena tidak ada kolom 'menu_unggulan' di table -->
+          <!-- Keterangan dikosongkan agar tampilan tetap rapi -->
           <p class="text-warning small">
-            <?= substr(strip_tags($k['deskripsi']), 0, 40)  ?>
+            &nbsp;
           </p>
 
           <div class="d-flex justify-content-between small">
             <!-- Menggunakan 'lokasi' dan 'harga_min' sesuai table -->
-            <span><i class="bi bi-geo-alt"></i> <?= $k['alamat'] ?></span>
+            <span><i class="bi bi-geo-alt"></i> <?= $alamat ?></span>
             <span class="fw-bold">
-              Rp <?= number_format($k['rentang_harga'], 0, ',', '.') ?>
+              Rp <?= $harga ?>
             </span>
           </div>
 
         </div>
-      </div>
+      </a>
     </div>
     <?php endforeach; ?>
 
       <div class="detail-destinasi">
-          <a href="kulinerlainnya.php" class="link-gold-animated">
+            <a href="kulinerLainnya.php" class="link-gold-animated">
             <i class="bi bi-fork-knife"></i> Lihat Semua Kuliner
           </a> 
       </div>

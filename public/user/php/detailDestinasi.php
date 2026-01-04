@@ -285,7 +285,7 @@ $map_lng = $has_map ? (float)$lng_raw : null;
   <div class="container">
     
     <!-- Logo Brand -->
-    <a class="navbar-brand fw-bold" href="#">
+    <a class="navbar-brand fw-bold" href="landingpageclean.php">
         Jogja<span style="color: #C69C6D;">Verse.</span>
     </a>
 

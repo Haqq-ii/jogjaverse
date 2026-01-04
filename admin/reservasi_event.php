@@ -10,6 +10,26 @@ if (!function_exists('h')) {
   }
 }
 
+if (!function_exists('table_has_column')) {
+  function table_has_column(mysqli $koneksi, string $table, string $column): bool {
+    $stmt = $koneksi->prepare("
+      SELECT COUNT(*) as total
+      FROM information_schema.columns
+      WHERE table_schema = DATABASE()
+        AND table_name = ?
+        AND column_name = ?
+    ");
+    if (!$stmt) {
+      return false;
+    }
+    $stmt->bind_param("ss", $table, $column);
+    $stmt->execute();
+    $row = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    return ((int)($row['total'] ?? 0)) > 0;
+  }
+}
+
 $flash = $_SESSION['flash'] ?? "";
 unset($_SESSION['flash']);
 
@@ -86,9 +106,21 @@ $detail = null;
 $detailTickets = [];
 if (isset($_GET['detail'])) {
   $id_detail = (int)$_GET['detail'];
+  $has_kode_transaksi = table_has_column($koneksi, 'pembayaran', 'kode_transaksi');
+  $has_metode = table_has_column($koneksi, 'pembayaran', 'metode');
+  $has_jumlah = table_has_column($koneksi, 'pembayaran', 'jumlah');
+  $has_dibayar_pada = table_has_column($koneksi, 'pembayaran', 'dibayar_pada');
+  $kode_transaksi_expr = $has_kode_transaksi ? "p.kode_transaksi" : "NULL";
+  $metode_expr = $has_metode ? "p.metode" : "NULL";
+  $jumlah_expr = $has_jumlah ? "p.jumlah" : "NULL";
+  $dibayar_expr = $has_dibayar_pada ? "p.dibayar_pada" : "NULL";
   $stmtDetail = $koneksi->prepare("
     SELECT r.*, e.judul AS nama_event, u.nama_lengkap, u.username,
-           p.status AS status_pembayaran, p.metode, p.jumlah, p.kode_transaksi, p.dibayar_pada
+           p.status AS status_pembayaran,
+           $metode_expr AS metode,
+           $jumlah_expr AS jumlah,
+           $kode_transaksi_expr AS kode_transaksi,
+           $dibayar_expr AS dibayar_pada
     FROM reservasi_event r
     JOIN event e ON r.id_event = e.id_event
     LEFT JOIN pengguna u ON r.id_pengguna = u.id_pengguna

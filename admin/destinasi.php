@@ -241,6 +241,41 @@ $penggunaOptions = fetch_options_by_table(
     background: #fff;
     cursor: pointer;
   }
+  .search-location {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #e4e6f0;
+  }
+  .search-results {
+    display: none;
+    border: 1px solid #e4e6f0;
+    border-radius: 10px;
+    margin-top: 6px;
+    background: #fff;
+    max-height: 180px;
+    overflow: auto;
+  }
+  .search-result-item {
+    width: 100%;
+    text-align: left;
+    padding: 8px 10px;
+    border: 0;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+  }
+  .search-result-item:last-child {
+    border-bottom: 0;
+  }
+  .search-result-item:hover {
+    background: #f6f7fb;
+  }
+  .search-hint {
+    font-size: 12px;
+    color: #777;
+    margin-top: 4px;
+  }
 </style>
 
 <div class="card">
@@ -388,6 +423,9 @@ $penggunaOptions = fetch_options_by_table(
             <button type="button" onclick="useMyLocation()">Gunakan Lokasi Saya</button>
             <small class="small">Klik peta untuk menempatkan marker</small>
           </div>
+          <input type="text" id="searchLocation" class="form-control search-location" placeholder="Cari lokasi (contoh: Malioboro)">
+          <div id="searchResults" class="search-results" aria-live="polite"></div>
+          <div class="search-hint">Pilih hasil untuk memindahkan marker.</div>
           <div id="map" class="map-box"></div>
         </div>
 
@@ -543,6 +581,76 @@ $penggunaOptions = fetch_options_by_table(
       () => alert('Gagal mengambil lokasi. Pastikan izin lokasi aktif.')
     );
   }
+
+  const searchInput = document.getElementById('searchLocation');
+  const searchResults = document.getElementById('searchResults');
+  let searchTimer = null;
+
+  async function searchLocation(query) {
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    return await res.json();
+  }
+
+  function clearSearchResults() {
+    if (!searchResults) return;
+    searchResults.innerHTML = '';
+    searchResults.style.display = 'none';
+  }
+
+  function renderSearchResults(items) {
+    if (!searchResults) return;
+    searchResults.innerHTML = '';
+    if (!items || items.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'search-result-item';
+      empty.textContent = 'Lokasi tidak ditemukan.';
+      searchResults.appendChild(empty);
+      searchResults.style.display = 'block';
+      return;
+    }
+    items.slice(0, 6).forEach((item) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'search-result-item';
+      btn.textContent = item.display_name || 'Lokasi';
+      btn.addEventListener('click', () => {
+        ensureMap();
+        const lat = parseFloat(item.lat);
+        const lon = parseFloat(item.lon);
+        if (!map || !marker || Number.isNaN(lat) || Number.isNaN(lon)) return;
+        map.setView([lat, lon], 15);
+        marker.setLatLng([lat, lon]);
+        updateLatLng(lat, lon);
+        if (searchInput) searchInput.value = item.display_name || '';
+        clearSearchResults();
+      });
+      searchResults.appendChild(btn);
+    });
+    searchResults.style.display = 'block';
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim();
+      clearTimeout(searchTimer);
+      if (query.length < 3) {
+        clearSearchResults();
+        return;
+      }
+      searchTimer = setTimeout(async () => {
+        const items = await searchLocation(query);
+        renderSearchResults(items);
+      }, 350);
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!searchResults || !searchInput) return;
+    if (e.target === searchInput || searchResults.contains(e.target)) return;
+    clearSearchResults();
+  });
 
   document.addEventListener('DOMContentLoaded', () => {
     <?php if ($edit): ?>

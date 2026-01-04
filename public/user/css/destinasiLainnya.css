@@ -30,6 +30,16 @@
         font-weight: 500;
         position: relative;
     }
+    body.navbar-solid .navbar {
+        background: linear-gradient(90deg, #2b1e1e, #3b2a2a);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 12px rgba(0,0,0,.18);
+    }
+    body.navbar-solid .navbar .nav-link,
+    body.navbar-solid .navbar-brand,
+    body.navbar-solid .navbar span {
+        color: #ffffff !important;
+    }
 
     .btn-login-custom {
         padding: 8px 24px; /* DIUBAH: Padding tombol lebih kecil */

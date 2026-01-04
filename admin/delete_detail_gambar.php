@@ -8,7 +8,7 @@ wajib_admin();
 $id = filter_input(INPUT_GET, 'id_galeri', FILTER_VALIDATE_INT);
 $redirect = $_GET['redirect'] ?? '';
 $refId = $_GET['ref_id'] ?? '';
-$allowed = ['destinasi', 'atraksi', 'event', 'kuliner'];
+$allowed = ['destinasi', 'event', 'kuliner'];
 
 if (!$id) {
   $_SESSION['flash'] = "Gambar detail tidak ditemukan.";

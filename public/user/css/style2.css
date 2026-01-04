@@ -89,13 +89,32 @@ html {
         transition: all 0.4s ease;
         padding: 0.6rem 0; /* Padding diperkecil (sebelumnya 1.75rem) */
     }
+
+    .navbar-transparent {
+        background: transparent;
+        transition: background .25s ease, box-shadow .25s ease;
+    }
+
+    body.navbar-solid .navbar {
+        background: linear-gradient(90deg, #2b1e1e, #3b2a2a);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 12px rgba(0,0,0,.18);
+    }
+
+    body.navbar-solid .navbar .nav-link,
+    body.navbar-solid .navbar-brand,
+    body.navbar-solid .navbar span {
+        color: #ffffff !important;
+    }
     
     /* Styling Navbar saat di-scroll */
+    .navbar-scrolled,
     .navbar.scrolled {
-        background-color: rgba(45, 27, 32, 0.95);
+        background: linear-gradient(90deg, #2b1e1e, #3b2a2a);
         backdrop-filter: blur(10px);
         padding: 0.75rem 0; /* Padding saat scroll dibuat lebih kecil lagi */
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px rgba(0,0,0,.18);
+        transition: background .25s ease, box-shadow .25s ease;
     }
 
     /* Brand / Logo - TETAP BESAR */

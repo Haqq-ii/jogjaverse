@@ -79,40 +79,10 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
   <link rel="stylesheet" href="../css/destinasiLainnya.css">
 </head>
 
-<body>
+<body class="navbar-solid">
 
 <!-- NAVBAR (Layout Besar) -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
-  <div class="container">
-    <a class="navbar-brand fw-bold text-dark" href="landingpageclean.php">
-        Jogja<span style="color: var(--secondary-color);">Verse.</span>
-    </a>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mx-auto text-center">
-        <li class="nav-item"><a class="nav-link fw-bold text-dark active" href="#">Destinasi</a></li>
-        <li class="nav-item"><a class="nav-link fw-bold text-dark" href="eventLainnya.php">Event&Atraksi</a></li>
-        <li class="nav-item"><a class="nav-link fw-bold text-dark" href="kulinerlainnya.php">Kuliner</a></li>
-      </ul>
-      <?php
-        if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
-          $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? $_SESSION['username']);
-          $avatarPath = '/public/user/img/default_avatar.png';
-          echo '<a href="/public/user.php" class="d-flex align-items-center text-decoration-none text-dark">';
-          echo '<img src="'.$avatarPath.'" alt="Profile" style="width:38px;height:38px;border-radius:50%;object-fit:cover;margin-right:8px;">';
-          echo '<span class="fw-medium d-none d-md-inline">'. $displayName .'</span>';
-          echo '</a>';
-        } else {
-          echo '<a href="/public/login.php" class="btn btn-outline-dark btn-login-custom">Login</a>';
-        }
-        ?>
-    </div>
-  </div>
-</nav>
+<?php include __DIR__ . '/includes/navbar.php'; ?>
 
 <!-- HEADER BACKGROUND -->
 <section id="background">
@@ -243,90 +213,6 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
   </div>
 </section>
 
-<!-- Footer (Ditambahkan di sini agar satu file style) -->
-<footer class="footer-custom pt-5 mt-5">
-  <div class="container">
-    <div class="row gy-4">
-
-      <!-- Brand & Info -->
-      <div class="col-lg-4 pe-lg-5">
-        <div class="d-flex align-items-center mb-3">
-          <h5 class="mb-0 fw-bold footer-brand">
-             Jogja<span style="color: #C69C6D;">Verse.</span>
-          </h5>
-        </div>
-        <p class="small text-light opacity-75 mb-4">
-          Platform pariwisata digital terlengkap untuk menjelajahi keistimewaan Yogyakarta, dari destinasi budaya hingga kuliner legendaris.
-        </p>
-        <ul class="list-unstyled small opacity-75">
-          <li class="mb-2 d-flex align-items-start">
-            <i class="bi bi-geo-alt-fill icon-gold me-2 mt-1"></i>
-            <span>Jl. Malioboro No. 1, Yogyakarta 55271</span>
-          </li>
-          <li class="mb-2 d-flex align-items-center">
-            <i class="bi bi-envelope-fill icon-gold me-2"></i>
-            <span>halo@jogjaverse.id</span>
-          </li>
-          <li class="d-flex align-items-center">
-            <i class="bi bi-telephone-fill icon-gold me-2"></i>
-            <span>(0274) 123456</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Links: Wisata -->
-      <div class="col-lg-2 col-6">
-        <h6 class="fw-bold mb-3 text-white">Jelajah</h6>
-        <ul class="list-unstyled footer-link">
-          <li><a href="#destinasi">Destinasi Populer</a></li>
-          <li><a href="#event">Kalender Event</a></li>
-          <li><a href="#kuliner">Kuliner Khas</a></li>
-          <li><a href="#">Virtual Tour</a></li>
-        </ul>
-      </div>
-
-      <!-- Links: Layanan -->
-      <div class="col-lg-3 col-6">
-        <h6 class="fw-bold mb-3 text-white">Layanan</h6>
-        <ul class="list-unstyled footer-link">
-          <li><a href="#">Pusat Bantuan</a></li>
-          <li><a href="#">Panduan Perjalanan</a></li>
-          <li><a href="#">Kerjasama Mitra</a></li>
-          <li><a href="#">Kontak Kami</a></li>
-        </ul>
-      </div>
-
-      <!-- Links: Tentang -->
-      <div class="col-lg-3 col-6">
-        <h6 class="fw-bold mb-3 text-white">Tentang</h6>
-        <ul class="list-unstyled footer-link">
-          <li><a href="#">Tentang JogjaVerse</a></li>
-          <li><a href="#">Kebijakan Privasi</a></li>
-          <li><a href="#">Syarat & Ketentuan</a></li>
-          <li><a href="#">Karir</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <hr class="border-light opacity-10 my-4">
-
-    <!-- Bottom Footer -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-4 gap-3">
-      <small class="opacity-50">
-        &copy; 2025 JogjaVerse. Disponsori oleh Pemerintah Kota Yogyakarta.
-      </small>
-
-      <div class="d-flex gap-2">
-        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
-      </div>
-    </div>
-
-  </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<?php include __DIR__ . '/includes/footer.php'; ?>
 </body>
 </html>

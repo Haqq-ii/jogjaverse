@@ -18,7 +18,7 @@ a {
 }
 .sidebar {
   width: 260px;
-  background: linear-gradient(180deg, #1f1f67 0%, #24257a 100%);
+  background: linear-gradient(180deg, #402832 0%, #4A2A2A 100%);
   color: #fff;
   padding: 18px;
   position: sticky;
@@ -31,6 +31,7 @@ a {
   font-size: 20px;
   margin: 6px 0 20px;
   letter-spacing: 0.4px;
+  color: #D9A441;
 }
 .menu .item {
   display: block;
@@ -39,15 +40,23 @@ a {
   margin-bottom: 8px;
   color: #fff;
   opacity: 0.95;
-  transition: background 0.2s, transform 0.1s;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.2s, transform 0.1s, border-color 0.2s;
 }
 .menu .item:hover,
 .menu .item.active {
-  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
   transform: translateX(2px);
 }
+.menu .item:hover {
+  background: #5A3535;
+}
+.menu .item.active {
+  background: #6B3F3F;
+}
 .menu .danger {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
 }
 .menu .section {
   margin: 16px 0 8px;

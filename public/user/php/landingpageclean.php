@@ -1,7 +1,33 @@
 <?php
+require_once __DIR__ . '/../../../config/config.php';
 require_once __DIR__ . '/../../../config/koneksi.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
+}
+
+if (!function_exists('h')) {
+  function h($value) {
+    return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+  }
+}
+
+$current_user = null;
+if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
+  $user_id = (int)($_SESSION['id_pengguna'] ?? 0);
+  if ($user_id > 0) {
+    $stmtUser = $koneksi->prepare("SELECT id_pengguna, nama_lengkap, username, foto_profil_url FROM pengguna WHERE id_pengguna = ? LIMIT 1");
+    if ($stmtUser) {
+      $stmtUser->bind_param("i", $user_id);
+      $stmtUser->execute();
+      $current_user = $stmtUser->get_result()->fetch_assoc();
+      $stmtUser->close();
+      if ($current_user) {
+        $_SESSION['nama_lengkap'] = $current_user['nama_lengkap'] ?? ($_SESSION['nama_lengkap'] ?? '');
+        $_SESSION['username'] = $current_user['username'] ?? ($_SESSION['username'] ?? '');
+        $_SESSION['foto_profil_url'] = $current_user['foto_profil_url'] ?? '';
+      }
+    }
+  }
 }
 
 /* 3 DESTINASI POPULER (Dibiarkan Sesuai Request) */
@@ -54,6 +80,28 @@ if ($res) {
     }
 }
 
+$ulasan_terbaru = [];
+$res = $koneksi->query("
+  SELECT u.rating, u.komentar, u.jenis_target, u.dibuat_pada,
+         p.nama_lengkap,
+         d.nama AS nama_destinasi,
+         e.judul AS nama_event,
+         k.nama AS nama_kuliner
+  FROM ulasan u
+  LEFT JOIN pengguna p ON u.id_pengguna = p.id_pengguna
+  LEFT JOIN destinasi d ON u.jenis_target = 'destinasi' AND u.id_target = d.id_destinasi
+  LEFT JOIN event e ON u.jenis_target = 'event' AND u.id_target = e.id_event
+  LEFT JOIN kuliner k ON u.jenis_target = 'kuliner' AND u.id_target = k.id_kuliner
+  WHERE u.status = 'tampil' AND u.jenis_target IN ('destinasi','event','kuliner')
+  ORDER BY u.dibuat_pada DESC
+  LIMIT 6
+");
+if ($res) {
+    while ($row = $res->fetch_assoc()) {
+      $ulasan_terbaru[] = $row;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -86,54 +134,7 @@ if ($res) {
 <body>
 
 <!-- 2. STRUKTUR HTML -->
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
-  <div class="container">
-    
-    <!-- Logo Brand -->
-    <a class="navbar-brand fw-bold" href="#">
-        Jogja<span style="color: #C69C6D;">Verse.</span>
-    </a>
-
-    <!-- Tombol Toggle Mobile -->
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Menu Links -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
-        <li class="nav-item">
-          <!-- Menggunakan link sesuai request awal Anda tapi dengan style baru -->
-          <a class="nav-link" href="destinasiLainnya.php">Destinasi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="eventLainnya.php">Event & Atraksi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="kulinerlainnya.php">Kuliner</a>
-        </li>
-      </ul>
-
-      <!-- Tombol Login -->
-  <div class="d-flex justify-content-center">
-    <?php
-    if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
-      $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? ($_SESSION['username'] ?? 'User'));
-      $avatarPath = '/public/user/img/default_avatar.png';
-
-      echo '<a href="/public/user.php" class="d-flex align-items-center text-decoration-none">';
-
-      // UPDATE: Ukuran gambar diubah jadi 35px agar pas dengan navbar kecil
-      echo '<img src="' . $avatarPath . '" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover; margin-right:8px;">';
-
-      echo '<span class="text-white fw-medium d-none d-md-inline" style="font-size: 0.95rem;">' . $displayName . '</span>';
-      echo '</a>';
-    } else {
-      echo '<a href="/public/login.php" class="btn btn-gold px-4">Login</a>';
-    }
-    ?>
-  </div>
-</nav>
+<?php include __DIR__ . '/includes/navbar.php'; ?>
 
 
 <!-- JUMBOTRON -->
@@ -564,112 +565,41 @@ if ($res) {
 </section>
 
 
-<!-- Footer (Ditambahkan di sini agar satu file style) -->
-<footer class="footer-custom pt-5 mt-5">
+<!-- Ulasan -->
+<section class="py-5" style="background-color: #FDFBF7;">
   <div class="container">
-    <div class="row gy-4">
-
-      <!-- Brand & Info -->
-      <div class="col-lg-4 pe-lg-5">
-        <div class="d-flex align-items-center mb-3">
-          <h5 class="mb-0 fw-bold footer-brand">
-             Jogja<span style="color: #C69C6D;">Verse.</span>
-          </h5>
-        </div>
-        <p class="small text-light opacity-75 mb-4">
-          Platform pariwisata digital terlengkap untuk menjelajahi keistimewaan Yogyakarta, dari destinasi budaya hingga kuliner legendaris.
-        </p>
-        <ul class="list-unstyled small opacity-75">
-          <li class="mb-2 d-flex align-items-start">
-            <i class="bi bi-geo-alt-fill icon-gold me-2 mt-1"></i>
-            <span>Jl. Malioboro No. 1, Yogyakarta 55271</span>
-          </li>
-          <li class="mb-2 d-flex align-items-center">
-            <i class="bi bi-envelope-fill icon-gold me-2"></i>
-            <span>halo@jogjaverse.id</span>
-          </li>
-          <li class="d-flex align-items-center">
-            <i class="bi bi-telephone-fill icon-gold me-2"></i>
-            <span>(0274) 123456</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Links: Wisata -->
-      <div class="col-lg-2 col-6">
-        <h6 class="fw-bold mb-3 text-white">Jelajah</h6>
-        <ul class="list-unstyled footer-link">
-          <li><a href="#destinasi">Destinasi Populer</a></li>
-          <li><a href="#event">Kalender Event</a></li>
-          <li><a href="#kuliner">Kuliner Khas</a></li>
-          <li><a href="#">Virtual Tour</a></li>
-        </ul>
-      </div>
-
-      <!-- Links: Layanan -->
-      <div class="col-lg-3 col-6">
-        <h6 class="fw-bold mb-3 text-white">Layanan</h6>
-        <ul class="list-unstyled footer-link">
-          <li><a href="#">Pusat Bantuan</a></li>
-          <li><a href="#">Panduan Perjalanan</a></li>
-          <li><a href="#">Kerjasama Mitra</a></li>
-          <li><a href="#">Kontak Kami</a></li>
-        </ul>
-      </div>
-
-      <!-- Links: Tentang -->
-      <div class="col-lg-3 col-6">
-        <h6 class="fw-bold mb-3 text-white">Tentang</h6>
-        <ul class="list-unstyled footer-link">
-          <li><a href="#">Tentang JogjaVerse</a></li>
-          <li><a href="#">Kebijakan Privasi</a></li>
-          <li><a href="#">Syarat & Ketentuan</a></li>
-          <li><a href="#">Karir</a></li>
-        </ul>
-      </div>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+      <h2 class="fw-bold mb-0" style="color: #321B1F;">Ulasan Pengunjung</h2>
+      <span class="text-muted small">Hanya ulasan yang sudah disetujui</span>
     </div>
 
-    <hr class="border-light opacity-10 my-4">
-
-    <!-- Bottom Footer -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-4 gap-3">
-      <small class="opacity-50">
-        &copy; 2025 JogjaVerse. Disponsori oleh Pemerintah Kota Yogyakarta.
-      </small>
-
-      <div class="d-flex gap-2">
-        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
+    <?php if (empty($ulasan_terbaru)): ?>
+      <div class="text-muted">Belum ada ulasan yang ditampilkan.</div>
+    <?php else: ?>
+      <div class="row g-4">
+        <?php foreach ($ulasan_terbaru as $u): ?>
+          <?php
+            $target_nama = $u['nama_destinasi'] ?? $u['nama_event'] ?? $u['nama_kuliner'] ?? '-';
+            $nama_user = $u['nama_lengkap'] ?? 'Pengunjung';
+          ?>
+          <div class="col-md-6 col-lg-4">
+            <div class="bg-white rounded-4 p-4 shadow-sm h-100">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="fw-bold"><?= htmlspecialchars($nama_user, ENT_QUOTES, 'UTF-8') ?></div>
+                <small class="text-muted"><?= htmlspecialchars($u['dibuat_pada'] ?? '-', ENT_QUOTES, 'UTF-8') ?></small>
+              </div>
+              <div class="text-warning small mb-2">Rating: <?= htmlspecialchars($u['rating'] ?? '-', ENT_QUOTES, 'UTF-8') ?>/5</div>
+              <div class="text-muted mb-2"><?= nl2br(htmlspecialchars($u['komentar'] ?? '', ENT_QUOTES, 'UTF-8')) ?></div>
+              <div class="small text-muted">Pada: <?= htmlspecialchars($target_nama, ENT_QUOTES, 'UTF-8') ?></div>
+            </div>
+          </div>
+        <?php endforeach; ?>
       </div>
-    </div>
-
+    <?php endif; ?>
   </div>
-</footer>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</section>
 
-<!-- AOS JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-  AOS.init({
-    duration: 1000, // durasi animasi
-    once: true    // animasi akan muncul setiap scroll
-  });
-</script>
-
-<!-- 3. JAVASCRIPT (Untuk Efek Scroll) -->
-<script>
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-</script>
+<?php include __DIR__ . '/includes/footer.php'; ?>
 
 </body>
 </html>

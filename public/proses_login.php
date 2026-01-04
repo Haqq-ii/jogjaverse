@@ -5,6 +5,11 @@ session_start();
 
 $identitas = trim($_POST['identitas'] ?? '');
 $password  = $_POST['password'] ?? '';
+$redirect_to = trim($_POST['redirect_to'] ?? '');
+$redirect_to_safe = '';
+if ($redirect_to !== '' && str_starts_with($redirect_to, '/') && !str_contains($redirect_to, '://') && !str_starts_with($redirect_to, '//')) {
+    $redirect_to_safe = $redirect_to;
+}
 
 if ($identitas === '' || $password === '') {
     $_SESSION['login_error'] = "Semua field wajib diisi.";
@@ -20,7 +25,8 @@ $stmt = $koneksi->prepare("
         email,
         kata_sandi_hash,
         peran,
-        status_aktif
+        status_aktif,
+        foto_profil_url
     FROM pengguna
     WHERE (username = ? OR email = ?)
     LIMIT 1
@@ -41,8 +47,16 @@ if ($user['status_aktif'] != 1) {
     exit();
 }
 
-// cek password (MD5)
-if (md5($password) !== $user['kata_sandi_hash']) {
+// cek password (MD5 atau bcrypt)
+$hash = $user['kata_sandi_hash'] ?? '';
+$verified = false;
+if (preg_match('/^\$2[aby]\$/', $hash)) {
+    $verified = password_verify($password, $hash);
+} else {
+    $verified = md5($password) === $hash;
+}
+
+if (!$verified) {
     $_SESSION['login_error'] = "Password salah.";
     header("Location: " . BASE_URL . "/public/login.php");
     exit();
@@ -55,6 +69,7 @@ $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
 $_SESSION['username'] = $user['username'];
 $_SESSION['email'] = $user['email'];
 $_SESSION['role'] = $user['peran'];
+$_SESSION['foto_profil_url'] = $user['foto_profil_url'] ?? '';
 
 // Update waktu login terakhir
 $stmt = $koneksi->prepare("UPDATE pengguna SET diubah_pada = NOW() WHERE id_pengguna = ?");
@@ -62,6 +77,12 @@ $stmt->bind_param("i", $user['id_pengguna']);
 $stmt->execute();
 
 // Redirect
-header("Location: " . BASE_URL . "/public/login.php");
+if ($redirect_to_safe !== '') {
+    header("Location: " . BASE_URL . $redirect_to_safe);
+} elseif (($user['peran'] ?? '') === 'admin') {
+    header("Location: " . BASE_URL . "/admin/dashboard.php");
+} else {
+    header("Location: " . BASE_URL . "/public/user/php/landingpageclean.php");
+}
 exit();
 ?>

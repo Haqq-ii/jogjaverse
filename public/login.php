@@ -2,9 +2,17 @@
 require_once __DIR__ . "/../config/config.php";
 session_start();
 
+$redirect_to = trim($_GET['redirect_to'] ?? '');
+$redirect_to_safe = '';
+if ($redirect_to !== '' && str_starts_with($redirect_to, '/') && !str_contains($redirect_to, '://') && !str_starts_with($redirect_to, '//')) {
+    $redirect_to_safe = $redirect_to;
+}
+
 if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
     if (($_SESSION['role'] ?? '') === 'admin') {
         header("Location: " . BASE_URL . "/admin/dashboard.php");
+    } elseif ($redirect_to_safe !== '') {
+        header("Location: " . BASE_URL . $redirect_to_safe);
     } else {
         header("Location: " . BASE_URL . "/public/user/php/landingpageclean.php");
     }
@@ -278,6 +286,9 @@ unset($_SESSION['login_error'], $_SESSION['register_success']);
 
             <!-- FORM -->
             <form method="POST" action="<?= BASE_URL ?>/public/proses_login.php">
+                <?php if ($redirect_to_safe !== ''): ?>
+                    <input type="hidden" name="redirect_to" value="<?= htmlspecialchars($redirect_to_safe, ENT_QUOTES, 'UTF-8') ?>">
+                <?php endif; ?>
                 
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="identitas" name="identitas" placeholder="Email atau Username" required autofocus>
@@ -295,7 +306,7 @@ unset($_SESSION['login_error'], $_SESSION['register_success']);
                 </div>
 
                 <div class="d-flex justify-content-end mb-4">
-                    <!-- <a href="#" class="text-gold small fw-semibold" style="font-size: 0.85rem;">Lupa Password?</a> -->
+                    <a href="<?= BASE_URL ?>/public/forgot_password.php" class="text-gold small fw-semibold" style="font-size: 0.85rem;">Lupa kata sandi?</a>
                 </div>
 
                 <button type="submit" class="btn btn-auth">

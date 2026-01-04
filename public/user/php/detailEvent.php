@@ -31,7 +31,47 @@ function format_datetime_label($value) {
 }
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+if (!$id) {
+  $id = filter_input(INPUT_GET, 'id_event', FILTER_VALIDATE_INT);
+}
 $event = null;
+$ulasan_error = '';
+$ulasan_success = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'submit_ulasan') {
+  if (empty($_SESSION['login']) || $_SESSION['login'] !== true) {
+    $ulasan_error = 'Silakan login untuk menulis ulasan.';
+  } elseif (!$id) {
+    $ulasan_error = 'Event tidak ditemukan.';
+  } else {
+    $rating = (int)($_POST['rating'] ?? 0);
+    $komentar = trim((string)($_POST['komentar'] ?? ''));
+    if ($rating < 1 || $rating > 5) {
+      $ulasan_error = 'Rating harus diisi 1 sampai 5.';
+    } elseif (strlen($komentar) > 500) {
+      $ulasan_error = 'Komentar maksimal 500 karakter.';
+    } else {
+      $id_pengguna = (int)($_SESSION['id_pengguna'] ?? 0);
+      if ($id_pengguna <= 0) {
+        $ulasan_error = 'Akun tidak valid.';
+      } else {
+        $jenis_target = 'event';
+        $komentar = $komentar === '' ? null : $komentar;
+        $stmtUlas = $koneksi->prepare("
+          INSERT INTO ulasan (id_pengguna, jenis_target, id_target, rating, komentar, status, dibuat_pada)
+          VALUES (?, ?, ?, ?, ?, 'sembunyi', NOW())
+        ");
+        $stmtUlas->bind_param("isiis", $id_pengguna, $jenis_target, $id, $rating, $komentar);
+        if ($stmtUlas->execute()) {
+          $ulasan_success = 'Ulasan berhasil dikirim dan menunggu moderasi.';
+        } else {
+          $ulasan_error = 'Gagal mengirim ulasan.';
+        }
+        $stmtUlas->close();
+      }
+    }
+  }
+}
 
 if ($id) {
   $stmt = $koneksi->prepare("
@@ -53,6 +93,41 @@ if ($id) {
 $not_found = !$id || !$event;
 if ($not_found) {
   http_response_code(404);
+}
+
+$ulasan_list = [];
+$ulasan_avg = null;
+$ulasan_total = 0;
+if (!$not_found) {
+  $jenis_target = 'event';
+  $stmtU = $koneksi->prepare("
+    SELECT u.rating, u.komentar, u.dibuat_pada, p.nama_lengkap
+    FROM ulasan u
+    LEFT JOIN pengguna p ON u.id_pengguna = p.id_pengguna
+    WHERE u.jenis_target = ? AND u.id_target = ? AND u.status = 'tampil'
+    ORDER BY u.dibuat_pada DESC
+  ");
+  $stmtU->bind_param("si", $jenis_target, $id);
+  $stmtU->execute();
+  $resU = $stmtU->get_result();
+  if ($resU) {
+    while ($row = $resU->fetch_assoc()) {
+      $ulasan_list[] = $row;
+    }
+  }
+  $stmtU->close();
+
+  $stmtAvg = $koneksi->prepare("
+    SELECT AVG(rating) as rata, COUNT(*) as total
+    FROM ulasan
+    WHERE jenis_target = ? AND id_target = ? AND status = 'tampil'
+  ");
+  $stmtAvg->bind_param("si", $jenis_target, $id);
+  $stmtAvg->execute();
+  $avgRow = $stmtAvg->get_result()->fetch_assoc();
+  $ulasan_avg = $avgRow['rata'] ?? null;
+  $ulasan_total = (int)($avgRow['total'] ?? 0);
+  $stmtAvg->close();
 }
 
 $detailGallery = [];
@@ -185,47 +260,7 @@ if ($event) {
 <body>
 
 <!-- 2. STRUKTUR HTML -->
-<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="landingpageclean.php">
-        Jogja<span style="color: #C69C6D;">Verse.</span>
-    </a>
-
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
-        <li class="nav-item">
-          <a class="nav-link" href="destinasiLainnya.php">Destinasi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="eventLainnya.php">Event & Atraksi</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="kulinerlainnya.php">Kuliner</a>
-        </li>
-      </ul>
-
-      <div class="d-flex justify-content-center">
-      <?php
-      if (!empty($_SESSION['login']) && $_SESSION['login'] === true) {
-        $displayName = htmlspecialchars($_SESSION['nama_lengkap'] ?? ($_SESSION['username'] ?? 'User'));
-        $avatarPath = '/public/user/img/default_avatar.png';
-        
-        echo '<a href="/public/dashboard_user.php" class="d-flex align-items-center text-decoration-none">';
-        echo '<img src="' . $avatarPath . '" alt="Profile" style="width:35px; height:35px; border-radius:50%; object-fit:cover; margin-right:8px;">';
-        echo '<span class="text-white fw-medium d-none d-md-inline" style="font-size: 0.95rem;">' . $displayName . '</span>';
-        echo '</a>';
-      } else {
-        echo '<a href="/public/login.php" class="btn btn-gold px-4">Login</a>';
-      }
-      ?>
-    </div>
-    </div>
-  </div>
-</nav>
+<?php include __DIR__ . '/includes/navbar.php'; ?>
 
 <?php if ($not_found): ?>
   <div class="hero-event" style="background-image: url('../img/hero-yogyakarta.jpg');">
@@ -352,85 +387,76 @@ if ($event) {
       </div>
     </div>
   </section>
+
+  <!-- ULASAN -->
+  <section class="py-5">
+    <div class="container">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+        <h2 class="fw-bold font-serif mb-0">Ulasan Pengunjung</h2>
+        <?php if ($ulasan_total > 0 && $ulasan_avg !== null): ?>
+          <span class="text-muted small">Rata-rata: <?= h(number_format((float)$ulasan_avg, 1)) ?>/5 (<?= h($ulasan_total) ?> ulasan)</span>
+        <?php endif; ?>
+      </div>
+
+      <?php if ($ulasan_success): ?>
+        <div class="alert alert-success"><?= h($ulasan_success) ?></div>
+      <?php endif; ?>
+      <?php if ($ulasan_error): ?>
+        <div class="alert alert-danger"><?= h($ulasan_error) ?></div>
+      <?php endif; ?>
+
+      <?php if (!empty($_SESSION['login']) && $_SESSION['login'] === true): ?>
+        <div class="bg-white rounded-4 p-4 shadow-sm mb-4">
+          <h5 class="fw-bold font-serif mb-3">Tulis Ulasan</h5>
+          <form method="POST">
+            <input type="hidden" name="action" value="submit_ulasan">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label small fw-bold">Rating</label>
+                <select name="rating" class="form-select" required>
+                  <option value="">Pilih</option>
+                  <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <option value="<?= $i ?>"><?= $i ?></option>
+                  <?php endfor; ?>
+                </select>
+              </div>
+              <div class="col-md-9">
+                <label class="form-label small fw-bold">Komentar</label>
+                <textarea name="komentar" class="form-control" rows="3" maxlength="500" placeholder="Tulis komentar (maks 500 karakter)"></textarea>
+              </div>
+            </div>
+            <button class="btn btn-gold mt-3" type="submit">Kirim Ulasan</button>
+          </form>
+        </div>
+      <?php else: ?>
+        <div class="alert alert-warning">
+          Silakan <a href="/public/login.php" class="text-decoration-none">login</a> untuk menulis ulasan.
+        </div>
+      <?php endif; ?>
+
+      <?php if (empty($ulasan_list)): ?>
+        <div class="text-muted">Belum ada ulasan yang ditampilkan.</div>
+      <?php else: ?>
+        <div class="row g-4">
+          <?php foreach ($ulasan_list as $u): ?>
+            <div class="col-md-6">
+              <div class="bg-white rounded-4 p-4 shadow-sm h-100">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <div class="fw-bold"><?= h($u['nama_lengkap'] ?? 'Pengguna') ?></div>
+                  <small class="text-muted"><?= h($u['dibuat_pada'] ?? '-') ?></small>
+                </div>
+                <div class="text-warning small mb-2">Rating: <?= h($u['rating'] ?? '-') ?>/5</div>
+                <div class="text-muted"><?= nl2br(h($u['komentar'] ?? '')) ?></div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
+    </div>
+  </section>
 <?php endif; ?>
 
-<footer class="footer-custom pt-5 mt-5">
-  <div class="container">
-    <div class="row gy-4">
-      <div class="col-lg-4 pe-lg-5">
-        <div class="d-flex align-items-center mb-3">
-          <h5 class="mb-0 fw-bold footer-brand">
-             Jogja<span style="color: #C69C6D;">Verse.</span>
-          </h5>
-        </div>
-        <p class="small text-light opacity-75 mb-4">
-          Platform pariwisata digital terlengkap untuk menjelajahi keistimewaan Yogyakarta, dari destinasi budaya hingga kuliner legendaris.
-        </p>
-        <ul class="list-unstyled small opacity-75">
-          <li class="mb-2 d-flex align-items-start">
-            <i class="bi bi-geo-alt-fill icon-gold me-2 mt-1"></i>
-            <span>Jl. Malioboro No. 1, Yogyakarta 55271</span>
-          </li>
-          <li class="mb-2 d-flex align-items-center">
-            <i class="bi bi-envelope-fill icon-gold me-2"></i>
-            <span>halo@jogjaverse.id</span>
-          </li>
-          <li class="d-flex align-items-center">
-            <i class="bi bi-telephone-fill icon-gold me-2"></i>
-            <span>(0274) 123456</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="col-lg-2 col-6">
-        <h6 class="fw-bold mb-3 text-white">Jelajah</h6>
-        <ul class="list-unstyled footer-link">
-          <li><a href="#destinasi">Destinasi Populer</a></li>
-          <li><a href="#event">Kalender Event</a></li>
-          <li><a href="#kuliner">Kuliner Khas</a></li>
-          <li><a href="#">Virtual Tour</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-3 col-6">
-        <h6 class="fw-bold mb-3 text-white">Layanan</h6>
-        <ul class="list-unstyled footer-link">
-          <li><a href="#">Pusat Bantuan</a></li>
-          <li><a href="#">Panduan Perjalanan</a></li>
-          <li><a href="#">Kerjasama Mitra</a></li>
-          <li><a href="#">Kontak Kami</a></li>
-        </ul>
-      </div>
-
-      <div class="col-lg-3 col-6">
-        <h6 class="fw-bold mb-3 text-white">Tentang</h6>
-        <ul class="list-unstyled footer-link">
-          <li><a href="#">Tentang JogjaVerse</a></li>
-          <li><a href="#">Kebijakan Privasi</a></li>
-          <li><a href="#">Syarat & Ketentuan</a></li>
-          <li><a href="#">Karir</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <hr class="border-light opacity-10 my-4">
-
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-4 gap-3">
-      <small class="opacity-50">
-        &copy; 2025 JogjaVerse. Disponsori oleh Pemerintah Kota Yogyakarta.
-      </small>
-
-      <div class="d-flex gap-2">
-        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<?php include __DIR__ . '/includes/footer.php'; ?>
 <?php if (!$not_found && $has_map): ?>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
@@ -453,17 +479,6 @@ if ($event) {
     });
   </script>
 <?php endif; ?>
-
-<script>
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-</script>
 
 </body>
 </html>

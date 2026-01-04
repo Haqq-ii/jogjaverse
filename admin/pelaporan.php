@@ -5,65 +5,132 @@ require_once __DIR__ . "/../config/koneksi.php";
 require_once __DIR__ . "/_crud_helper.php";
 wajib_admin();
 
-$table = "pelaporan";
+$flash = $_SESSION['flash'] ?? "";
+unset($_SESSION['flash']);
 
-[$cols, $pk] = describe_table($koneksi, $table);
-if (!$pk) die("PK tidak ditemukan di tabel $table");
+$allowed_status = ['all', 'baru', 'diproses', 'selesai', 'ditolak'];
+$filter_status = $_GET['status'] ?? 'baru';
+if (!in_array($filter_status, $allowed_status, true)) {
+  $filter_status = 'baru';
+}
 
-$colNames  = array_map(fn($c) => $c['Field'], $cols);
-$colUser   = pick_col($colNames, ["id_pengguna", "pelapor_id", "user_id"]);
-$colTarget = pick_col($colNames, ["id_target", "target_id", "id_destinasi", "id_event"]);
-$colJenis  = pick_col($colNames, ["jenis", "jenis_laporan", "tipe", "kategori"]);
-$colStatus = pick_col($colNames, ["status", "status_laporan", "status_pelaporan"]);
-$colIsi    = pick_col($colNames, ["deskripsi", "keterangan", "pesan", "isi", "detail"]);
-$colTime   = guess_time_col($colNames);
+$q = trim($_GET['q'] ?? '');
 
-$q = trim($_GET['q'] ?? "");
-$data = fetch_rows($koneksi, $table, $pk, $q, $cols);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'update_status') {
+  $id_pelaporan = (int)($_POST['id_pelaporan'] ?? 0);
+  $status_baru = $_POST['status'] ?? '';
+  if ($id_pelaporan > 0 && in_array($status_baru, $allowed_status, true) && $status_baru !== 'all') {
+    $stmt = $koneksi->prepare("UPDATE pelaporan SET status = ? WHERE id_pelaporan = ? LIMIT 1");
+    if ($stmt) {
+      $stmt->bind_param("si", $status_baru, $id_pelaporan);
+      $stmt->execute();
+      $stmt->close();
+      $_SESSION['flash'] = "Status pelaporan berhasil diperbarui.";
+    }
+  }
+  $qs = http_build_query(['status' => $filter_status, 'q' => $q]);
+  header("Location: " . BASE_URL . "/admin/pelaporan.php" . ($qs ? "?" . $qs : ""));
+  exit();
+}
 
-$totalLaporan = 0;
-$pending = 0;
-$resolved = 0;
-$stmt = $koneksi->prepare("SELECT COUNT(*) as total FROM `$table`");
+$metric = [
+  'total' => 0,
+  'baru' => 0,
+  'diproses' => 0,
+  'selesai' => 0,
+  'ditolak' => 0,
+];
+$stmt = $koneksi->prepare("
+  SELECT
+    COUNT(*) as total,
+    SUM(status = 'baru') as baru,
+    SUM(status = 'diproses') as diproses,
+    SUM(status = 'selesai') as selesai,
+    SUM(status = 'ditolak') as ditolak
+  FROM pelaporan
+");
 if ($stmt) {
   $stmt->execute();
-  $totalLaporan = (int)$stmt->get_result()->fetch_assoc()['total'];
+  $row = $stmt->get_result()->fetch_assoc();
+  $metric['total'] = (int)($row['total'] ?? 0);
+  $metric['baru'] = (int)($row['baru'] ?? 0);
+  $metric['diproses'] = (int)($row['diproses'] ?? 0);
+  $metric['selesai'] = (int)($row['selesai'] ?? 0);
+  $metric['ditolak'] = (int)($row['ditolak'] ?? 0);
+  $stmt->close();
 }
-if ($colStatus) {
-  $sql = "
-    SELECT 
-      SUM(CASE WHEN LOWER(`$colStatus`) IN ('pending','open','baru','dalam_proses') THEN 1 ELSE 0 END) as pending,
-      SUM(CASE WHEN LOWER(`$colStatus`) IN ('selesai','done','resolved','closed') THEN 1 ELSE 0 END) as resolved
-    FROM `$table`
-  ";
-  $stmt = $koneksi->prepare($sql);
-  if ($stmt) {
-    $stmt->execute();
-    $r = $stmt->get_result()->fetch_assoc();
-    $pending = (int)($r['pending'] ?? 0);
-    $resolved = (int)($r['resolved'] ?? 0);
-  }
+
+$sql = "
+  SELECT
+    p.id_pelaporan,
+    p.jenis_target,
+    p.id_target,
+    p.judul,
+    p.deskripsi,
+    p.status,
+    p.dibuat_pada,
+    u.nama_lengkap,
+    u.username
+  FROM pelaporan p
+  LEFT JOIN pengguna u ON p.id_pengguna = u.id_pengguna
+  WHERE 1=1
+";
+$types = "";
+$params = [];
+if ($filter_status !== 'all') {
+  $sql .= " AND p.status = ?";
+  $types .= "s";
+  $params[] = $filter_status;
 }
+if ($q !== '') {
+  $like = "%" . $q . "%";
+  $sql .= " AND (p.judul LIKE ? OR p.deskripsi LIKE ? OR u.nama_lengkap LIKE ? OR u.username LIKE ?)";
+  $types .= "ssss";
+  $params[] = $like;
+  $params[] = $like;
+  $params[] = $like;
+  $params[] = $like;
+}
+$sql .= " ORDER BY p.dibuat_pada DESC";
+
+$stmt = $koneksi->prepare($sql);
+if ($types !== '') {
+  $stmt->bind_param($types, ...$params);
+}
+$stmt->execute();
+$data = $stmt->get_result();
 ?>
 
 <?php require_once __DIR__ . "/partials/header.php"; ?>
 <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/admin_crud.css">
 
+<?php if ($flash): ?><div class="notice"><?= h($flash) ?></div><?php endif; ?>
+
 <div class="metric-cards">
   <div class="metric-card">
     <div class="label">Total Pelaporan</div>
-    <div class="value"><?= h($totalLaporan) ?></div>
-    <div class="muted">Semua laporan masuk</div>
+    <div class="value"><?= h($metric['total']) ?></div>
+    <div class="muted">Semua laporan</div>
   </div>
   <div class="metric-card">
-    <div class="label">Pending</div>
-    <div class="value"><?= h($pending) ?></div>
-    <div class="muted"><?= $colStatus ? "Status pending/open" : "Kolom status tidak ada" ?></div>
+    <div class="label">Baru</div>
+    <div class="value"><?= h($metric['baru']) ?></div>
+    <div class="muted">Status baru</div>
   </div>
   <div class="metric-card">
-    <div class="label">Terselesaikan</div>
-    <div class="value"><?= h($resolved) ?></div>
-    <div class="muted"><?= $colStatus ? "Status selesai/resolved" : "Kolom status tidak ada" ?></div>
+    <div class="label">Diproses</div>
+    <div class="value"><?= h($metric['diproses']) ?></div>
+    <div class="muted">Dalam penanganan</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Selesai</div>
+    <div class="value"><?= h($metric['selesai']) ?></div>
+    <div class="muted">Tuntas</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">Ditolak</div>
+    <div class="value"><?= h($metric['ditolak']) ?></div>
+    <div class="muted">Tidak valid</div>
   </div>
 </div>
 
@@ -71,11 +138,18 @@ if ($colStatus) {
   <div class="toolbar">
     <div>
       <h1 class="page-title" style="margin:0">Pelaporan Pengguna</h1>
-      <p class="page-sub">Monitor laporan & isu dari wisatawan</p>
+      <p class="page-sub">Kelola laporan masuk dari pengguna</p>
     </div>
-    <form method="GET" style="display:flex;gap:10px;align-items:center">
-      <input class="search" type="text" name="q" placeholder="Cari isi laporan..." value="<?= h($q) ?>">
-      <button class="btn secondary" type="submit">Cari</button>
+    <form method="GET" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <select name="status">
+        <option value="all" <?= $filter_status === 'all' ? 'selected' : '' ?>>Semua</option>
+        <option value="baru" <?= $filter_status === 'baru' ? 'selected' : '' ?>>Baru</option>
+        <option value="diproses" <?= $filter_status === 'diproses' ? 'selected' : '' ?>>Diproses</option>
+        <option value="selesai" <?= $filter_status === 'selesai' ? 'selected' : '' ?>>Selesai</option>
+        <option value="ditolak" <?= $filter_status === 'ditolak' ? 'selected' : '' ?>>Ditolak</option>
+      </select>
+      <input class="search" type="text" name="q" placeholder="Cari judul/username..." value="<?= h($q) ?>">
+      <button class="btn secondary" type="submit">Filter</button>
       <a class="btn secondary" href="<?= BASE_URL ?>/admin/pelaporan.php">Reset</a>
     </form>
   </div>
@@ -85,28 +159,51 @@ if ($colStatus) {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Pelapor</th>
+          <th>Pengguna</th>
           <th>Target</th>
-          <th>Jenis</th>
+          <th>Judul</th>
+          <th>Deskripsi</th>
           <th>Status</th>
-          <th>Isi</th>
-          <?php if ($colTime): ?><th>Waktu</th><?php endif; ?>
+          <th>Waktu</th>
+          <th>Aksi</th>
         </tr>
       </thead>
       <tbody>
-        <?php while($row = $data->fetch_assoc()): ?>
+        <?php if ($data && $data->num_rows > 0): ?>
+          <?php while ($row = $data->fetch_assoc()): ?>
+            <?php
+              $nama_user = $row['nama_lengkap'] ?? $row['username'] ?? '-';
+              $target = ($row['jenis_target'] ?? '-') . ' #' . ($row['id_target'] ?? '-');
+              $status = $row['status'] ?? '-';
+            ?>
+            <tr>
+              <td><?= h($row['id_pelaporan']) ?></td>
+              <td><?= h($nama_user) ?></td>
+              <td><?= h($target) ?></td>
+              <td><?= h($row['judul'] ?? '-') ?></td>
+              <td style="max-width:320px"><small><?= h($row['deskripsi'] ?? '-') ?></small></td>
+              <td><?= h($status) ?></td>
+              <td><small><?= h($row['dibuat_pada'] ?? '-') ?></small></td>
+              <td class="actions">
+                <form method="POST" style="display:flex;gap:6px;align-items:center;">
+                  <input type="hidden" name="action" value="update_status">
+                  <input type="hidden" name="id_pelaporan" value="<?= h($row['id_pelaporan']) ?>">
+                  <select name="status">
+                    <option value="baru" <?= $status === 'baru' ? 'selected' : '' ?>>Baru</option>
+                    <option value="diproses" <?= $status === 'diproses' ? 'selected' : '' ?>>Diproses</option>
+                    <option value="selesai" <?= $status === 'selesai' ? 'selected' : '' ?>>Selesai</option>
+                    <option value="ditolak" <?= $status === 'ditolak' ? 'selected' : '' ?>>Ditolak</option>
+                  </select>
+                  <button class="btn-sm primary" type="submit">Update</button>
+                </form>
+              </td>
+            </tr>
+          <?php endwhile; ?>
+        <?php else: ?>
           <tr>
-            <td><?= h($row[$pk]) ?></td>
-            <td><?= h($colUser ? ($row[$colUser] ?? '-') : '-') ?></td>
-            <td><?= h($colTarget ? ($row[$colTarget] ?? '-') : '-') ?></td>
-            <td><?= h($colJenis ? ($row[$colJenis] ?? '-') : '-') ?></td>
-            <td><?= h($colStatus ? ($row[$colStatus] ?? '-') : '-') ?></td>
-            <td style="max-width:320px"><small><?= h($colIsi ? ($row[$colIsi] ?? '-') : '-') ?></small></td>
-            <?php if ($colTime): ?>
-              <td><small><?= h($row[$colTime] ?? '-') ?></small></td>
-            <?php endif; ?>
+            <td colspan="8"><small>Belum ada pelaporan sesuai filter.</small></td>
           </tr>
-        <?php endwhile; ?>
+        <?php endif; ?>
       </tbody>
     </table>
   </div>

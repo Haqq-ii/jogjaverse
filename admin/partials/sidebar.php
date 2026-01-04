@@ -4,9 +4,9 @@
   <nav class="menu">
   <a class="item" href="<?= BASE_URL ?>/admin/dashboard.php">Dashboard</a>
   <a class="item" href="<?= BASE_URL ?>/admin/destinasi.php">Destinasi</a>
-  <a class="item" href="<?= BASE_URL ?>/admin/atraksi.php">Atraksi</a>
   <a class="item" href="<?= BASE_URL ?>/admin/event.php">Event</a>
   <a class="item" href="<?= BASE_URL ?>/admin/reservasi_event.php">Reservasi Event</a>
+  <a class="item" href="<?= BASE_URL ?>/admin/cek_tiket.php">Cek Tiket</a>
   <a class="item" href="<?= BASE_URL ?>/admin/kuliner.php">Kuliner</a>
   <a class="item" href="<?= BASE_URL ?>/admin/akun.php">Akun</a>
   <a class="item" href="<?= BASE_URL ?>/admin/ulasan.php">Ulasan</a>

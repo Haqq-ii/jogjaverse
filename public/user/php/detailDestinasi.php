@@ -3,6 +3,7 @@ require_once __DIR__ . "/../../../config/koneksi.php";
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+require_once __DIR__ . "/helpers/tracker.php";
 
 function h($value) {
   return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
@@ -22,6 +23,10 @@ function format_harga($harga) {
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
   $id = filter_input(INPUT_GET, 'id_destinasi', FILTER_VALIDATE_INT);
+}
+$userId = (int)($_SESSION['id_pengguna'] ?? 0);
+if ($id) {
+  track_visit($koneksi, 'destinasi_detail', 'destinasi', $id, $userId > 0 ? $userId : null);
 }
 $destinasi = null;
 $ulasan_error = '';

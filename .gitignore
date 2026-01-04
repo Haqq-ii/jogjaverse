@@ -1,0 +1,31 @@
+## Secrets
+.env
+.env.*
+
+## Logs
+*.log
+logs/
+
+## Dependencies
+node_modules/
+vendor/
+
+## Caches / temp
+storage/
+cache/
+tmp/
+
+## OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+## Local databases / dumps
+*.sqlite
+*.sqlite3
+*.db
+db/*.sql
+
+## User uploads
+assets/uploads/

@@ -102,6 +102,10 @@ if ($res) {
     }
 }
 
+require_once __DIR__ . '/helpers/trend.php';
+$trend_data = jv_get_trend_7hari($koneksi);
+$trend_top = $trend_data['top'] ?? [];
+
 ?>
 
 <!DOCTYPE html>
@@ -286,6 +290,78 @@ if ($res) {
   </div>
 </section>
 <!-- Akhir Card Section -->
+
+<!-- Trending Minggu Ini -->
+<section class="py-5">
+  <div class="container" style="background-color:#F9F7F5; border-radius: 20px; padding: 2rem;" data-aos="fade-up">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+      <h2 class="fw-bold mb-0 text-center" style="color: #321B1F; font-size: clamp(2rem, 3.5vw, 3.5rem);">Trending Minggu Ini</h2>
+      <span class="text-muted small">Berdasarkan data mingguan</span>
+    </div>
+
+    <div class="row g-4 justify-content-center mx-auto">
+      <?php if (!empty($trend_top)): ?>
+        <?php foreach ($trend_top as $t): ?>
+          <?php
+            $trend_img = !empty($t['gambar']) ? $t['gambar'] : 'https://placehold.co/600x400?text=Destinasi';
+            $trend_jam = trim((string)($t['jam_operasional'] ?? ''));
+            $trend_jam = $trend_jam !== '' ? $trend_jam : '-';
+          ?>
+          <div class="col-6 col-sm-6 col-md-4 col-lg-3" data-aos="zoom-in" data-aos-delay="200">
+            <div class="card border-0 shadow rounded-4 overflow-hidden h-100">
+              <div class="position-relative card-image-wrapper">
+                <img src="<?= h($trend_img) ?>"
+                     class="card-img-top object-fit-cover"
+                     alt="<?= h($t['nama'] ?? 'Destinasi') ?>"
+                     style="height: 200px;"
+                     onerror="this.src='https://placehold.co/600x400?text=Destinasi'">
+
+                <div class="card-gradient-overlay"></div>
+
+                <span class="position-absolute top-0 start-0 m-2 py-1 px-2
+                             bg-white text-dark rounded-pill fw-bold shadow-sm"
+                      style="font-size: 0.6rem;">
+                  Trending
+                </span>
+
+                <div class="position-absolute bottom-0 start-0 m-2 text-white z-2
+                            d-flex align-items-center"
+                     style="font-size: 0.75rem;">
+                  <i class="bi bi-graph-up-arrow text-warning me-1"></i>
+                  <span class="fw-bold me-1"><?= (int)($t['count'] ?? 0) ?></span>
+                  <span class="opacity-75">klik</span>
+                </div>
+              </div>
+
+              <div class="card-body p-3 d-flex flex-column">
+                <h5 class="card-title fw-bold mb-1 font-serif fs-6">
+                  <?= h($t['nama'] ?? 'Destinasi') ?>
+                </h5>
+
+                <div class="d-flex align-items-center justify-content-between mt-auto">
+                  <div class="d-flex align-items-center text-muted"
+                       style="font-size: 0.7rem;">
+                    <i class="bi bi-clock me-1"></i>
+                    <span><?= h($trend_jam) ?></span>
+                  </div>
+                  <a href="detailDestinasi.php?id=<?= (int)($t['id'] ?? 0) ?>"
+                     class="link-detail-animated"
+                     style="font-size: 0.75rem;">
+                    Detail <i class="bi bi-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <div class="col-12 text-center py-4">
+          <div class="text-muted">Belum ada data trending minggu ini.</div>
+        </div>
+      <?php endif; ?>
+    </div>
+  </div>
+</section>
 
 <!-- Even dan Atraksi -->
 <section class="py-5">
@@ -600,6 +676,10 @@ if ($res) {
 </section>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
+
+<?php include __DIR__ . '/partials/jove_widget.php'; ?>
+<link rel="stylesheet" href="../css/jove.css">
+<script src="../js/jove.js"></script>
 
 </body>
 </html>

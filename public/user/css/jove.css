@@ -1,0 +1,158 @@
+:root {
+  --jove-primary: #2d1b20;
+  --jove-accent: #c69c6d;
+  --jove-bg: #fdf8f2;
+  --jove-border: #eee2d6;
+  --jove-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
+}
+
+.jove-widget {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1200;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.jove-toggle {
+  border: none;
+  background: var(--jove-primary);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  box-shadow: var(--jove-shadow);
+  cursor: pointer;
+}
+
+.jove-toggle:hover {
+  background: #3b242b;
+}
+
+.jove-panel {
+  position: absolute;
+  right: 0;
+  bottom: 56px;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  height: 420px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: var(--jove-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.jove-panel.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.jove-header {
+  background: var(--jove-primary);
+  color: #fff;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.jove-title {
+  font-weight: 700;
+}
+
+.jove-close {
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.jove-body {
+  flex: 1;
+  padding: 14px;
+  background: var(--jove-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.jove-bubble {
+  padding: 10px 12px;
+  border-radius: 14px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.jove-bot {
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid var(--jove-border);
+}
+
+.jove-user {
+  align-self: flex-end;
+  background: var(--jove-primary);
+  color: #fff;
+}
+
+.jove-typing {
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.jove-footer {
+  border-top: 1px solid var(--jove-border);
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  background: #fff;
+}
+
+.jove-footer input {
+  flex: 1;
+  border: 1px solid var(--jove-border);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.jove-footer button {
+  border: none;
+  border-radius: 999px;
+  background: var(--jove-accent);
+  color: #2d1b20;
+  padding: 8px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.jove-footer button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+@media (max-width: 576px) {
+  .jove-widget {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .jove-panel {
+    width: 100%;
+    right: 0;
+    bottom: 54px;
+  }
+}

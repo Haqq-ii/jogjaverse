@@ -125,6 +125,31 @@ $recentAccounts = recent_rows($koneksi, "pengguna", 6);
   </div>
 </div>
 
+<div class="card">
+  <div class="toprow">
+    <h2 style="margin:0">Tren 7 Hari (Klik Detail Destinasi)</h2>
+    <span class="pill">Destinasi</span>
+  </div>
+  <div class="chart-grid">
+    <div>
+      <canvas id="trend-destinasi-chart" height="140"></canvas>
+    </div>
+    <div>
+      <table class="table-minimal">
+        <thead>
+          <tr>
+            <th>Top Destinasi</th>
+            <th>Jumlah</th>
+          </tr>
+        </thead>
+        <tbody id="trend-destinasi-top">
+          <tr><td colspan="2"><small>Memuat data...</small></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <div class="card two-col">
   <div>
     <div class="toprow">
@@ -196,6 +221,74 @@ $recentAccounts = recent_rows($koneksi, "pengguna", 6);
     </table>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const apiUrl = "<?= BASE_URL ?>/admin/api/trend_7hari.php";
+    const chartEl = document.getElementById('trend-destinasi-chart');
+    const topBody = document.getElementById('trend-destinasi-top');
+    if (!chartEl || !topBody) return;
+
+    let chartInstance = null;
+
+    const renderTop = (items = []) => {
+      topBody.innerHTML = '';
+      if (!Array.isArray(items) || items.length === 0) {
+        topBody.innerHTML = '<tr><td colspan="2"><small>Belum ada data trending.</small></td></tr>';
+        return;
+      }
+      items.forEach((row) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${row.nama ?? '-'}</td><td><b>${row.count ?? 0}</b></td>`;
+        topBody.appendChild(tr);
+      });
+    };
+
+    const renderChart = (daily = []) => {
+      const labels = daily.map((d) => d.date);
+      const values = daily.map((d) => d.count);
+      if (chartInstance) {
+        chartInstance.data.labels = labels;
+        chartInstance.data.datasets[0].data = values;
+        chartInstance.update();
+        return;
+      }
+      chartInstance = new Chart(chartEl, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Klik Detail',
+            data: values,
+            borderColor: '#4A2A2A',
+            backgroundColor: 'rgba(74, 42, 42, 0.15)',
+            tension: 0.3,
+            fill: true,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { beginAtZero: true, ticks: { precision: 0 } }
+          }
+        }
+      });
+    };
+
+    fetch(apiUrl, { cache: 'no-cache' })
+      .then((res) => res.ok ? res.json() : null)
+      .then((data) => {
+        if (!data) return;
+        renderChart(data.daily || []);
+        renderTop(data.top || []);
+      })
+      .catch(() => {
+        renderTop([]);
+      });
+  });
+</script>
 
 <script>
   // Polling sederhana untuk menyegarkan data kunjungan tanpa reload

@@ -214,5 +214,9 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
 </section>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
+
+<?php include __DIR__ . '/partials/jove_widget.php'; ?>
+<link rel="stylesheet" href="../css/jove.css">
+<script src="../js/jove.js"></script>
 </body>
 </html>

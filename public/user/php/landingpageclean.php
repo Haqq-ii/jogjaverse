@@ -211,7 +211,7 @@ if ($res) {
 
     <div class="row g-4 justify-content-center mx-auto">
 
-      <!-- Card 1 -->
+      <!-- Card Loop -->
 <?php foreach ($destinasi as $d): ?>
 <div class="col-6 col-sm-6 col-md-4 col-lg-3"
      data-aos="zoom-in"
@@ -248,7 +248,7 @@ if ($res) {
         <?= $d['nama'] ?>
       </h5>
 
-      
+      <!-- Deskripsi dihapus sesuai snippet asli Anda yang kosong di bagian ini -->
 
       <div class="d-flex align-items-center justify-content-between mt-auto">
 
@@ -260,9 +260,9 @@ if ($res) {
             </span>
         </div>
 
+        <!-- PERUBAHAN DI SINI: Menggunakan class link-detail-animated -->
         <a href="#"
-           class="text-decoration-none fw-bold text-dark
-                  icon-link icon-link-hover"
+           class="link-detail-animated"
            style="font-size: 0.75rem;">
           Detail <i class="bi bi-arrow-right"></i>
         </a>
@@ -286,121 +286,132 @@ if ($res) {
 </section>
 <!-- Akhir Card Section -->
 
-<!-- Even dan Atraksi-->
- <section class="py-5">
-    <h2 class="fw-bold mb-3 text-center" style="color: #321B1F; font-size: clamp(2rem, 3.5vw, 3.5rem);">Event & <span style="color: #4A1B22;">Atraksi</span></h2>
-    <p class="text-center mb-5" style="color:#846267; font-size: clamp(1.1rem, 1.5vw, 1.5rem); ">
-      Ikuti berbagai event budaya, festival, dan atraksi menarik yang diselenggarakan di Kota 
-      <br>Yogyakarta
-    </p>
+<!-- Even dan Atraksi -->
+<section class="py-5">
+  <h2 class="fw-bold mb-3 text-center" style="color: #321B1F; font-size: clamp(2rem, 3.5vw, 3.5rem);">Event & <span style="color: #4A1B22;">Atraksi</span></h2>
+  <p class="text-center mb-5" style="color:#846267; font-size: clamp(1.1rem, 1.5vw, 1.5rem); ">
+    Ikuti berbagai event budaya, festival, dan atraksi menarik yang diselenggarakan di Kota 
+    <br>Yogyakarta
+  </p>
     
   <div class="container" data-aos="fade-up">
 
-  <div class="row g-3">
+    <div class="row g-3">
     
-    <!-- LEFT COLUMN: BIG CARD (Event Pertama/Unggulan) -->
-    <div class="col-lg-6">
-      <?php if(isset($event[0])): $mainEvent = $event[0]; ?>
-      <div class="card h-100 border-0 rounded-4 p-3 p-lg-4 text-white position-relative overflow-hidden shadow-lg">
-        
-        <img src="<?= $mainEvent['gambar_sampul_url'] ?>" 
-             class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" 
-             alt="<?= $mainEvent['judul'] ?>">
-
-        <div class="position-absolute top-0 start-0 w-100 h-100" 
-             style="background: linear-gradient(0deg, rgba(74, 27, 34, 0.95) 0%, rgba(74, 27, 34, 0.6) 100%); z-index: 1;">
-        </div>
-
-        <div class="position-relative h-100 d-flex flex-column justify-content-center" style="z-index: 2;">
+      <!-- LEFT COLUMN: BIG CARD (Event Pertama/Unggulan) -->
+      <div class="col-lg-6">
+        <?php if(isset($event[0])): $mainEvent = $event[0]; ?>
+        <?php
+          $event_id = $mainEvent['id_event'] ?? null;
+          $event_href = $event_id ? "detailEvent.php?id_event=" . $event_id : "eventLainnya.php";
+        ?>
+        <div class="card h-100 border-0 rounded-4 p-3 p-lg-4 text-white position-relative overflow-hidden shadow-lg">
           
-          <span class="position-absolute top-0 end-0 badge text-dark fw-bold px-3 py-1 rounded-pill shadow-sm" 
-                style="background-color: #EEB32B; font-size: 0.75rem;">
-            Event Unggulan
-          </span>
+          <img src="<?= $mainEvent['gambar_sampul_url'] ?>" 
+               class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" 
+               alt="<?= $mainEvent['judul'] ?>">
 
-          <div class="mb-2">
-            <span class="px-2 py-1 rounded-pill text-white border border-light border-opacity-25" 
-                  style="font-size: 0.7rem; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px);">
-              <?= $mainEvent['kategori'] ?? 'Event' ?>
-            </span>
+          <div class="position-absolute top-0 start-0 w-100 h-100" 
+               style="background: linear-gradient(0deg, rgba(74, 27, 34, 0.95) 0%, rgba(74, 27, 34, 0.6) 100%); z-index: 1;">
           </div>
 
-          <h3 class="fs-2 fw-bold font-serif mb-3"><?= $mainEvent['judul'] ?></h3>
+          <div class="position-relative h-100 d-flex flex-column justify-content-center" style="z-index: 2;">
+            
+            <span class="position-absolute top-0 end-0 badge text-dark fw-bold px-3 py-1 rounded-pill shadow-sm" 
+                  style="background-color: #EEB32B; font-size: 0.75rem;">
+              Event Unggulan
+            </span>
 
-          <div class="row g-2 mb-4 text-white-50" style="font-size: 0.85rem;">
-            <div class="col-6 d-flex align-items-center">
-              <i class="bi bi-calendar-event me-2 text-white"></i> 
-              <span class="text-white">
-                <?= date('d M', strtotime($mainEvent['mulai_pada'])) ?> – <?= date('d M Y', strtotime($mainEvent['selesai_pada'])) ?>
+            <div class="mb-2">
+              <span class="px-2 py-1 rounded-pill text-white border border-light border-opacity-25" 
+                    style="font-size: 0.7rem; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px);">
+                <?= $mainEvent['kategori'] ?? 'Event' ?>
               </span>
             </div>
-            <div class="col-6 d-flex align-items-center">
-              <i class="bi bi-geo-alt me-2 text-white"></i> <span class="text-white"><?= $mainEvent['lokasi'] ?></span>
-            </div>
-            <div class="col-6 d-flex align-items-center">
-              <i class="bi bi-clock me-2 text-white"></i> 
-              <span class="text-white"><?= date('H:i', strtotime($mainEvent['mulai_pada'])) ?> WIB</span>
-            </div>
-            <div class="col-6 d-flex align-items-center">
-              <i class="bi bi-people me-2 text-white"></i> 
-              <span class="text-white"><?= $mainEvent['kuota'] ?? 'Unlimited' ?> kuota</span>
-            </div>
-          </div>
 
-          <div>
-            <a href="#" class="btn btn-sm fw-bold rounded-pill px-4 py-2 w-100 w-md-auto shadow" 
-               style="background-color: #EEB32B; color: #321B1F;">
-              Pesan Tiket <i class="bi bi-arrow-right ms-2"></i>
-            </a>
+            <h3 class="fs-2 fw-bold font-serif mb-3"><?= $mainEvent['judul'] ?></h3>
+
+            <div class="row g-2 mb-4 text-white-50" style="font-size: 0.85rem;">
+              <div class="col-6 d-flex align-items-center">
+                <i class="bi bi-calendar-event me-2 text-white"></i> 
+                <span class="text-white">
+                  <?= date('d M', strtotime($mainEvent['mulai_pada'])) ?> – <?= date('d M Y', strtotime($mainEvent['selesai_pada'])) ?>
+                </span>
+              </div>
+              <div class="col-6 d-flex align-items-center">
+                <i class="bi bi-geo-alt me-2 text-white"></i> <span class="text-white"><?= $mainEvent['lokasi'] ?></span>
+              </div>
+              <div class="col-6 d-flex align-items-center">
+                <i class="bi bi-clock me-2 text-white"></i> 
+                <span class="text-white"><?= date('H:i', strtotime($mainEvent['mulai_pada'])) ?> WIB</span>
+              </div>
+              <div class="col-6 d-flex align-items-center">
+                <i class="bi bi-people me-2 text-white"></i> 
+                <span class="text-white"><?= $mainEvent['kuota'] ?? 'Unlimited' ?> kuota</span>
+              </div>
+            </div>
+
+            <div>
+              <a href="<?= $event_href ?>" class="btn btn-sm fw-bold rounded-pill px-4 py-2 w-100 w-md-auto shadow" 
+                 style="background-color: #EEB32B; color: #321B1F;">
+                Pesan Tiket <i class="bi bi-arrow-right ms-2"></i>
+              </a>
+            </div>
+
           </div>
+        </div>
+        <?php endif; ?>
+      </div>
+
+      <!-- RIGHT COLUMN: LIST (Event 2, 3, 4) -->
+      <div class="col-lg-6">
+        <div class="d-flex flex-column gap-2 h-100">
+
+          <?php 
+          // Loop dari index 1 sampai 3 (3 item)
+          $listEvents = array_slice($event, 1, 3);
+          foreach($listEvents as $e): 
+            $event_id = $e['id_event'] ?? null;
+            $event_href = $event_id ? "detailEvent.php?id_event=" . $event_id : "eventLainnya.php";
+          ?>
+          <div class="card border-0 rounded-4 p-3 shadow-sm card-event-hover" style="background-color: #F9F7F5;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="d-flex align-items-center">
+                <span class="badge border border-danger border-opacity-10 rounded-pill px-2 fw-normal" style="font-size: 0.7rem; background-color: #EBE1E1; color: #6F202D;">
+                  <?= $e['kategori'] ?? 'Event' ?>
+                </span>
+                <span class="ms-2 small" style="color: #846267; font-size: 0.8rem;">
+                  <?= date('d M Y', strtotime($e['mulai_pada'])) ?>
+                </span>
+              </div>
+              
+              <!-- UPDATED BUTTON: Link Detail dengan Animasi Garis -->
+              <a href="<?= $event_href ?>" class="link-detail-animated" style="font-size: 0.75rem;">
+                  Detail <i class="bi bi-arrow-right"></i>
+              </a>
+
+            </div>
+            <h6 class="fw-bold font-serif mb-1 fs-5" style="color: #4A1B22;"><?= $e['judul'] ?></h6>
+            <div class="text-muted d-flex gap-3" style="font-size: 0.8rem;">
+              <span style="color: #846267;"><i class="bi bi-geo-alt me-1"></i> <?= $e['lokasi'] ?></span>
+              <span style="color: #846267;"><i class="bi bi-clock me-1"></i> <?= date('H:i', strtotime($e['mulai_pada'])) ?> WIB</span>
+            </div>
+          </div>
+          <?php endforeach; ?>
 
         </div>
       </div>
-      <?php endif; ?>
+
     </div>
 
-    <!-- RIGHT COLUMN: LIST (Event 2, 3, 4) -->
-    <div class="col-lg-6">
-      <div class="d-flex flex-column gap-2 h-100">
-
-        <?php 
-        // Loop dari index 1 sampai 3 (3 item)
-        $listEvents = array_slice($event, 1, 3);
-        foreach($listEvents as $e): 
-        ?>
-        <div class="card border-0 rounded-4 p-3 shadow-sm card-event-hover" style="background-color: #F9F7F5;">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <div class="d-flex align-items-center">
-              <span class="badge border border-danger border-opacity-10 rounded-pill px-2 fw-normal" style="font-size: 0.7rem; background-color: #EBE1E1; color: #6F202D;">
-                <?= $e['kategori'] ?? 'Event' ?>
-              </span>
-              <span class="ms-2 small" style="color: #846267; font-size: 0.8rem;">
-                <?= date('d M Y', strtotime($e['mulai_pada'])) ?>
-              </span>
-            </div>
-            <a href="#" class="text-dark"><i class="bi bi-arrow-right"></i></a>
-          </div>
-          <h6 class="fw-bold font-serif mb-1 fs-5" style="color: #4A1B22;"><?= $e['judul'] ?></h6>
-          <div class="text-muted d-flex gap-3" style="font-size: 0.8rem;">
-            <span style="color: #846267;"><i class="bi bi-geo-alt me-1"></i> <?= $e['lokasi'] ?></span>
-            <span style="color: #846267;"><i class="bi bi-clock me-1"></i> <?= date('H:i', strtotime($e['mulai_pada'])) ?> WIB</span>
-          </div>
-        </div>
-        <?php endforeach; ?>
-
-      </div>
+    <div class="detail-destinasi">
+      <a href="eventLainnya.php" class="link-gold-animated">
+        <i class="bi bi-geo-alt"></i> Lihat Semua Event
+      </a> 
     </div>
 
   </div>
-
-        <div class="detail-destinasi">
-            <a href="eventLainnya.php" class="link-gold-animated">
-                <i class="bi bi-geo-alt"></i> Lihat Semua Event
-            </a> 
-        </div>
-</div>
-
- </section>
+</section>
  <!-- akhir Even dan Atraksi -->
 
 
@@ -418,37 +429,48 @@ if ($res) {
 
       <!-- Kuliner Dynamic Loop -->
     <?php foreach ($kuliner as $k): ?>
+    <?php
+      $kuliner_id = $k['id_kuliner'] ?? null;
+      $kuliner_href = $kuliner_id ? "detailKuliner.php?id_kuliner=" . $kuliner_id : "kulinerLainnya.php";
+      $kategori = $k['kategori'] ?? 'Kuliner';
+      $nama = $k['nama'] ?? 'Kuliner';
+      $alamat = trim((string)($k['alamat'] ?? ''));
+      $alamat = $alamat !== '' ? $alamat : '-';
+      $harga_raw = $k['rentang_harga'] ?? '';
+      $harga = $harga_raw !== '' ? number_format((float)$harga_raw, 0, ',', '.') : '-';
+      $gambar = $k['gambar_sampul_url'] ?? '';
+    ?>
     <div class="col-6 col-md-4 col-lg-3">
-      <div class="card border-0 shadow rounded-4 overflow-hidden h-100">
+      <a href="<?= $kuliner_href ?>" class="card border-0 shadow rounded-4 overflow-hidden h-100 text-decoration-none text-dark">
 
         <!-- Menggunakan 'gambar_url' sesuai table -->
-        <img src="<?= $k['gambar_sampul_url'] ?>" class="card-img-top" style="height:200px; object-fit:cover;">
+        <img src="<?= $gambar ?>" class="card-img-top" style="height:200px; object-fit:cover;" alt="<?= $nama ?>">
 
         <div class="card-body">
-          <span class="badge bg-light text-dark small"><?= $k['kategori'] ?></span>
+          <span class="badge bg-light text-dark small"><?= $kategori ?></span>
 
-          <h6 class="fw-bold mt-2"><?= $k['nama'] ?></h6>
+          <h6 class="fw-bold mt-2"><?= $nama ?></h6>
 
-          <!-- Menggunakan 'deskripsi' yang dipotong karena tidak ada kolom 'menu_unggulan' di table -->
+          <!-- Keterangan dikosongkan agar tampilan tetap rapi -->
           <p class="text-warning small">
-            <?= substr(strip_tags($k['deskripsi']), 0, 40)  ?>
+            &nbsp;
           </p>
 
           <div class="d-flex justify-content-between small">
             <!-- Menggunakan 'lokasi' dan 'harga_min' sesuai table -->
-            <span><i class="bi bi-geo-alt"></i> <?= $k['alamat'] ?></span>
+            <span><i class="bi bi-geo-alt"></i> <?= $alamat ?></span>
             <span class="fw-bold">
-              Rp <?= number_format($k['rentang_harga'], 0, ',', '.') ?>
+              Rp <?= $harga ?>
             </span>
           </div>
 
         </div>
-      </div>
+      </a>
     </div>
     <?php endforeach; ?>
 
       <div class="detail-destinasi">
-          <a href="kulinerlainnya.php" class="link-gold-animated">
+            <a href="kulinerLainnya.php" class="link-gold-animated">
             <i class="bi bi-fork-knife"></i> Lihat Semua Kuliner
           </a> 
       </div>

@@ -247,3 +247,43 @@ html {
     .link-gold-animated:hover::after {
         width: 100%; /* Melebar Penuh */
     }
+
+    /* Animasi Hover Link Detail */
+.link-detail-animated {
+    color: #2D3436; /* Warna text awal (dark) */
+    text-decoration: none;
+    font-weight: 700;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+}
+
+.link-detail-animated i {
+    transition: transform 0.3s ease;
+}
+
+.link-detail-animated:hover {
+    color: #C69C6D; /* Warna saat hover (Gold) */
+}
+
+/* Efek Garis Bawah Bergerak */
+.link-detail-animated::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0; /* Mulai dari kiri */
+    background-color: #C69C6D;
+    transition: width 0.3s ease;
+}
+
+.link-detail-animated:hover::after {
+    width: 100%; /* Melebar penuh saat hover */
+}
+
+.link-detail-animated:hover i {
+    transform: translateX(3px); /* Panah geser sedikit ke kanan */
+}

@@ -187,7 +187,7 @@ if ($event) {
 <!-- 2. STRUKTUR HTML -->
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="#">
+    <a class="navbar-brand fw-bold" href="landingpageclean.php">
         Jogja<span style="color: #C69C6D;">Verse.</span>
     </a>
 

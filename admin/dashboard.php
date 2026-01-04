@@ -43,7 +43,6 @@ if ($colJenis) {
 }
 
 $totalDestinasi = safe_count_table($koneksi, "destinasi");
-$totalAtraksi   = safe_count_table($koneksi, "atraksi");
 $totalEvent     = safe_count_table($koneksi, "event");
 $totalKuliner   = safe_count_table($koneksi, "kuliner");
 $totalAkun      = safe_count_table($koneksi, "pengguna");
@@ -69,8 +68,8 @@ $recentAccounts = recent_rows($koneksi, "pengguna", 6);
   </div>
   <div class="metric-card">
     <div class="label">Konten Wisata</div>
-    <div class="value"><?= h($totalDestinasi + $totalAtraksi + $totalEvent + $totalKuliner) ?></div>
-    <div class="muted">Destinasi, atraksi, event, kuliner</div>
+    <div class="value"><?= h($totalDestinasi + $totalEvent + $totalKuliner) ?></div>
+    <div class="muted">Destinasi, event, kuliner</div>
   </div>
   <div class="metric-card">
     <div class="label">Akun Pengguna</div>

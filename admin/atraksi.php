@@ -6,6 +6,10 @@ require_once __DIR__ . "/../config/upload.php";
 require_once __DIR__ . "/_crud_helper.php";
 wajib_admin();
 
+$_SESSION['flash'] = "Fitur atraksi sudah dinonaktifkan.";
+header("Location: " . BASE_URL . "/admin/dashboard.php");
+exit();
+
 $table = "atraksi";
 $galeriTable = "galeri";
 $galeriJenis = "atraksi";

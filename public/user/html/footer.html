@@ -9,7 +9,7 @@
           <div class="logo-icon me-2">
             <i class="bi bi-geo-alt-fill"></i>
           </div>
-          <h5 class="mb-0 fw-bold">WisataJogja</h5>
+          <h5 class="mb-0 fw-bold">JogjaVerse</h5>
         </div>
 
         <p class="small text-light opacity-75">
@@ -24,7 +24,7 @@
           </li>
           <li class="mb-2">
             <i class="bi bi-envelope me-2"></i>
-            info@wisatajogja.go.id
+            info@jogjaverse.go.id
           </li>
           <li>
             <i class="bi bi-telephone me-2"></i>
@@ -73,7 +73,7 @@
     <!-- Bottom -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pb-4 gap-3">
       <small class="opacity-75">
-        © 2025 WisataJogja. Disponsori oleh Pemerintah Kota Yogyakarta
+        © 2025 JogjaVerse. Disponsori oleh Pemerintah Kota Yogyakarta
       </small>
 
       <div class="d-flex gap-3">
@@ -86,3 +86,51 @@
 
   </div>
 </footer>
+
+
+
+<!-- <?php
+require_once __DIR__ . '/../../../config/koneksi.php';
+
+
+/* 3 DESTINASI POPULER */
+$destinasi = [];
+$res = $koneksi->query("
+  SELECT * FROM destinasi
+  WHERE status = 'publish'
+  ORDER BY dibuat_pada DESC
+  LIMIT 3
+");
+
+while ($row = $res->fetch_assoc()) {
+  $destinasi[] = $row;
+}
+
+/* 4 EVENT POPULER */
+$event = [];
+$res = $koneksi->query("
+  SELECT * FROM event
+  WHERE status = 'publish'
+  ORDER BY kuota DESC
+  LIMIT 4
+");
+
+while ($row = $res->fetch_assoc()) {
+  $event[] = $row;
+}
+
+
+/* 3 KULINER POPULER */
+$kuliner = [];
+$res = $koneksi->query("
+  SELECT * FROM kuliner
+  WHERE status = 'publish'
+  ORDER BY dibuat_pada DESC
+  LIMIT 3
+");
+
+while ($row = $res->fetch_assoc()) {
+  $kuliner[] = $row;
+}
+
+?> -->

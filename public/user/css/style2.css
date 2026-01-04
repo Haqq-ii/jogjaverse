@@ -1,0 +1,290 @@
+#background {
+    background-image: 
+    linear-gradient(
+  to bottom, 
+  rgba(255, 255, 255, 0) 50%, 
+  #FFFFFF 100% ), 
+    url(../img/hero-yogyakarta.jpg);
+    background-size: cover;
+    border-radius: 0 0 40px 40px;
+    background-repeat: no-repeat;
+     background-size: cover;
+    background-position: center center; /* gambar selalu di tengah */
+}
+
+html {
+    background-color: #332920;
+}
+
+.desk {
+    margin-top: 4rem;
+}
+
+.destinasi {
+    text-decoration: none;
+    color:#6F202D;
+    background-color: #EBE1E1;
+    padding: 5px 10px 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+.title{
+ font-size: 3.5rem;
+ color:#321B1F;
+
+}
+
+.sub-title {
+    font-size: 2rem;
+    color:#846267;
+}
+
+.card-text {
+    font-size: 12px;
+}
+
+.bi {
+    font-size: 12px;
+    font-style: normal;
+}
+
+.card:hover {
+    transform: scale(1.01);
+    transition: .4s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.deskripsi {
+    border-radius: 20px;
+    margin: 40px;
+}
+
+.scale-down {
+  transform: scale(0.88);
+}
+
+.card {
+  transition: transform .3s ease, opacity .3s ease;
+}
+
+
+.detail-destinasi {
+    text-align: center;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+}
+
+.detail-destinasi a{
+    text-decoration: none;
+}
+/* Variabel Warna */
+    :root {
+        --primary-nav: #2D1B20; /* Dark Maroon */
+        --secondary-nav: #C69C6D; /* Gold */
+    }
+
+    /* Styling Dasar Navbar - DIUBAH MENJADI COMPACT */
+    .navbar {
+        transition: all 0.4s ease;
+        padding: 0.6rem 0; /* Padding diperkecil (sebelumnya 1.75rem) */
+    }
+    
+    /* Styling Navbar saat di-scroll */
+    .navbar.scrolled {
+        background-color: rgba(45, 27, 32, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 0.75rem 0; /* Padding saat scroll dibuat lebih kecil lagi */
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Brand / Logo - TETAP BESAR */
+    .navbar-brand {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem; /* Tetap 2rem sesuai request */
+    }
+
+    /* Link Navigasi - UKURAN STANDAR */
+    .nav-link {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        color: rgba(255,255,255,0.85) !important;
+        font-weight: 500;
+        font-size: 1.2rem; /* Diperkecil menjadi 1rem (sebelumnya 1.4rem) */
+        position: relative;
+        transition: color 0.3s;
+        margin: 0 10px; /* Margin dirapatkan (sebelumnya 15px) */
+    }
+
+    /* Efek Hover & Active */
+    .nav-link:hover, .nav-link.active {
+        color: #C69C6D !important;
+    }
+
+    /* Garis Bawah Animasi saat Hover */
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 3px;
+        bottom: 0px; /* Disesuaikan ke 0px agar nempel */
+        left: 50%;
+        background-color: #C69C6D;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after {
+        width: 80%;
+    }
+
+    /* Tombol Login - DIPERKECIL */
+    .btn-gold {
+        background-color: #C69C6D;
+        color: #fff;
+        border-radius: 50px;
+        padding: 8px 24px; /* Padding diperkecil (sebelumnya 14px 36px) */
+        font-size: 1rem;   /* Font diperkecil (sebelumnya 1.25rem) */
+        font-weight: 600;
+        transition: all 0.3s;
+        border: none;
+        text-decoration: none;
+    }
+
+    .btn-gold:hover {
+        background-color: #b08855;
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(198, 156, 109, 0.4);
+    }
+
+    /* --- STYLING FOOTER (Baru) --- */
+    .footer-custom {
+        background-color: var(--primary-nav); /* Menggunakan warna yang sama dengan Navbar */
+        color: #fff;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        border-top: 1px solid rgba(198, 156, 109, 0.2); /* Garis emas tipis di atas */
+    }
+
+    .footer-brand {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        color: #fff;
+    }
+
+    .footer-link a {
+        color: rgba(255,255,255,0.7);
+        text-decoration: none;
+        transition: all 0.3s;
+        display: inline-block;
+        margin-bottom: 8px;
+    }
+
+    .footer-link a:hover {
+        color: var(--secondary-nav); /* Hover Emas */
+        transform: translateX(5px);
+    }
+
+    .social-icon {
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 50%;
+        color: #fff;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+
+    .social-icon:hover {
+        background-color: var(--secondary-nav);
+        border-color: var(--secondary-nav);
+        color: #fff;
+        transform: translateY(-3px);
+    }
+    
+    .icon-gold {
+        color: var(--secondary-nav);
+    }
+
+  /* --- CLASS BARU: LINK TEXT ANIMATED (Untuk Destinasi Lainnya) --- */
+    .link-gold-animated {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 700;       /* Tebal */
+        color: #2D1B20;         /* Warna Gelap */
+        text-decoration: none;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;              /* Jarak antara ikon dan teks sedikit diperlebar */
+        transition: color 0.3s ease;
+        font-size: 1.1rem;      /* Ukuran font teks utama */
+    }
+
+    /* Penyesuaian Ukuran Ikon Khusus */
+    .link-gold-animated i {
+        font-size: 1.4rem;      /* Ukuran ikon lebih besar dari teks */     line-height: 1;
+        margin-top: -2px;       /* Sedikit naik agar sejajar optik dengan teks */
+    }
+
+    .link-gold-animated:hover {
+        color: #C69C6D; /* Berubah Emas */
+    }
+
+    .link-gold-animated::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 50%;
+        background-color: #C69C6D;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .link-gold-animated:hover::after {
+        width: 100%; /* Melebar Penuh */
+    }
+
+
+    /* Animasi Hover Link Detail */
+.link-detail-animated {
+    color: #2D3436; /* Warna text awal (dark) */
+    text-decoration: none;
+    font-weight: 700;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: color 0.3s ease;
+}
+
+.link-detail-animated i {
+    transition: transform 0.3s ease;
+}
+
+.link-detail-animated:hover {
+    color: #C69C6D; /* Warna saat hover (Gold) */
+}
+
+/* Efek Garis Bawah Bergerak */
+.link-detail-animated::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0; /* Mulai dari kiri */
+    background-color: #C69C6D;
+    transition: width 0.3s ease;
+}
+
+.link-detail-animated:hover::after {
+    width: 100%; /* Melebar penuh saat hover */
+}
+
+.link-detail-animated:hover i {
+    transform: translateX(3px); /* Panah geser sedikit ke kanan */
+}

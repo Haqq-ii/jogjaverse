@@ -2,7 +2,7 @@
 require_once __DIR__ . "/../config/config.php";
 session_start();
 
-// Jika sudah login, redirect ke dashboard
+// Redirect jika user sudah login
 if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
     if (($_SESSION['role'] ?? '') === 'admin') {
         header("Location: " . BASE_URL . "/admin/dashboard.php");
@@ -14,11 +14,9 @@ if (isset($_SESSION['login']) && $_SESSION['login'] === true) {
 
 $error = $_SESSION['register_error'] ?? '';
 $success = $_SESSION['register_success'] ?? '';
-unset($_SESSION['register_error'], $_SESSION['register_success']);
+$old_data = $_SESSION['old_data'] ?? [];
 
-// Simpan input sebelumnya jika ada error
-$old_data = $_SESSION['old_register_data'] ?? [];
-unset($_SESSION['old_register_data']);
+unset($_SESSION['register_error'], $_SESSION['register_success'], $_SESSION['old_data']);
 ?>
 <!DOCTYPE html>
 <html lang="id">

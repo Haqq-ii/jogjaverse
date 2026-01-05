@@ -131,11 +131,12 @@ $trend_top = $trend_data['top'] ?? [];
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 
     <link rel="stylesheet" href="../css/style2.css">
+    <link rel="stylesheet" href="../css/landingpage.css">
     <title>JogjaVerse</title>
 
 
 </head>
-<body class="navbar-overlay">
+<body class="navbar-overlay landingpage">
 
 <!-- 2. STRUKTUR HTML -->
 <?php include __DIR__ . '/includes/navbar.php'; ?>
@@ -208,7 +209,7 @@ $trend_top = $trend_data['top'] ?? [];
 <section class="py-5">
   <div class="container" style="background-color:#F9F7F5; border-radius: 20px; padding: 2rem;" data-aos="fade-up">
     
-    <h2 class="fw-bold mb-3 text-center" style="color: #321B1F; font-size: clamp(2rem, 3.5vw, 3.5rem);">Tempat Destinasi <span style="color: #EEB32B;">Unggulan</span></h2>
+    <h2 class="fw-bold mb-3 text-center" style="color: #321B1F; font-size: clamp(2rem, 3.5vw, 3.rem);">Tempat Destinasi <span style="color: #EEB32B;">Unggulan</span></h2>
     <p class="text-center mb-5" style="color:#846267; font-size: clamp(1.1rem, 1.5vw, 1.5rem);">
       Temukan destinasi wisata terbaik di Yogyakarta dengan informasi lengkap, ulasan <br>
       pengunjung, dan pemesanan tiket online
@@ -295,7 +296,7 @@ $trend_top = $trend_data['top'] ?? [];
 <section class="py-5">
   <div class="container" style="background-color:#F9F7F5; border-radius: 20px; padding: 2rem;" data-aos="fade-up">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
-      <h2 class="fw-bold mb-0 text-center" style="color: #321B1F; font-size: clamp(2rem, 3.5vw, 3.5rem);">Trending Minggu Ini</h2>
+      <h2 class="fw-bold mb-0 text-center" style="color: #321B1F; font-size: clamp(2rem, 3.5vw, 3.rem);">Trending Minggu Ini</h2>
       <span class="text-muted small">Berdasarkan data mingguan</span>
     </div>
 
@@ -365,7 +366,7 @@ $trend_top = $trend_data['top'] ?? [];
 
 <!-- Even dan Atraksi -->
 <section class="py-5">
-  <h2 class="fw-bold mb-3 text-center" style="color: #321B1F; font-size: clamp(2rem, 3.5vw, 3.5rem);">Event & <span style="color: #4A1B22;">Atraksi</span></h2>
+  <h2 class="fw-bold mb-3 text-center" style="color: #321B1F; font-size: clamp(2rem, 3.5vw, 3.rem);">Event & <span style="color: #4A1B22;">Atraksi</span></h2>
   <p class="text-center mb-5" style="color:#846267; font-size: clamp(1.1rem, 1.5vw, 1.5rem); ">
     Ikuti berbagai event budaya, festival, dan atraksi menarik yang diselenggarakan di Kota 
     <br>Yogyakarta

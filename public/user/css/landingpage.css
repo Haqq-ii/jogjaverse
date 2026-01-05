@@ -1,0 +1,75 @@
+body.landingpage #background {
+  min-height: 100svh;
+}
+
+body.landingpage {
+  overflow-x: hidden;
+}
+
+body.landingpage #background h1,
+body.landingpage #background p {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 991.98px) {
+  body.landingpage .navbar .navbar-collapse {
+    align-items: center;
+    text-align: center;
+  }
+
+  body.landingpage .navbar .navbar-center {
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100%;
+  }
+
+  body.landingpage .navbar .navbar-nav {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  body.landingpage .navbar .navbar-account {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 767.98px) {
+  body.landingpage #background {
+    padding: 5.5rem 1.25rem 3.5rem !important;
+  }
+
+  body.landingpage #background h1 {
+    font-size: clamp(2rem, 10vw, 3.5rem) !important;
+    letter-spacing: 0.2rem !important;
+  }
+
+  body.landingpage #background p {
+    font-size: clamp(0.9rem, 4.5vw, 1.35rem) !important;
+    letter-spacing: 0.12rem !important;
+  }
+
+  body.landingpage .deskripsi {
+    margin: 16px;
+    padding: 16px;
+  }
+
+  body.landingpage .desk {
+    margin-top: 1.5rem;
+  }
+
+  body.landingpage .title {
+    font-size: clamp(1.8rem, 6.5vw, 2.6rem) !important;
+  }
+
+  body.landingpage .sub-title {
+    font-size: clamp(1rem, 4vw, 1.4rem) !important;
+  }
+
+  body.landingpage .sub-title br {
+    display: none;
+  }
+}

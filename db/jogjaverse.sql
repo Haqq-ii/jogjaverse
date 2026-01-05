@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jan 05, 2026 at 04:20 AM
+-- Generation Time: Jan 05, 2026 at 05:49 AM
 -- Server version: 8.0.44
 -- PHP Version: 8.3.26
 
@@ -48,7 +48,7 @@ CREATE TABLE `atraksi` (
 --
 
 INSERT INTO `atraksi` (`id_atraksi`, `id_destinasi`, `id_kategori`, `nama`, `deskripsi`, `jam_mulai`, `jam_selesai`, `hari_buka`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
-(2, 11, 1, 'Tari Topeng', 'adalah pokoknya', '09:00:00', '17:01:00', 'Senin - Jumat', '/assets/uploads/atr_69592c40b09d73.91339865.jpg', 'publish', 8, '2026-01-03 14:48:32', NULL);
+(2, NULL, 1, 'Tari Topeng', 'adalah pokoknya', '09:00:00', '17:01:00', 'Senin - Jumat', '/assets/uploads/atr_69592c40b09d73.91339865.jpg', 'publish', 8, '2026-01-03 14:48:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -81,9 +81,16 @@ CREATE TABLE `destinasi` (
 --
 
 INSERT INTO `destinasi` (`id_destinasi`, `id_kategori`, `nama`, `slug`, `deskripsi`, `alamat`, `kota`, `latitude`, `longitude`, `jam_operasional`, `harga_tiket`, `nomor_kontak`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
-(7, 2, 'Heha Sky View', 'dest_693f08c738b2d4.35672802.jpg', 'lorem ipsum dolor sit amet', NULL, NULL, -7.7956000, 110.3695000, '9:00 - 21:00', NULL, NULL, '/assets/uploads/dest_694eef2eec2ec2.01692125.jpg', 'publish', NULL, '2025-12-18 17:51:55', '2025-12-26 20:25:19'),
-(9, 1, 'Pantai Drini', '.', 'Pantai yang indah dengan suarah tabrakn ombak ', NULL, 'Sleman', -7.7956000, 110.3695000, '7:00 - 16:00', NULL, NULL, '/assets/uploads/dest_694eefe2878625.49001356.jpg', 'publish', NULL, '2025-12-26 20:28:18', '2026-01-02 13:29:03'),
-(11, 1, 'Candi Prambanan', 'candi_prambanan', 'Candi Prambanan merupakan salah satu peninggalan sejarah dan kebudayaan terbesar di Indonesia yang menjadi simbol kejayaan peradaban Hindu di Pulau Jawa. Kompleks candi ini terletak di Kecamatan Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta, meskipun sebagian wilayahnya juga masuk ke dalam Kabupaten Klaten, Jawa Tengah. Dengan arsitektur yang megah dan nilai sejarah yang tinggi, Candi Prambanan telah ditetapkan sebagai Situs Warisan Dunia oleh UNESCO pada tahun 1991. Keberadaan candi ini tidak hanya mencerminkan keindahan seni bangunan masa lampau, tetapi juga menggambarkan kemajuan teknologi, kepercayaan, serta kehidupan sosial masyarakat Jawa Kuno.\r\nCandi Prambanan dibangun pada abad ke-9 Masehi, pada masa pemerintahan Dinasti Sanjaya yang menganut agama Hindu. Candi ini didedikasikan untuk Trimurti, yaitu tiga dewa utama dalam ajaran Hindu, yakni Dewa Brahma sebagai pencipta, Dewa Wisnu sebagai pemelihara, dan Dewa Siwa sebagai pelebur. Dari ketiga dewa tersebut, Dewa Siwa menempati posisi paling utama, yang tercermin dari Candi Siwa sebagai bangunan tertinggi dan terbesar di kompleks Prambanan, dengan ketinggian mencapai sekitar 47 meter. Hal ini menunjukkan bahwa aliran Hindu Siwaisme memiliki pengaruh yang sangat kuat pada masa itu.\r\nSecara keseluruhan, kompleks Candi Prambanan terdiri atas ratusan bangunan candi, meskipun tidak semuanya masih berdiri utuh hingga saat ini. Kompleks ini tersusun dalam tiga zona utama, yaitu zona luar, zona tengah, dan zona inti. Zona inti merupakan bagian terpenting yang berisi delapan candi utama dan delapan candi pendamping. Di antara candi utama tersebut, tiga candi besar didedikasikan untuk Dewa Siwa, Brahma, dan Wisnu, serta tiga candi wahana yang masing-masing diperuntukkan bagi kendaraan dewa, yaitu Nandi (lembu) untuk Siwa, Angsa untuk Brahma, dan Garuda untuk Wisnu.\r\nKeindahan Candi Prambanan tidak hanya terlihat dari kemegahan bangunannya, tetapi juga dari relief-relief yang terukir di dinding candi. Relief tersebut menceritakan kisah epik Ramayana dan Krishnayana, yang dipahat dengan sangat detail dan artistik. Relief Ramayana yang terdapat pada Candi Siwa dan Candi Brahma menggambarkan perjalanan hidup Rama, Sinta, dan Rahwana, serta nilai-nilai moral seperti kesetiaan, keberanian, dan pengorbanan. Relief-relief ini tidak hanya berfungsi sebagai hiasan, tetapi juga sebagai media pendidikan dan penyebaran ajaran agama Hindu kepada masyarakat pada masa itu.\r\nArsitektur Candi Prambanan mencerminkan konsep kosmologi Hindu, di mana bangunan candi dianggap sebagai representasi Gunung Meru, tempat bersemayamnya para dewa. Bentuk bangunan yang menjulang tinggi dengan struktur berundak melambangkan tingkatan alam semesta, mulai dari dunia manusia hingga alam para dewa. Setiap bagian candi dirancang dengan perhitungan yang matang, baik dari segi proporsi, orientasi, maupun simbolisme religius. Hal ini menunjukkan tingkat pengetahuan dan keterampilan yang tinggi dari para arsitek dan pemahat pada masa Jawa Kuno.\r\nSeiring berjalannya waktu, Candi Prambanan sempat mengalami masa kemunduran dan kerusakan, terutama akibat perpindahan pusat kekuasaan ke Jawa Timur serta bencana alam seperti gempa bumi dan letusan gunung berapi. Pada abad ke-16, kompleks candi ini mulai ditinggalkan dan tertutup oleh semak belukar. Upaya pemugaran baru dilakukan secara serius pada abad ke-20 oleh pemerintah Hindia Belanda dan dilanjutkan oleh pemerintah Indonesia setelah kemerdekaan. Proses restorasi ini memerlukan waktu yang panjang dan ketelitian tinggi untuk menjaga keaslian struktur bangunan.\r\nSaat ini, Candi Prambanan tidak hanya berfungsi sebagai situs sejarah dan tempat ibadah umat Hindu, tetapi juga sebagai destinasi wisata budaya yang menarik wisatawan domestik maupun mancanegara. Berbagai kegiatan budaya sering diselenggarakan di kawasan ini, salah satunya adalah Sendratari Ramayana Prambanan, sebuah pertunjukan seni yang menggabungkan tari, musik, dan drama dengan latar belakang Candi Prambanan yang megah. Pertunjukan ini menjadi daya tarik tersendiri karena mampu menghidupkan kembali kisah Ramayana dalam bentuk seni pertunjukan yang memukau.\r\nDengan segala keindahan, nilai sejarah, dan makna filosofis yang dimilikinya, Candi Prambanan merupakan warisan budaya yang sangat berharga bagi bangsa Indonesia. Keberadaan candi ini menjadi bukti nyata bahwa nenek moyang bangsa Indonesia memiliki peradaban yang maju, kreatif, dan berlandaskan nilai-nilai spiritual yang kuat. Oleh karena itu, pelestarian dan perawatan Candi Prambanan merupakan tanggung jawab bersama agar warisan budaya ini dapat terus dinikmati dan dipelajari oleh generasi mendatang.\r\n', 'Jl. Raya Solo - Yogyakarta No.16, Kranggan, Bokoharjo, Kecamatan Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571', 'Sleman', -7.7520370, 110.4914550, '08:00-16:00', 50000, '+62 811 2688 000', '/assets/uploads/dest_695924f477ec29.72712864.jpg', 'publish', 8, '2026-01-03 14:17:24', '2026-01-04 10:12:26');
+(12, 1, 'Museum Ullen Sentalu', 'museum-ullen-sentalu', 'Museum Ullen Sentalu di Yogyakarta adalah pusat pelestarian budaya dan sejarah bangsawan Mataram, termasuk Kesultanan Yogyakarta dan Kasunanan Surakarta. Terletak di lereng Gunung Merapi, museum ini menawarkan pengalaman unik dengan desain semi-terbuka dan suasana yang tenang. Koleksi utamanya meliputi lukisan tokoh bangsawan, batik klasik, sastra, dan surat pribadi yang menggambarkan kehidupan para bangsawan. Dengan tur berpemandu dan pendekatan naratif, museum ini menyajikan sejarah dan budaya Jawa secara mendalam, menjadikannya destinasi penting bagi wisatawan dan pelajar yang ingin memahami kearifan lokal.', 'Jl. Boyong No.KM 25, Kaliurang, Hargobinangun, Kec. Pakem, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55582', 'Sleman', -7.5976480, 110.4233960, '08.30-15.00', 50, '+62 813-2891-8828', '/assets/uploads/dest_695b46e4216031.07444462.png', 'publish', 8, '2026-01-05 05:06:44', NULL),
+(13, 1, 'Taman Sari (Water Castle)', 'taman-sari-water-castle', 'Taman Sari Yogyakarta adalah kompleks bersejarah yang dibangun pada abad ke-18 oleh Sri Sultan Hamengku Buwono I sebagai taman kerajaan untuk rekreasi, meditasi, dan pertahanan. Terletak dekat dengan Keraton Yogyakarta, Taman Sari menggabungkan unsur budaya Jawa, Portugis, dan Tiongkok dalam arsitekturnya, menghasilkan desain yang unik. Dikenal dengan Umbul Pasiraman, kolam pemandian untuk Sultan dan keluarganya, serta Sumur Gumuling, tempat meditasi dengan desain simbolik. Taman ini juga memiliki terowongan bawah tanah sebagai jalur pertahanan. Walaupun sebagian besar kompleks rusak, restorasi terus dilakukan untuk menjaga kelestariannya, menjadikannya destinasi wisata budaya yang penting, mencerminkan filosofi kehidupan dan harmoni antara kekuasaan duniawi dan spiritual.', 'Jl. Taman Sari No.42, Patehan, Kecamatan Kraton, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55133', 'Yogyakarta', -7.8100320, 110.3591530, '09.00-15.00', 25, '08122791278', '/assets/uploads/dest_695b47c50d8252.36785121.png', 'publish', 8, '2026-01-05 05:10:29', '2026-01-05 05:15:46'),
+(14, 1, 'Benteng Vredeburg', 'benteng-vredeburg', 'Benteng Vredeburg adalah bangunan bersejarah yang terletak di pusat Kota Yogyakarta, tepatnya di kawasan Malioboro. Dibangun pada tahun 1760 oleh pemerintah kolonial Belanda, benteng ini awalnya berfungsi sebagai alat pengawasan dan pertahanan. Kini, Benteng Vredeburg berfungsi sebagai museum yang menyimpan diorama dan koleksi sejarah perjuangan Indonesia, mulai dari masa penjajahan Belanda hingga kemerdekaan. Museum ini juga menjadi pusat kegiatan budaya dan edukasi sejarah. Dengan arsitektur militer Eropa abad ke-18 yang masih terjaga, Benteng Vredeburg memberikan wawasan mendalam tentang sejarah Indonesia dan menjadi destinasi wisata penting yang mudah dijangkau wisatawan.', 'Jl. Margo Mulyo No.6, Ngupasan, Kecamatan Gondomanan, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55122, Indonesia', 'Yogyakarta', -7.8003250, 110.3663350, '08.00-20.00', 3, '(0274) 586934', '/assets/uploads/dest_695b48d3055de0.35075499.png', 'publish', 8, '2026-01-05 05:14:59', '2026-01-05 05:15:50'),
+(15, 2, 'Pantai Parangtritis', 'pantai-parangtritis', 'Pantai Parangtritis, terletak sekitar 27 km selatan Yogyakarta, adalah destinasi wisata alam yang terkenal dengan pantai berpasir hitam dan ombak besar. Selain keindahan alamnya, pantai ini kaya akan nilai budaya dan spiritual, terkait erat dengan legenda Nyi Roro Kidul, penguasa Laut Selatan. Dikenal juga dengan gumuk pasir yang langka, Parangtritis menjadi tempat menarik untuk sandboarding dan aktivitas alam lainnya. Tradisi upacara Labuhan yang diadakan Keraton Yogyakarta menambah dimensi sakral tempat ini. Pengunjung dapat menikmati matahari terbenam yang indah, serta menikmati kuliner pesisir dan aktivitas tradisional seperti menaiki delman. Meskipun indah, pantai ini juga memiliki ombak yang berbahaya, sehingga kewaspadaan sangat diperlukan.', 'Pantai Parangtritis Mancingan RT 07, Pantai, Parangtritis, Kecamatan Kretek, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55772, Indonesia', 'Bantul', -8.0272830, 110.3370080, '-', 15, '+62 813-6478-0043 ', '/assets/uploads/dest_695b499fe44d32.98240902.png', 'publish', 8, '2026-01-05 05:18:23', '2026-01-05 05:37:55'),
+(16, 2, 'Obelix Hiils', 'obelix-hiils', 'Obelix Hills adalah destinasi wisata modern di kawasan perbukitan Prambanan, Yogyakarta, yang menawarkan pemandangan alam spektakuler dan fasilitas hiburan menarik. Terletak di dataran tinggi, Obelix Hills menyuguhkan pemandangan 360 derajat dari hamparan perbukitan, persawahan, dan Kota Yogyakarta. Dikenal dengan spot foto tematik dan area panorama terbuka, tempat ini sangat populer untuk menikmati sunset yang memukau. Selain itu, Obelix Hills juga dilengkapi dengan kafe, restoran, dan fasilitas lainnya, serta sering mengadakan acara hiburan. Dengan pengelolaan profesional dan suasana yang nyaman, Obelix Hills menjadi destinasi favorit bagi wisatawan yang mencari keindahan alam dan pengalaman wisata yang dinamis.', 'Klumprit, Jl. Rakai Panangkaran Blok I & 2, Klumprit II, Wukirharjo, Kec. Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55572', 'Sleman', -7.8066470, 110.5198040, '11.00-19.00', 30, '08112948833', '/assets/uploads/dest_695b4b1ec117a0.42183795.png', 'publish', 8, '2026-01-05 05:24:46', '2026-01-05 05:26:01'),
+(17, NULL, 'Hutam Pinus Pengger dan Hutan Pinus Mangunan', 'hutam-pinus-pengger-dan-hutan-pinus-mangunan', 'Hutan Pinus Pengger dan Hutan Pinus Mangunan merupakan dua destinasi wisata alam yang terletak di kawasan perbukitan Dlingo, Kabupaten Bantul, Daerah Istimewa Yogyakarta. Kedua tempat ini dikenal luas karena menawarkan suasana alam yang sejuk, hamparan pepohonan pinus yang menjulang tinggi, serta pemandangan alam dari ketinggian yang memukau. Keberadaan hutan pinus ini menjadi alternatif wisata alam yang menenangkan, jauh dari hiruk-pikuk perkotaan, sekaligus mencerminkan keberhasilan pengelolaan lingkungan berbasis pariwisata berkelanjutan.', 'Jl. Dlingo-Patuk, Sendangsari, Terong, Kec. Dlingo, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55783', 'Bantul', -7.9228660, 110.4341080, '08.00-21.00', 7, '082135753988', '/assets/uploads/dest_695b4c456fa268.29564669.png', 'publish', 8, '2026-01-05 05:28:54', '2026-01-05 05:29:41'),
+(18, 1, 'Keraton Yogyakarta', 'keraton-yogyakarta', 'Keraton Yogyakarta Hadiningrat, didirikan oleh Sri Sultan Hamengku Buwono I pada tahun 1755, adalah pusat kebudayaan dan simbol kekuasaan Kesultanan Yogyakarta. Arsitektur keraton mencerminkan filosofi kehidupan Jawa, dengan tata letak yang menghubungkan alam, manusia, dan spiritual. Keraton terdiri dari bangunan utama seperti Kedhaton dan Bangsal Kencono, yang menjadi tempat tinggal Sultan dan pusat upacara. Sebagai pusat pelestarian budaya, Keraton Yogyakarta juga menjaga seni tradisional seperti tari Bedhaya, wayang kulit, dan gamelan. Selain itu, keraton memiliki museum yang menyimpan koleksi bersejarah. Selain sebagai simbol kebudayaan, keraton juga memainkan peran penting dalam sejarah Indonesia, terutama selama masa kemerdekaan. Hingga kini, Keraton Yogyakarta tetap menjadi lambang keluhuran budaya Jawa yang terus berkembang.', 'Jl. Rotowijayan No.1, Panembahan, Kecamatan Kraton, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55131', 'Yogyakarta', -7.8075970, 110.3638700, '08.30-14.30', 25, '(0274) 376795', '/assets/uploads/dest_695b4cd54a3136.62287274.png', 'publish', 8, '2026-01-05 05:32:05', NULL),
+(19, 2, 'Heha Sky View', 'heha-sky-view', 'HeHa Sky View adalah destinasi wisata modern yang terletak di perbukitan Patuk, Kabupaten Gunungkidul, Yogyakarta. Menawarkan pemandangan spektakuler dari ketinggian, tempat ini populer untuk menikmati panorama alam, terutama sunset dan pemandangan malam kota Yogyakarta. Dengan konsep wisata terpadu, HeHa Sky View memiliki spot foto ikonik seperti Sky Glass, Sky Bridge, dan balon udara, serta berbagai instalasi artistik. Selain itu, tempat ini juga menawarkan wisata kuliner dengan restoran terbuka yang menyajikan hidangan lokal dan internasional. Dilengkapi dengan fasilitas lengkap, HeHa Sky View cocok untuk keluarga, pasangan, dan komunitas yang ingin bersantai, berfoto, atau menikmati suasana senja. Dengan pengelolaan yang baik, destinasi ini juga berdampak positif bagi ekonomi lokal.', 'Jl. Dlingo-Patuk No.2, Patuk, Bukit, Kec. Patuk, Kabupaten Gunungkidul, Daerah Istimewa Yogyakarta 55862', 'Gunung Kidul', -7.8484810, 110.4785860, '10.00-21.00', 30, '02744357999', '/assets/uploads/dest_695b4d6d6da8a2.30047443.png', 'publish', 8, '2026-01-05 05:34:37', NULL),
+(20, NULL, 'Alun-Alun Kidul', 'alun-alun-kidul', 'Alun-Alun Kidul (Alkid) Yogyakarta adalah ruang publik ikonik yang terletak di selatan Keraton Yogyakarta, dengan nilai sejarah, budaya, dan sosial yang kuat. Dulu digunakan untuk latihan prajurit dan upacara kerajaan, alun-alun ini kini dikenal dengan tradisi masangin, yaitu berjalan melewati dua pohon beringin besar dengan mata tertutup sebagai simbol introspeksi diri. Pada malam hari, kawasan ini menjadi pusat hiburan dengan wahana rekreasi seperti odong-odong dan permainan anak-anak, serta pedagang kaki lima yang menjajakan kuliner khas Yogyakarta. Selain sebagai tempat wisata, Alun-Alun Kidul juga berfungsi sebagai ruang sosial dan kegiatan budaya, menciptakan suasana hangat dan dinamis yang mencerminkan kehidupan masyarakat Yogyakarta.', 'Jl. Alun Alun Kidul, Patehan, Kecamatan Kraton, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55133', 'Yogyakarta', -7.7956000, 110.3695000, NULL, NULL, NULL, '/assets/uploads/dest_695b4deb31bab4.35643112.png', 'publish', 8, '2026-01-05 05:36:43', '2026-01-05 05:38:13'),
+(21, 1, 'Malioboro', 'malioboro', 'Jalan Malioboro adalah ikon utama Kota Yogyakarta yang menghubungkan Tugu Yogyakarta dan Keraton Yogyakarta, penuh dengan nilai sejarah, budaya, dan kehidupan masyarakat. Sebagai pusat aktivitas ekonomi, budaya, dan pariwisata, jalan ini dipenuhi pedagang kaki lima yang menjual berbagai barang, seperti batik, kerajinan tangan, dan kuliner khas Yogyakarta. Malioboro juga menjadi ruang ekspresi seni, dengan para seniman jalanan yang menampilkan karya mereka di trotoar. Dalam beberapa tahun terakhir, kawasan ini mengalami revitalisasi untuk meningkatkan kenyamanan pengunjung, tetap mempertahankan identitas budaya sekaligus beradaptasi dengan modernitas. Pada malam hari, Malioboro menyuguhkan suasana yang romantis dengan lampu jalan, angkringan, dan musik, menjadikannya pusat pertemuan berbagai kalangan. Sebagai saksi sejarah perjuangan Indonesia, Malioboro tetap menjadi simbol hidup dan dinamis Yogyakarta.', 'Jalan Malioboro, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55271, Indonesia', 'Yogyakarta', -7.7956000, 110.3695000, NULL, NULL, NULL, '/assets/uploads/dest_695b4ee217b8c1.80417962.png', 'publish', 8, '2026-01-05 05:40:50', '2026-01-05 05:41:07');
 
 -- --------------------------------------------------------
 
@@ -117,11 +124,11 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`id_event`, `id_destinasi`, `id_kategori`, `judul`, `slug`, `deskripsi`, `lokasi`, `latitude`, `longitude`, `mulai_pada`, `selesai_pada`, `kuota`, `harga`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
-(2, NULL, NULL, 'Konser ', '.', NULL, 'Prambanan', NULL, NULL, '2026-01-02 03:02:00', '2026-01-02 03:02:00', 200, 75, '/assets/uploads/evt_6957b4a30ce3e8.54306731.png', 'publish', NULL, '2026-01-01 20:03:24', '2026-01-02 12:05:55'),
-(4, NULL, NULL, 'Teater', '-', NULL, 'Malioboro', NULL, NULL, '2026-01-02 14:50:00', '2026-01-02 21:50:00', NULL, NULL, NULL, 'publish', NULL, '2026-01-02 07:51:15', '2026-01-02 11:20:41'),
-(7, NULL, NULL, 'Pagelaran Wayang', '---', NULL, 'Alun-Alun Utara', NULL, NULL, '2026-01-03 19:07:00', '2026-01-03 22:07:00', NULL, NULL, NULL, 'publish', NULL, '2026-01-02 12:07:50', NULL),
-(8, 11, 1, 'Wayang Kulit', 'wayang_kulit', 'faefafcecveaffevavrdvrvae', 'Jln Nglanjaran', NULL, NULL, '2026-01-03 21:48:00', '2026-01-03 23:00:00', 99, 150000, '/assets/uploads/evt_69593a884593b6.93284992.png', 'publish', 8, '2026-01-03 15:49:28', '2026-01-03 16:06:16'),
-(9, 9, 2, 'Voli Pantai', 'voli_pantai', 'voli pantai', 'jln kaliurang', NULL, NULL, '2026-01-05 03:22:00', '2026-01-05 17:30:00', 200, NULL, '/assets/uploads/evt_695b2084e45025.23790586.jpg', 'publish', 8, '2026-01-05 02:23:00', NULL);
+(10, NULL, 1, 'Wayang kulit', 'wayang-kulit', 'ChatGPT said:\r\nWayang kulit adalah seni pertunjukan tradisional yang sangat penting di Yogyakarta, berfungsi tidak hanya sebagai hiburan, tetapi juga sebagai media pendidikan dan pelestarian nilai budaya Jawa. Wayang kulit terbuat dari kulit kerbau yang dipahat dan dicat, dimainkan oleh dalang yang mengisi suara tokoh dan mengendalikan cerita, dengan iringan gamelan Jawa. Cerita yang diangkat umumnya berasal dari Mahabharata dan Ramayana, dengan tokoh-tokoh seperti Arjuna, Bima, dan Semar yang menyampaikan nilai kehidupan. Wayang kulit Yogyakarta dikenal dengan pementasan yang halus dan filosofis, mencerminkan keseimbangan antara manusia, alam, dan Tuhan. Pertunjukan wayang kulit sering diadakan dalam upacara adat, festival budaya, dan acara penting lainnya. UNESCO telah mengakui wayang kulit sebagai Warisan Budaya Takbenda Dunia, dan Yogyakarta menjadi pusat pelestariannya. Menyaksikan pertunjukan wayang kulit di Yogyakarta menawarkan pengalaman budaya yang mendalam dan penuh makna.', NULL, NULL, NULL, '2026-01-05 12:43:00', '2026-01-05 12:43:00', NULL, NULL, '/assets/uploads/evt_695b4fb5104989.34240308.png', 'publish', 8, '2026-01-05 05:44:21', NULL),
+(11, NULL, NULL, 'Upacara Labuhan Merapi', 'upacara-labuhan-merapi', 'Upacara Labuhan Merapi adalah tradisi adat dan spiritual yang dipelopori oleh Keraton Ngayogyakarta Hadiningrat untuk mempersembahkan sesaji kepada Tuhan, leluhur, dan kekuatan alam, terutama Gunung Merapi, dengan tujuan memohon keselamatan, keberkahan, dan keseimbangan hidup. Ritual ini digelar setiap tahun pada tanggal 30 Rejeb dalam kalender Jawa, sehari setelah peringatan Tingalan Dalem Jumenengan Dalem, hari kenaikan tahta Sultan Hamengku Buwono X. Dilaksanakan di lereng Gunung Merapi, ritual dimulai dengan arak-arakan persembahan (uborampe) dari Keraton menuju Bangsal Srimanganti di hutan lereng Merapi. Selain pemberian sesaji, prosesi ini mencakup macapat, doa bersama, kenduri, dan pertunjukan wayang kulit, menjadikannya sebuah festival budaya. Upacara yang dimulai pagi hari ini dipenuhi dengan kesakralan dan dihormati oleh ratusan peserta, baik masyarakat lokal maupun wisatawan.', 'Merapi', NULL, NULL, '2026-01-06 12:45:00', '2026-01-06 12:45:00', NULL, NULL, '/assets/uploads/evt_695b5003e1f8d8.41346681.png', 'publish', 8, '2026-01-05 05:45:39', NULL),
+(12, NULL, NULL, 'Gamelan Jawa', 'gamelan-jawa', 'Gamelan Jawa di Pendopo Keraton Ngayogyakarta Hadiningrat adalah ekspresi budaya karawitan tradisional yang ikonik dan bersejarah di Yogyakarta. Gamelan, yang terdiri dari alat musik logam seperti gong, kenong, bonang, saron, dan kendang, menghasilkan harmoni khas Jawa yang mendalam dan penuh makna. Di Keraton, gamelan tidak hanya berfungsi sebagai musik pengiring, tetapi juga mencerminkan nilai spiritual dan filosofi hidup Jawa, sering digunakan untuk mengiringi tarian klasik, upacara kerajaan, dan pertunjukan wayang kulit.\r\n\r\nDi Pendopo Keraton, gamelan dimainkan oleh abdi dalem atau kelompok karawitan yang terlatih, membawa suasana yang menggetarkan batin. Keraton Yogyakarta memiliki koleksi gamelan pusaka dengan nilai sejarah tinggi, yang hanya dimainkan pada acara-acara khusus. Pertunjukan gamelan menjadi bagian penting dari kegiatan budaya harian di keraton, memberikan pengalaman budaya otentik bagi wisatawan dan memperkenalkan filosofi serta estetika kehidupan masyarakat Jawa.', NULL, NULL, NULL, '2026-01-07 12:46:00', '2026-01-07 12:46:00', NULL, NULL, '/assets/uploads/evt_695b504815b9b1.68396510.png', 'publish', 8, '2026-01-05 05:46:48', NULL),
+(13, NULL, NULL, 'Festival Sekaten', 'festival-sekaten', 'Festival Sekaten adalah tradisi budaya dan keagamaan yang telah berlangsung ratusan tahun di Yogyakarta, dimulai pada masa Kesultanan Mataram Islam. Festival ini diselenggarakan untuk memperingati Maulid Nabi Muhammad SAW dan sebagai sarana dakwah Islam yang dikemas dalam budaya Jawa. Sekaten, yang nama nya berasal dari kata syahadatain (dua kalimat syahadat), dimulai dengan gamelan untuk menarik perhatian masyarakat agar mendengarkan dakwah.', NULL, NULL, NULL, '2026-01-08 12:47:00', '2026-01-08 12:47:00', NULL, NULL, '/assets/uploads/evt_695b5092b06e84.87205575.png', 'publish', 8, '2026-01-05 05:48:02', NULL),
+(14, NULL, NULL, 'Batik Tulis Yogyakarta', 'batik-tulis-yogyakarta', 'Kampung Batik Giriloyo adalah pusat batik tulis tradisional yang terletak di Wukirsari, Imogiri, Bantul, Yogyakarta. Kampung ini telah menjadi bagian dari budaya Kerajaan Mataram sejak abad ke-17, dengan pengrajin yang masih mempertahankan teknik membatik tulis manual menggunakan canting dan lilin malam. Batik Giriloyo terkenal dengan warna alami seperti soga (cokelat) dan bahan pewarna alami lainnya, menciptakan palet warna lembut khas batik Jawa klasik. Motif batiknya, seperti Parang dan Sidomukti, mengandung filosofi dan nilai budaya yang mendalam.', 'Kampung Batik Giriloyo', NULL, NULL, '2026-01-09 12:48:00', '2026-01-09 12:48:00', NULL, NULL, '/assets/uploads/evt_695b50e727e852.17208106.png', 'publish', 8, '2026-01-05 05:49:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -144,16 +151,85 @@ CREATE TABLE `galeri` (
 --
 
 INSERT INTO `galeri` (`id_galeri`, `jenis_target`, `id_target`, `gambar_url`, `keterangan`, `urutan`, `dibuat_pada`) VALUES
-(1, 'destinasi', 11, '/assets/uploads/detail/dest_detail_695924f489b6e3.25063079.jpg', NULL, 1, '2026-01-03 14:17:24'),
-(2, 'destinasi', 11, '/assets/uploads/detail/dest_detail_695924f49701d7.15856130.jpg', NULL, 2, '2026-01-03 14:17:24'),
-(3, 'destinasi', 11, '/assets/uploads/detail/dest_detail_695924f4a02048.75763247.jpg', NULL, 3, '2026-01-03 14:17:24'),
 (4, 'atraksi', 2, '/assets/uploads/detail/atr_detail_69592c40bd07a5.16727415.jpg', NULL, 1, '2026-01-03 14:48:32'),
-(5, 'event', 8, '/assets/uploads/detail/evt_detail_69593a88517a13.88091287.png', NULL, 1, '2026-01-03 15:49:28'),
-(6, 'event', 8, '/assets/uploads/detail/evt_detail_69593a885cea90.02199455.png', NULL, 2, '2026-01-03 15:49:28'),
-(9, 'event', 9, '/assets/uploads/detail/evt_detail_695b2084ec8aa3.73105548.jpg', NULL, 1, '2026-01-05 02:23:01'),
-(10, 'event', 9, '/assets/uploads/detail/evt_detail_695b20850128f6.49600130.jpg', NULL, 2, '2026-01-05 02:23:01'),
-(14, 'kuliner', 6, '/assets/uploads/detail/kul_detail_695b2e47e86477.50975319.png', NULL, 1, '2026-01-05 03:21:44'),
-(15, 'kuliner', 6, '/assets/uploads/detail/kul_detail_695b2e481a2eb9.13823811.png', NULL, 2, '2026-01-05 03:21:44');
+(16, 'kuliner', 7, '/assets/uploads/detail/kul_detail_695b4277cbe467.77584243.png', NULL, 1, '2026-01-05 04:47:51'),
+(17, 'kuliner', 7, '/assets/uploads/detail/kul_detail_695b4277d0c878.43830659.png', NULL, 2, '2026-01-05 04:47:51'),
+(18, 'kuliner', 7, '/assets/uploads/detail/kul_detail_695b4277d54859.70289814.jpg', NULL, 3, '2026-01-05 04:47:51'),
+(28, 'kuliner', 8, '/assets/uploads/detail/kul_detail_695b433e1cb6b6.14180838.png', NULL, 1, '2026-01-05 04:51:10'),
+(29, 'kuliner', 8, '/assets/uploads/detail/kul_detail_695b433e209291.13804364.png', NULL, 2, '2026-01-05 04:51:10'),
+(30, 'kuliner', 8, '/assets/uploads/detail/kul_detail_695b433e23ac81.71203895.png', NULL, 3, '2026-01-05 04:51:10'),
+(31, 'kuliner', 9, '/assets/uploads/detail/kul_detail_695b436e4c7799.55153231.png', NULL, 1, '2026-01-05 04:51:58'),
+(32, 'kuliner', 9, '/assets/uploads/detail/kul_detail_695b436e4ecc54.86565343.png', NULL, 2, '2026-01-05 04:51:58'),
+(33, 'kuliner', 9, '/assets/uploads/detail/kul_detail_695b436e51af58.57139016.png', NULL, 3, '2026-01-05 04:51:58'),
+(34, 'kuliner', 10, '/assets/uploads/detail/kul_detail_695b43bd5c3bb4.41368388.png', NULL, 1, '2026-01-05 04:53:17'),
+(35, 'kuliner', 10, '/assets/uploads/detail/kul_detail_695b43bd60a598.12934561.png', NULL, 2, '2026-01-05 04:53:17'),
+(36, 'kuliner', 10, '/assets/uploads/detail/kul_detail_695b43bd64d435.02682671.png', NULL, 3, '2026-01-05 04:53:17'),
+(37, 'kuliner', 11, '/assets/uploads/detail/kul_detail_695b43f6a381c3.33313190.png', NULL, 1, '2026-01-05 04:54:14'),
+(38, 'kuliner', 11, '/assets/uploads/detail/kul_detail_695b43f6a60532.45609884.png', NULL, 2, '2026-01-05 04:54:14'),
+(39, 'kuliner', 11, '/assets/uploads/detail/kul_detail_695b43f6a9d813.95131280.png', NULL, 3, '2026-01-05 04:54:14'),
+(40, 'kuliner', 12, '/assets/uploads/detail/kul_detail_695b442e1af777.35579719.png', NULL, 1, '2026-01-05 04:55:10'),
+(41, 'kuliner', 12, '/assets/uploads/detail/kul_detail_695b442e1eb237.04586329.png', NULL, 2, '2026-01-05 04:55:10'),
+(42, 'kuliner', 12, '/assets/uploads/detail/kul_detail_695b442e225698.84619522.png', NULL, 3, '2026-01-05 04:55:10'),
+(43, 'kuliner', 13, '/assets/uploads/detail/kul_detail_695b4462dab587.73654633.png', NULL, 1, '2026-01-05 04:56:02'),
+(44, 'kuliner', 13, '/assets/uploads/detail/kul_detail_695b4462dd26c2.22549015.png', NULL, 2, '2026-01-05 04:56:02'),
+(45, 'kuliner', 13, '/assets/uploads/detail/kul_detail_695b4462e0eac5.50079872.png', NULL, 3, '2026-01-05 04:56:02'),
+(46, 'kuliner', 14, '/assets/uploads/detail/kul_detail_695b449b646cd5.94162614.png', NULL, 1, '2026-01-05 04:56:59'),
+(47, 'kuliner', 14, '/assets/uploads/detail/kul_detail_695b449b688214.85589288.png', NULL, 2, '2026-01-05 04:56:59'),
+(48, 'kuliner', 14, '/assets/uploads/detail/kul_detail_695b449b6c5e02.83440413.png', NULL, 3, '2026-01-05 04:56:59'),
+(49, 'kuliner', 15, '/assets/uploads/detail/kul_detail_695b44ca725436.69940017.png', NULL, 1, '2026-01-05 04:57:46'),
+(50, 'kuliner', 15, '/assets/uploads/detail/kul_detail_695b44ca753156.15791619.png', NULL, 2, '2026-01-05 04:57:46'),
+(51, 'kuliner', 15, '/assets/uploads/detail/kul_detail_695b44ca778a49.37782306.png', NULL, 3, '2026-01-05 04:57:46'),
+(52, 'kuliner', 16, '/assets/uploads/detail/kul_detail_695b4502b20990.66800831.png', NULL, 1, '2026-01-05 04:58:42'),
+(53, 'kuliner', 16, '/assets/uploads/detail/kul_detail_695b4502b51556.26841856.png', NULL, 2, '2026-01-05 04:58:42'),
+(54, 'kuliner', 16, '/assets/uploads/detail/kul_detail_695b4502b8d931.81070593.png', NULL, 3, '2026-01-05 04:58:42'),
+(55, 'kuliner', 17, '/assets/uploads/detail/kul_detail_695b4532143cd8.28716666.png', NULL, 1, '2026-01-05 04:59:30'),
+(56, 'kuliner', 17, '/assets/uploads/detail/kul_detail_695b4532168408.26085348.png', NULL, 2, '2026-01-05 04:59:30'),
+(57, 'kuliner', 17, '/assets/uploads/detail/kul_detail_695b45321a6f12.98156670.png', NULL, 3, '2026-01-05 04:59:30'),
+(58, 'destinasi', 12, '/assets/uploads/detail/dest_detail_695b46e4243309.51386502.png', NULL, 1, '2026-01-05 05:06:44'),
+(59, 'destinasi', 12, '/assets/uploads/detail/dest_detail_695b46e4277197.84101994.png', NULL, 2, '2026-01-05 05:06:44'),
+(60, 'destinasi', 12, '/assets/uploads/detail/dest_detail_695b46e42a2820.73564634.png', NULL, 3, '2026-01-05 05:06:44'),
+(61, 'destinasi', 13, '/assets/uploads/detail/dest_detail_695b47c510e0c2.00725941.png', NULL, 1, '2026-01-05 05:10:29'),
+(62, 'destinasi', 13, '/assets/uploads/detail/dest_detail_695b47c51442f6.86991664.png', NULL, 2, '2026-01-05 05:10:29'),
+(63, 'destinasi', 13, '/assets/uploads/detail/dest_detail_695b47c51780f4.50274950.png', NULL, 3, '2026-01-05 05:10:29'),
+(64, 'destinasi', 14, '/assets/uploads/detail/dest_detail_695b48d311ee36.67068138.png', NULL, 1, '2026-01-05 05:14:59'),
+(65, 'destinasi', 14, '/assets/uploads/detail/dest_detail_695b48d316bdc4.42149569.png', NULL, 2, '2026-01-05 05:14:59'),
+(66, 'destinasi', 14, '/assets/uploads/detail/dest_detail_695b48d31bba89.88836629.png', NULL, 3, '2026-01-05 05:14:59'),
+(67, 'destinasi', 15, '/assets/uploads/detail/dest_detail_695b499fe7f489.08293395.png', NULL, 1, '2026-01-05 05:18:23'),
+(68, 'destinasi', 15, '/assets/uploads/detail/dest_detail_695b499feb9714.35958186.png', NULL, 2, '2026-01-05 05:18:23'),
+(69, 'destinasi', 15, '/assets/uploads/detail/dest_detail_695b499fef8241.59129911.png', NULL, 3, '2026-01-05 05:18:23'),
+(70, 'destinasi', 16, '/assets/uploads/detail/dest_detail_695b4b1ec52f55.83387338.png', NULL, 1, '2026-01-05 05:24:46'),
+(71, 'destinasi', 16, '/assets/uploads/detail/dest_detail_695b4b1ec96e27.64735009.png', NULL, 2, '2026-01-05 05:24:46'),
+(72, 'destinasi', 16, '/assets/uploads/detail/dest_detail_695b4b1eccc204.92035376.png', NULL, 3, '2026-01-05 05:24:46'),
+(73, 'destinasi', 17, '/assets/uploads/detail/dest_detail_695b4c45745df8.55879026.png', NULL, 1, '2026-01-05 05:29:41'),
+(74, 'destinasi', 17, '/assets/uploads/detail/dest_detail_695b4c457a1724.71196899.png', NULL, 2, '2026-01-05 05:29:41'),
+(75, 'destinasi', 17, '/assets/uploads/detail/dest_detail_695b4c457cb106.71738482.png', NULL, 3, '2026-01-05 05:29:41'),
+(76, 'destinasi', 18, '/assets/uploads/detail/dest_detail_695b4cd54fb8e0.84521503.png', NULL, 1, '2026-01-05 05:32:05'),
+(77, 'destinasi', 18, '/assets/uploads/detail/dest_detail_695b4cd5543c76.39154473.png', NULL, 2, '2026-01-05 05:32:05'),
+(78, 'destinasi', 18, '/assets/uploads/detail/dest_detail_695b4cd5583f65.47003432.png', NULL, 3, '2026-01-05 05:32:05'),
+(79, 'destinasi', 19, '/assets/uploads/detail/dest_detail_695b4d6d7258f8.84782342.png', NULL, 1, '2026-01-05 05:34:37'),
+(80, 'destinasi', 19, '/assets/uploads/detail/dest_detail_695b4d6d7573e3.73339104.png', NULL, 2, '2026-01-05 05:34:37'),
+(81, 'destinasi', 19, '/assets/uploads/detail/dest_detail_695b4d6d784485.98534722.png', NULL, 3, '2026-01-05 05:34:37'),
+(82, 'destinasi', 20, '/assets/uploads/detail/dest_detail_695b4deb3572b2.87955212.png', NULL, 1, '2026-01-05 05:36:43'),
+(83, 'destinasi', 20, '/assets/uploads/detail/dest_detail_695b4deb38edc5.34375840.png', NULL, 2, '2026-01-05 05:36:43'),
+(84, 'destinasi', 20, '/assets/uploads/detail/dest_detail_695b4deb3bafc5.25408019.png', NULL, 3, '2026-01-05 05:36:43'),
+(85, 'destinasi', 21, '/assets/uploads/detail/dest_detail_695b4ee21b3409.95626533.png', NULL, 1, '2026-01-05 05:40:50'),
+(86, 'destinasi', 21, '/assets/uploads/detail/dest_detail_695b4ee21f7352.40009946.png', NULL, 2, '2026-01-05 05:40:50'),
+(87, 'destinasi', 21, '/assets/uploads/detail/dest_detail_695b4ee2239eb1.93932890.png', NULL, 3, '2026-01-05 05:40:50'),
+(88, 'event', 10, '/assets/uploads/detail/evt_detail_695b4fb514a714.17493840.png', NULL, 1, '2026-01-05 05:44:21'),
+(89, 'event', 10, '/assets/uploads/detail/evt_detail_695b4fb517f657.91844062.png', NULL, 2, '2026-01-05 05:44:21'),
+(90, 'event', 10, '/assets/uploads/detail/evt_detail_695b4fb51a5e71.96746243.png', NULL, 3, '2026-01-05 05:44:21'),
+(91, 'event', 11, '/assets/uploads/detail/evt_detail_695b5003e66085.48507803.png', NULL, 1, '2026-01-05 05:45:39'),
+(92, 'event', 11, '/assets/uploads/detail/evt_detail_695b5003e9e3d2.85362335.png', NULL, 2, '2026-01-05 05:45:39'),
+(93, 'event', 11, '/assets/uploads/detail/evt_detail_695b5003ecbbb0.95532103.png', NULL, 3, '2026-01-05 05:45:39'),
+(94, 'event', 12, '/assets/uploads/detail/evt_detail_695b50481a3110.39501079.png', NULL, 1, '2026-01-05 05:46:48'),
+(95, 'event', 12, '/assets/uploads/detail/evt_detail_695b50481d99c3.85877651.png', NULL, 2, '2026-01-05 05:46:48'),
+(96, 'event', 12, '/assets/uploads/detail/evt_detail_695b5048200811.33155595.png', NULL, 3, '2026-01-05 05:46:48'),
+(97, 'event', 13, '/assets/uploads/detail/evt_detail_695b5092b479a9.84439192.png', NULL, 1, '2026-01-05 05:48:02'),
+(98, 'event', 13, '/assets/uploads/detail/evt_detail_695b5092b82851.81493205.png', NULL, 2, '2026-01-05 05:48:02'),
+(99, 'event', 13, '/assets/uploads/detail/evt_detail_695b5092bc14e2.77464261.png', NULL, 3, '2026-01-05 05:48:02'),
+(100, 'event', 14, '/assets/uploads/detail/evt_detail_695b50e72c94d1.76494579.png', NULL, 1, '2026-01-05 05:49:27'),
+(101, 'event', 14, '/assets/uploads/detail/evt_detail_695b50e731c1b0.56403478.png', NULL, 2, '2026-01-05 05:49:27'),
+(102, 'event', 14, '/assets/uploads/detail/evt_detail_695b50e7364d06.84497321.png', NULL, 3, '2026-01-05 05:49:27');
 
 -- --------------------------------------------------------
 
@@ -199,7 +275,17 @@ CREATE TABLE `kuliner` (
 --
 
 INSERT INTO `kuliner` (`id_kuliner`, `kuliner_kategori_id`, `nama`, `deskripsi`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
-(6, 1, 'Seblak Mas Yusril', 'seblak enak sekali ', '/assets/uploads/kul_695b2e47d59ed1.24694722.png', 'publish', 8, '2026-01-05 03:21:43', NULL);
+(7, 1, 'Gudeg Yu Djum', 'ChatGPT said:\r\nGudeg Yu Djum adalah ikon kuliner Yogyakarta yang terkenal karena cita rasa khas, kualitas konsisten, dan sejarah panjang sejak 1950-an. Gudegnya termasuk gudeg kering berbahan nangka muda yang dimasak lama dengan santan dan rempah hingga meresap, menghasilkan rasa manis-gurih yang lembut serta lebih tahan lama. Keistimewaannya terletak pada pemasakan dengan kayu bakar yang memberi aroma khas, ditambah lauk pelengkap seperti ayam kampung, telur pindang, tahu-tempe, krecek pedas, dan sambal goreng. Selain dinikmati di tempat, Gudeg Yu Djum juga populer sebagai oleh-oleh dalam kemasan besek atau kaleng, tanpa meninggalkan resep tradisional yang diwariskan turun-temurun.', '/assets/uploads/kul_695b4277c5bb34.46509997.png', 'publish', 8, '2026-01-05 04:47:51', NULL),
+(8, 1, 'Sate Ratu', 'Sate Ratu adalah destinasi kuliner populer di Yogyakarta yang terkenal dengan sate ayam, kambing, dan mixed berkualitas tinggi. Satenya dibakar menggunakan arang sehingga aromanya khas, dagingnya empuk, dan bumbunya meresap dengan rasa manis-gurih seimbang. Disajikan dengan saus kacang tradisional serta sambal yang bisa disesuaikan tingkat pedasnya. Suasana warung sederhana dan hangat, bahan baku terjaga, serta pelayanan ramah, menjadikannya rekomendasi wajib bagi wisatawan maupun warga lokal.', '/assets/uploads/kul_695b433e17aae8.42783555.png', 'publish', 8, '2026-01-05 04:48:44', '2026-01-05 04:51:10'),
+(9, 1, 'Sate Klatak Pak Pong', 'Sate Klathak Pak Pong adalah salah satu destinasi kuliner legendaris di Yogyakarta, khususnya bagi pecinta olahan kambing yang ingin mencicipi sate khas yang berbeda dari kebanyakan sate di Indonesia. Sate klathak sendiri merupakan variasi sate kambing yang unik karena cara memasaknya, bumbunya, dan sensasi rasa yang dihasilkan — yang semuanya mencerminkan tradisi kuliner khas Jogja selatan.', '/assets/uploads/kul_695b436e49e054.98308106.png', 'publish', 8, '2026-01-05 04:51:58', NULL),
+(10, 1, 'Oseng Mercon Bu Narti', 'Oseng Mercon Bu Narti adalah kuliner legendaris Yogyakarta yang terkenal dengan sensasi pedas ekstrem “mercon”. Hidangan ini berupa tumisan cepat daging (sapi/ayam/paru) dengan cabe rawit, bawang, dan rempah, menghasilkan rasa gurih–pedas dengan sedikit manis. Ciri khasnya ada pada racikan bumbu turun-temurun yang pedasnya tajam namun tetap seimbang. Warungnya sederhana, ramah, dan terjangkau, sehingga jadi tujuan favorit pecinta pedas yang ingin merasakan tantangan kuliner khas Jogja.', '/assets/uploads/kul_695b43bd585f50.84149800.png', 'publish', 8, '2026-01-05 04:53:17', NULL),
+(11, 1, 'Nasi Teri pojok Gejayan', 'Nasi Teri Pojok Gejayan adalah salah satu kuliner legendaris di Yogyakarta yang sudah menjadi favorit masyarakat lokal, mahasiswa, hingga wisatawan yang berburu makanan malam atau sahur ketika Ramadan. Warung ini dikenal sebagai spot kuliner malam yang ramah di kantong, penuh rasa, dan sarat dengan nuansa lokal Jogja.', '/assets/uploads/kul_695b43f69fcfe9.98367123.png', 'publish', 8, '2026-01-05 04:54:14', NULL),
+(12, 1, 'Mangut Lele Mbah Marto', 'Mangut Lele Mbah Marto adalah kuliner legendaris Yogyakarta yang terkenal dengan mangut lele asap: lele diasapi lalu dimasak dengan kuah santan dan rempah khas Jawa, menghasilkan rasa gurih, pedas, dan kaya aroma. Prosesnya masih tradisional dengan resep turun-temurun, disajikan dengan nasi hangat serta pendamping seperti lalapan dan sayur. Suasana warung sederhana dan hangat, sehingga pengalaman makan terasa autentik dan sering direkomendasikan sebagai destinasi wajib kuliner Jogja.', '/assets/uploads/kul_695b442e1629d9.64285196.png', 'publish', 8, '2026-01-05 04:55:10', NULL),
+(13, 4, 'Kopi Jos Lik Man', 'Kopi Jos Lik Man adalah ikon kuliner malam Yogyakarta dengan penyajian unik: kopi hitam panas diberi arang membara ke dalam gelas hingga terdengar bunyi “jos”. Teknik ini memberi sensasi khas dengan aroma kuat, rasa lebih bold dan sedikit berasap, cocok dinikmati malam hari. Warungnya mempertahankan racikan tradisional memakai kopi lokal, suasananya sederhana dan ramah, serta populer sebagai tempat nongkrong dan tujuan wisata kuliner otentik Jogja.', '/assets/uploads/kul_695b4462d3e3a9.80879524.png', 'publish', 8, '2026-01-05 04:56:02', NULL),
+(14, 5, 'Jadah Tempe Mbah Carik', 'Jadah Tempe Mbah Carik adalah kuliner tradisional khas Yogyakarta yang terkenal dengan perpaduan jadah ketan yang lembut dan tempe goreng berbumbu yang gurih, kadang dilengkapi sambal untuk menambah rasa pedas. Resepnya diwariskan turun-temurun dengan bahan berkualitas—ketan pilihan dan tempe segar—sehingga cita rasanya tetap autentik. Suasananya sederhana dan hangat, membuatnya populer sebagai camilan atau santapan ringan yang sering direkomendasikan wisatawan.', '/assets/uploads/kul_695b449b608349.20175628.png', 'publish', 8, '2026-01-05 04:56:59', NULL),
+(15, 1, 'Hoouse Of Ramintem', 'House of Raminten adalah ikon wisata kuliner Yogyakarta yang memadukan makanan tradisional Jawa, budaya lokal, dan hiburan dalam satu pengalaman. Restoran ini dikenal dengan suasana Jawa yang hangat, dekorasi khas seperti ukiran kayu, lampu temaram, serta ornamen unik bernuansa Yogyakarta yang membuat pengunjung merasakan pengalaman makan yang autentik dan berbeda dari restoran pada umumnya.', '/assets/uploads/kul_695b44ca6d1641.58427654.png', 'publish', 8, '2026-01-05 04:57:46', NULL),
+(16, 5, 'Bakpia Pathok', 'Bakpia Pathok adalah ikon oleh-oleh khas Yogyakarta yang berasal dari kawasan Pathok. Kue bulat kecil ini dikenal dengan kulit tipis lembut dan isian manis seperti kacang hijau, serta varian modern seperti keju, cokelat, durian, hingga green tea. Berawal dari pengaruh kue Tionghoa pada awal abad ke-20, bakpia kemudian diadaptasi sesuai selera lokal dan kini menjadi buruan wisatawan karena rasanya konsisten, mudah dibawa, dan tersedia luas di toko serta kios oleh-oleh di Yogyakarta.', '/assets/uploads/kul_695b4502acee27.10233797.png', 'publish', 8, '2026-01-05 04:58:42', NULL),
+(17, 1, 'Bakmi Mbah Gito', 'Bakmi Jawa Mbah Gito adalah kuliner legendaris Yogyakarta yang terkenal dengan bakmi tradisional Jawa bercita rasa autentik serta suasana pedesaan Jawa tempo dulu. Menu seperti bakmi goreng, bakmi godhog, dan magelangan dimasak satu per satu memakai anglo dan arang, menghasilkan rasa manis-gurih khas Jogja dengan aroma asap yang khas. Tempatnya bernuansa kayu dan bambu dengan ornamen tradisional, pelayanannya ramah, dan pengalaman menunggunya menjadi bagian dari sensasi menikmati bakmi Jawa yang asli.', '/assets/uploads/kul_695b45321103b9.04487917.png', 'publish', 8, '2026-01-05 04:59:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -326,15 +412,6 @@ CREATE TABLE `pembayaran` (
   `dibuat_pada` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `pembayaran`
---
-
-INSERT INTO `pembayaran` (`id_pembayaran`, `id_reservasi`, `metode`, `jumlah`, `status`, `bukti_bayar_url`, `dibayar_pada`, `dibuat_pada`) VALUES
-(1, 6, 'gateway', 150000, 'BELUM_BAYAR', NULL, NULL, '2026-01-03 16:00:56'),
-(2, 7, 'gateway', 150000, 'BELUM_BAYAR', NULL, NULL, '2026-01-03 16:01:25'),
-(3, 8, 'gateway', 150000, 'SUDAH_BAYAR', NULL, '2026-01-03 16:06:16', '2026-01-03 16:06:11');
-
 -- --------------------------------------------------------
 
 --
@@ -360,7 +437,7 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `username`, `email`, `kata_sandi_hash`, `peran`, `nomor_hp`, `foto_profil_url`, `status_aktif`, `dibuat_pada`, `diubah_pada`) VALUES
-(8, 'Administrator', 'admin', 'admin@jogjaverse.com', '0192023a7bbd73250516f069df18b500', 'admin', '081234567890', '/public/user/img/profile/profile_8_1767534950.jpg', 1, '2025-12-16 15:17:22', '2026-01-05 02:26:54'),
+(8, 'Administrator', 'admin', 'admin@jogjaverse.com', '0192023a7bbd73250516f069df18b500', 'admin', '081234567890', '/public/user/img/profile/profile_8_1767534950.jpg', 1, '2025-12-16 15:17:22', '2026-01-05 04:44:43'),
 (9, 'User Example', 'user', 'user@jogjaverse.com', '6ad14ba9986e3615423dfca256d04e3f', 'user', '081234567891', NULL, 1, '2025-12-16 15:17:22', '2026-01-04 14:04:17'),
 (10, 'adminn', 'adminn', 'uadyi@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin', '09123456789', NULL, 1, '2025-12-18 17:42:59', '2026-01-03 02:09:02'),
 (11, 'userrr', 'userrr', 'user@113.com', '96e79218965eb72c92a549dd5a330112', 'user', '0887982747214', NULL, 1, '2025-12-26 18:35:30', '2025-12-26 18:35:58');
@@ -398,15 +475,6 @@ CREATE TABLE `reservasi_event` (
   `diubah_pada` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `reservasi_event`
---
-
-INSERT INTO `reservasi_event` (`id_reservasi`, `id_event`, `id_pengguna`, `jumlah_tiket`, `harga_satuan`, `total_harga`, `status`, `kedaluwarsa_pada`, `catatan`, `dibuat_pada`, `diubah_pada`) VALUES
-(6, 8, 8, 1, 150000, 150000, 'PENDING', '2026-01-03 23:15:56', '', '2026-01-03 16:00:56', NULL),
-(7, 8, 8, 1, 150000, 150000, 'PENDING', '2026-01-03 23:16:25', '', '2026-01-03 16:01:25', NULL),
-(8, 8, 8, 1, 150000, 150000, 'DIKONFIRMASI', '2026-01-03 23:21:11', '', '2026-01-03 16:06:11', '2026-01-03 16:06:16');
-
 -- --------------------------------------------------------
 
 --
@@ -432,15 +500,6 @@ CREATE TABLE `tiket_event` (
   `dipakai_pada` datetime DEFAULT NULL,
   `dibuat_pada` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `tiket_event`
---
-
-INSERT INTO `tiket_event` (`id_tiket`, `id_reservasi`, `kode_tiket`, `sudah_dipakai`, `dipakai_pada`, `dibuat_pada`) VALUES
-(1, 6, 'EVT-6-884357-1', 0, NULL, '2026-01-03 16:00:56'),
-(2, 7, 'EVT-7-F1FE1F-1', 0, NULL, '2026-01-03 16:01:25'),
-(3, 8, 'EVT-8-4A3096-1', 0, NULL, '2026-01-03 16:06:11');
 
 -- --------------------------------------------------------
 
@@ -636,19 +695,19 @@ ALTER TABLE `atraksi`
 -- AUTO_INCREMENT for table `destinasi`
 --
 ALTER TABLE `destinasi`
-  MODIFY `id_destinasi` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_destinasi` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `id_event` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_event` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `galeri`
 --
 ALTER TABLE `galeri`
-  MODIFY `id_galeri` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_galeri` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -660,7 +719,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `kuliner`
 --
 ALTER TABLE `kuliner`
-  MODIFY `id_kuliner` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_kuliner` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `kuliner_kategori`

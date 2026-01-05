@@ -135,7 +135,7 @@ $trend_top = $trend_data['top'] ?? [];
 
 
 </head>
-<body>
+<body class="navbar-overlay">
 
 <!-- 2. STRUKTUR HTML -->
 <?php include __DIR__ . '/includes/navbar.php'; ?>

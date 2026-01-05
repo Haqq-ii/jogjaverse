@@ -11,15 +11,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const messagesEl = document.getElementById("jove-messages");
   const endpoint = widget.dataset.endpoint || "api/jove_chat.php";
   const historyKey = "jove_chat_history";
+  const storage = (() => {
+    try {
+      return window.sessionStorage;
+    } catch (err) {
+      return null;
+    }
+  })();
 
   const defaultGreeting = {
     role: "assistant",
-    content: "Hai! Saya JOVE ✨, asisten wisata JogjaVerse. Mau cari destinasi apa hari ini?"
+    content: "Hai! Saya JOVE, asisten wisata JogjaVerse. Mau cari destinasi apa hari ini?"
   };
 
   const loadHistory = () => {
     try {
-      const raw = localStorage.getItem(historyKey);
+      const raw = storage ? storage.getItem(historyKey) : null;
       const parsed = raw ? JSON.parse(raw) : [];
       if (!Array.isArray(parsed)) return [defaultGreeting];
       return parsed.length ? parsed : [defaultGreeting];
@@ -32,7 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const saveHistory = () => {
     try {
-      localStorage.setItem(historyKey, JSON.stringify(history));
+      if (storage) {
+        storage.setItem(historyKey, JSON.stringify(history));
+      }
     } catch (err) {
       // ignore storage errors
     }

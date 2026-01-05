@@ -87,6 +87,9 @@ html {
     body {
         padding-top: var(--navbar-height);
     }
+    body.navbar-overlay {
+        padding-top: 0;
+    }
 
     /* Styling Dasar Navbar - DIUBAH MENJADI COMPACT */
     .navbar {

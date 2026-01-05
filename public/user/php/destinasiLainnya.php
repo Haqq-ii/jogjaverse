@@ -77,12 +77,13 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../css/destinasiLainnya.css">
+  <link rel="stylesheet" href="../css/navbar_solid.css">
 </head>
 
-<body class="navbar-solid">
+<body class="navbar-solid-page">
 
 <!-- NAVBAR (Layout Besar) -->
-<?php include __DIR__ . '/includes/navbar.php'; ?>
+<?php include __DIR__ . '/partials/navbar_solid.php'; ?>
 
 <!-- HEADER BACKGROUND -->
 <section id="background">

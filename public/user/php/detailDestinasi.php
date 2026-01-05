@@ -431,7 +431,7 @@ $map_lng = $has_map ? (float)$lng_raw : null;
   </style>
 
 </head>
-<body>
+<body class="navbar-overlay">
 
 <!-- 2. STRUKTUR HTML -->
 <?php include __DIR__ . '/includes/navbar.php'; ?>

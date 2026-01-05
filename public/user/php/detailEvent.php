@@ -167,16 +167,6 @@ $desc_plain = trim(strip_tags((string)$deskripsi_display));
 $is_long_desc = strlen($desc_plain) > 600;
 $detail_class = $is_long_desc ? 'is-long' : 'is-short';
 
-$lat_raw = $event['latitude'] ?? '';
-$lng_raw = $event['longitude'] ?? '';
-$has_map = $event
-  && is_numeric($lat_raw)
-  && is_numeric($lng_raw)
-  && (float)$lat_raw != 0.0
-  && (float)$lng_raw != 0.0;
-$map_lat = $has_map ? (float)$lat_raw : null;
-$map_lng = $has_map ? (float)$lng_raw : null;
-
 $can_reservasi = false;
 $button_label = 'Beli Tiket';
 if ($event) {
@@ -201,8 +191,6 @@ if ($event) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style2.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="/assets/css/leaflet.css">
 
   <style>
     :root {
@@ -311,11 +299,6 @@ if ($event) {
     }
     .media-gallery.is-empty {
         display: block;
-    }
-    #mapEvent {
-        width: 100%;
-        height: 300px;
-        border-radius: 16px;
     }
     @media (max-width: 991.98px) {
         .detail-wrapper {
@@ -429,24 +412,8 @@ if ($event) {
         </div>
       </div>
 
-      <div class="row g-4 align-items-start mt-1">
-        <div class="col-lg-8">
-          <div class="bg-white rounded-4 p-4 shadow-sm">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h3 class="fw-bold font-serif mb-0">Peta Lokasi</h3>
-              <span class="text-muted small"><?= h($lokasi_display) ?></span>
-            </div>
-            <?php if ($has_map): ?>
-              <div class="rounded-4 overflow-hidden shadow-sm">
-                <div id="mapEvent"></div>
-              </div>
-            <?php else: ?>
-              <div class="text-muted">Lokasi peta belum tersedia.</div>
-            <?php endif; ?>
-          </div>
-        </div>
-
-        <div class="col-lg-4">
+      <div class="row g-4 align-items-start mt-3">
+        <div class="col-12 col-lg-6 ms-lg-auto">
           <div class="card border-0 shadow-sm rounded-4 mb-4">
             <div class="card-body">
               <h5 class="fw-bold font-serif mb-3">Informasi</h5>
@@ -541,28 +508,6 @@ if ($event) {
 <?php endif; ?>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
-<?php if (!$not_found && $has_map): ?>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const lat = parseFloat(<?= json_encode($map_lat) ?>);
-      const lng = parseFloat(<?= json_encode($map_lng) ?>);
-      const mapEl = document.getElementById('mapEvent');
-      if (!mapEl || Number.isNaN(lat) || Number.isNaN(lng)) {
-        return;
-      }
-      if (window._mapEvent) {
-        return;
-      }
-      window._mapEvent = L.map('mapEvent').setView([lat, lng], 14);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap'
-      }).addTo(window._mapEvent);
-      L.marker([lat, lng]).addTo(window._mapEvent);
-    });
-  </script>
-<?php endif; ?>
 
 </body>
 </html>

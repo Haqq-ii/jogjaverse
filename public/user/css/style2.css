@@ -87,7 +87,21 @@ html {
     /* Styling Dasar Navbar - DIUBAH MENJADI COMPACT */
     .navbar {
         transition: all 0.4s ease;
-        padding: 0.6rem 0; /* Padding diperkecil (sebelumnya 1.75rem) */
+        padding: 0.35rem 0;
+    }
+    .navbar .navbar-shell {
+        position: relative;
+    }
+    .navbar .navbar-collapse {
+        justify-content: flex-end;
+    }
+    .navbar .navbar-center {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .navbar .navbar-account {
+        margin-left: auto;
     }
 
     .navbar-transparent {
@@ -112,7 +126,7 @@ html {
     .navbar.scrolled {
         background: linear-gradient(90deg, #2b1e1e, #3b2a2a);
         backdrop-filter: blur(10px);
-        padding: 0.75rem 0; /* Padding saat scroll dibuat lebih kecil lagi */
+        padding: 0.45rem 0;
         box-shadow: 0 4px 12px rgba(0,0,0,.18);
         transition: background .25s ease, box-shadow .25s ease;
     }
@@ -121,6 +135,7 @@ html {
     .navbar-brand {
         font-family: 'Playfair Display', serif;
         font-size: 2rem; /* Tetap 2rem sesuai request */
+        line-height: 1;
     }
 
     /* Link Navigasi - UKURAN STANDAR */
@@ -128,10 +143,12 @@ html {
         font-family: 'Plus Jakarta Sans', sans-serif;
         color: rgba(255,255,255,0.85) !important;
         font-weight: 500;
-        font-size: 1.2rem; /* Diperkecil menjadi 1rem (sebelumnya 1.4rem) */
+        font-size: 1.05rem;
         position: relative;
         transition: color 0.3s;
-        margin: 0 10px; /* Margin dirapatkan (sebelumnya 15px) */
+        margin: 0 8px;
+        padding: 0.25rem 0.75rem;
+        line-height: 1.2;
     }
 
     /* Efek Hover & Active */
@@ -161,12 +178,26 @@ html {
         background-color: #C69C6D;
         color: #fff;
         border-radius: 50px;
-        padding: 8px 24px; /* Padding diperkecil (sebelumnya 14px 36px) */
-        font-size: 1rem;   /* Font diperkecil (sebelumnya 1.25rem) */
+        padding: 8px 24px;
+        font-size: 1rem;
         font-weight: 600;
         transition: all 0.3s;
         border: none;
         text-decoration: none;
+    }
+
+    @media (max-width: 991.98px) {
+        .navbar .navbar-center {
+            position: static;
+            transform: none;
+        }
+        .navbar .navbar-collapse {
+            align-items: flex-start;
+        }
+        .navbar .navbar-account {
+            margin-left: 0;
+            margin-top: 0.5rem;
+        }
     }
 
     .btn-gold:hover {

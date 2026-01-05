@@ -33,15 +33,15 @@ if (empty($_SESSION['login']) || $_SESSION['login'] !== true) {
         <ul class="list-unstyled small opacity-75">
           <li class="mb-2 d-flex align-items-start">
             <i class="bi bi-geo-alt-fill icon-gold me-2 mt-1"></i>
-            <span>Jl. Malioboro No. 1, Yogyakarta 55271</span>
+            <span>Jl. Kaliurang Km. 14, Kabupaten Sleman, Yogyakarta 55271</span>
           </li>
           <li class="mb-2 d-flex align-items-center">
             <i class="bi bi-envelope-fill icon-gold me-2"></i>
-            <span>halo@jogjaverse.id</span>
+            <span>jogjaversee@gmail.com</span>
           </li>
           <li class="d-flex align-items-center">
             <i class="bi bi-telephone-fill icon-gold me-2"></i>
-            <span>(0274) 123456</span>
+            <span>085678910101</span>
           </li>
         </ul>
       </div>
@@ -89,9 +89,7 @@ if (empty($_SESSION['login']) || $_SESSION['login'] !== true) {
       </small>
 
       <div class="d-flex gap-2">
-        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="social-icon"><i class="bi bi-twitter-x"></i></a>
+        <a href="https://www.instagram.com/jogjaverse?igsh=MTdvOXJkNXRyYmh4aw==" class="social-icon"><i class="bi bi-instagram"></i></a>
         <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
       </div>
     </div>

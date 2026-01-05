@@ -9,6 +9,7 @@ logs/
 ## Dependencies
 node_modules/
 vendor/
+/vendor/
 
 ## Caches / temp
 storage/

@@ -151,8 +151,20 @@
   }
 
   .jove-panel {
-    width: 100%;
+    width: 90vw;
+    height: 80vh;
+    max-width: none;
+    max-height: none;
     right: 0;
     bottom: 54px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 991.98px) {
+  .jove-panel {
+    width: 70vw;
+    height: 70vh;
+    max-width: none;
+    max-height: none;
   }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jan 05, 2026 at 05:49 AM
+-- Generation Time: Jan 05, 2026 at 02:11 PM
 -- Server version: 8.0.44
 -- PHP Version: 8.3.26
 
@@ -90,7 +90,8 @@ INSERT INTO `destinasi` (`id_destinasi`, `id_kategori`, `nama`, `slug`, `deskrip
 (18, 1, 'Keraton Yogyakarta', 'keraton-yogyakarta', 'Keraton Yogyakarta Hadiningrat, didirikan oleh Sri Sultan Hamengku Buwono I pada tahun 1755, adalah pusat kebudayaan dan simbol kekuasaan Kesultanan Yogyakarta. Arsitektur keraton mencerminkan filosofi kehidupan Jawa, dengan tata letak yang menghubungkan alam, manusia, dan spiritual. Keraton terdiri dari bangunan utama seperti Kedhaton dan Bangsal Kencono, yang menjadi tempat tinggal Sultan dan pusat upacara. Sebagai pusat pelestarian budaya, Keraton Yogyakarta juga menjaga seni tradisional seperti tari Bedhaya, wayang kulit, dan gamelan. Selain itu, keraton memiliki museum yang menyimpan koleksi bersejarah. Selain sebagai simbol kebudayaan, keraton juga memainkan peran penting dalam sejarah Indonesia, terutama selama masa kemerdekaan. Hingga kini, Keraton Yogyakarta tetap menjadi lambang keluhuran budaya Jawa yang terus berkembang.', 'Jl. Rotowijayan No.1, Panembahan, Kecamatan Kraton, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55131', 'Yogyakarta', -7.8075970, 110.3638700, '08.30-14.30', 25, '(0274) 376795', '/assets/uploads/dest_695b4cd54a3136.62287274.png', 'publish', 8, '2026-01-05 05:32:05', NULL),
 (19, 2, 'Heha Sky View', 'heha-sky-view', 'HeHa Sky View adalah destinasi wisata modern yang terletak di perbukitan Patuk, Kabupaten Gunungkidul, Yogyakarta. Menawarkan pemandangan spektakuler dari ketinggian, tempat ini populer untuk menikmati panorama alam, terutama sunset dan pemandangan malam kota Yogyakarta. Dengan konsep wisata terpadu, HeHa Sky View memiliki spot foto ikonik seperti Sky Glass, Sky Bridge, dan balon udara, serta berbagai instalasi artistik. Selain itu, tempat ini juga menawarkan wisata kuliner dengan restoran terbuka yang menyajikan hidangan lokal dan internasional. Dilengkapi dengan fasilitas lengkap, HeHa Sky View cocok untuk keluarga, pasangan, dan komunitas yang ingin bersantai, berfoto, atau menikmati suasana senja. Dengan pengelolaan yang baik, destinasi ini juga berdampak positif bagi ekonomi lokal.', 'Jl. Dlingo-Patuk No.2, Patuk, Bukit, Kec. Patuk, Kabupaten Gunungkidul, Daerah Istimewa Yogyakarta 55862', 'Gunung Kidul', -7.8484810, 110.4785860, '10.00-21.00', 30, '02744357999', '/assets/uploads/dest_695b4d6d6da8a2.30047443.png', 'publish', 8, '2026-01-05 05:34:37', NULL),
 (20, NULL, 'Alun-Alun Kidul', 'alun-alun-kidul', 'Alun-Alun Kidul (Alkid) Yogyakarta adalah ruang publik ikonik yang terletak di selatan Keraton Yogyakarta, dengan nilai sejarah, budaya, dan sosial yang kuat. Dulu digunakan untuk latihan prajurit dan upacara kerajaan, alun-alun ini kini dikenal dengan tradisi masangin, yaitu berjalan melewati dua pohon beringin besar dengan mata tertutup sebagai simbol introspeksi diri. Pada malam hari, kawasan ini menjadi pusat hiburan dengan wahana rekreasi seperti odong-odong dan permainan anak-anak, serta pedagang kaki lima yang menjajakan kuliner khas Yogyakarta. Selain sebagai tempat wisata, Alun-Alun Kidul juga berfungsi sebagai ruang sosial dan kegiatan budaya, menciptakan suasana hangat dan dinamis yang mencerminkan kehidupan masyarakat Yogyakarta.', 'Jl. Alun Alun Kidul, Patehan, Kecamatan Kraton, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55133', 'Yogyakarta', -7.7956000, 110.3695000, NULL, NULL, NULL, '/assets/uploads/dest_695b4deb31bab4.35643112.png', 'publish', 8, '2026-01-05 05:36:43', '2026-01-05 05:38:13'),
-(21, 1, 'Malioboro', 'malioboro', 'Jalan Malioboro adalah ikon utama Kota Yogyakarta yang menghubungkan Tugu Yogyakarta dan Keraton Yogyakarta, penuh dengan nilai sejarah, budaya, dan kehidupan masyarakat. Sebagai pusat aktivitas ekonomi, budaya, dan pariwisata, jalan ini dipenuhi pedagang kaki lima yang menjual berbagai barang, seperti batik, kerajinan tangan, dan kuliner khas Yogyakarta. Malioboro juga menjadi ruang ekspresi seni, dengan para seniman jalanan yang menampilkan karya mereka di trotoar. Dalam beberapa tahun terakhir, kawasan ini mengalami revitalisasi untuk meningkatkan kenyamanan pengunjung, tetap mempertahankan identitas budaya sekaligus beradaptasi dengan modernitas. Pada malam hari, Malioboro menyuguhkan suasana yang romantis dengan lampu jalan, angkringan, dan musik, menjadikannya pusat pertemuan berbagai kalangan. Sebagai saksi sejarah perjuangan Indonesia, Malioboro tetap menjadi simbol hidup dan dinamis Yogyakarta.', 'Jalan Malioboro, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55271, Indonesia', 'Yogyakarta', -7.7956000, 110.3695000, NULL, NULL, NULL, '/assets/uploads/dest_695b4ee217b8c1.80417962.png', 'publish', 8, '2026-01-05 05:40:50', '2026-01-05 05:41:07');
+(21, 1, 'Malioboro', 'malioboro', 'Jalan Malioboro adalah ikon utama Kota Yogyakarta yang menghubungkan Tugu Yogyakarta dan Keraton Yogyakarta, penuh dengan nilai sejarah, budaya, dan kehidupan masyarakat. Sebagai pusat aktivitas ekonomi, budaya, dan pariwisata, jalan ini dipenuhi pedagang kaki lima yang menjual berbagai barang, seperti batik, kerajinan tangan, dan kuliner khas Yogyakarta. Malioboro juga menjadi ruang ekspresi seni, dengan para seniman jalanan yang menampilkan karya mereka di trotoar. Dalam beberapa tahun terakhir, kawasan ini mengalami revitalisasi untuk meningkatkan kenyamanan pengunjung, tetap mempertahankan identitas budaya sekaligus beradaptasi dengan modernitas. Pada malam hari, Malioboro menyuguhkan suasana yang romantis dengan lampu jalan, angkringan, dan musik, menjadikannya pusat pertemuan berbagai kalangan. Sebagai saksi sejarah perjuangan Indonesia, Malioboro tetap menjadi simbol hidup dan dinamis Yogyakarta.', 'Jalan Malioboro, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55271, Indonesia', 'Yogyakarta', -7.7956000, 110.3695000, '-', NULL, NULL, '/assets/uploads/dest_695b4ee217b8c1.80417962.png', 'publish', 8, '2026-01-05 05:40:50', '2026-01-05 10:02:11'),
+(22, 1, 'Candi Prambanan', 'candi-prambanan', 'Candi Prambanan adalah kompleks candi Hindu terbesar di Indonesia yang terletak di Kecamatan Prambanan, sekitar 17 kilometer sebelah timur Kota Yogyakarta. Candi ini dibangun pada abad ke-9 Masehi pada masa pemerintahan Dinasti Sanjaya dari Kerajaan Mataram Kuno. Prambanan didedikasikan untuk Trimurti, yaitu tiga dewa utama dalam ajaran Hindu: Brahma sebagai dewa pencipta, Wisnu sebagai dewa pemelihara, dan Siwa sebagai dewa pelebur. Candi Siwa merupakan bangunan utama dan tertinggi dengan ketinggian sekitar 47 meter, menjadikannya pusat dari keseluruhan kompleks.\r\nArsitektur Candi Prambanan mencerminkan keindahan dan kecanggihan seni bangunan Hindu klasik di Jawa. Struktur candinya ramping dan menjulang tinggi, dihiasi dengan relief-relief halus yang menceritakan kisah epik Ramayana dan Krishnayana. Relief tersebut tidak hanya memiliki nilai estetika, tetapi juga berfungsi sebagai media penyampaian ajaran moral dan keagamaan kepada masyarakat pada masa itu. Tata letak kompleks candi disusun secara simetris, melambangkan keseimbangan kosmos menurut kepercayaan Hindu.\r\nSelain sebagai tempat ibadah, Candi Prambanan juga memiliki nilai sejarah dan budaya yang sangat penting. Kompleks ini sempat mengalami kerusakan parah akibat gempa bumi dan faktor alam, namun telah direstorasi secara bertahap oleh pemerintah dan para ahli. Pada tahun 1991, Candi Prambanan ditetapkan sebagai Situs Warisan Dunia oleh UNESCO. Hingga kini, Prambanan menjadi destinasi wisata unggulan sekaligus pusat kegiatan budaya, seperti pertunjukan Sendratari Ramayana, yang terus memperkenalkan kekayaan warisan budaya Indonesia kepada dunia.', 'Jl. Raya Solo - Yogyakarta No.16, Kranggan, Bokoharjo, Kecamatan Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571', 'Yogyakarta', -7.7522270, 110.4915330, '06:00-16:30', 50000, '+62 811 2688 000', '/assets/uploads/dest_695bba9d3aa5e8.48061003.png', 'publish', 8, '2026-01-05 13:20:29', NULL);
 
 -- --------------------------------------------------------
 
@@ -124,11 +125,12 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`id_event`, `id_destinasi`, `id_kategori`, `judul`, `slug`, `deskripsi`, `lokasi`, `latitude`, `longitude`, `mulai_pada`, `selesai_pada`, `kuota`, `harga`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
-(10, NULL, 1, 'Wayang kulit', 'wayang-kulit', 'ChatGPT said:\r\nWayang kulit adalah seni pertunjukan tradisional yang sangat penting di Yogyakarta, berfungsi tidak hanya sebagai hiburan, tetapi juga sebagai media pendidikan dan pelestarian nilai budaya Jawa. Wayang kulit terbuat dari kulit kerbau yang dipahat dan dicat, dimainkan oleh dalang yang mengisi suara tokoh dan mengendalikan cerita, dengan iringan gamelan Jawa. Cerita yang diangkat umumnya berasal dari Mahabharata dan Ramayana, dengan tokoh-tokoh seperti Arjuna, Bima, dan Semar yang menyampaikan nilai kehidupan. Wayang kulit Yogyakarta dikenal dengan pementasan yang halus dan filosofis, mencerminkan keseimbangan antara manusia, alam, dan Tuhan. Pertunjukan wayang kulit sering diadakan dalam upacara adat, festival budaya, dan acara penting lainnya. UNESCO telah mengakui wayang kulit sebagai Warisan Budaya Takbenda Dunia, dan Yogyakarta menjadi pusat pelestariannya. Menyaksikan pertunjukan wayang kulit di Yogyakarta menawarkan pengalaman budaya yang mendalam dan penuh makna.', NULL, NULL, NULL, '2026-01-05 12:43:00', '2026-01-05 12:43:00', NULL, NULL, '/assets/uploads/evt_695b4fb5104989.34240308.png', 'publish', 8, '2026-01-05 05:44:21', NULL),
+(10, NULL, 1, 'Wayang kulit', 'wayang-kulit', 'Wayang kulit adalah seni pertunjukan tradisional yang sangat penting di Yogyakarta, berfungsi tidak hanya sebagai hiburan, tetapi juga sebagai media pendidikan dan pelestarian nilai budaya Jawa. Wayang kulit terbuat dari kulit kerbau yang dipahat dan dicat, dimainkan oleh dalang yang mengisi suara tokoh dan mengendalikan cerita, dengan iringan gamelan Jawa. Cerita yang diangkat umumnya berasal dari Mahabharata dan Ramayana, dengan tokoh-tokoh seperti Arjuna, Bima, dan Semar yang menyampaikan nilai kehidupan. Wayang kulit Yogyakarta dikenal dengan pementasan yang halus dan filosofis, mencerminkan keseimbangan antara manusia, alam, dan Tuhan. Pertunjukan wayang kulit sering diadakan dalam upacara adat, festival budaya, dan acara penting lainnya. UNESCO telah mengakui wayang kulit sebagai Warisan Budaya Takbenda Dunia, dan Yogyakarta menjadi pusat pelestariannya. Menyaksikan pertunjukan wayang kulit di Yogyakarta menawarkan pengalaman budaya yang mendalam dan penuh makna.', NULL, NULL, NULL, '2026-01-05 12:43:00', '2026-01-05 12:43:00', NULL, NULL, '/assets/uploads/evt_695b4fb5104989.34240308.png', 'publish', 8, '2026-01-05 05:44:21', '2026-01-05 11:55:33'),
 (11, NULL, NULL, 'Upacara Labuhan Merapi', 'upacara-labuhan-merapi', 'Upacara Labuhan Merapi adalah tradisi adat dan spiritual yang dipelopori oleh Keraton Ngayogyakarta Hadiningrat untuk mempersembahkan sesaji kepada Tuhan, leluhur, dan kekuatan alam, terutama Gunung Merapi, dengan tujuan memohon keselamatan, keberkahan, dan keseimbangan hidup. Ritual ini digelar setiap tahun pada tanggal 30 Rejeb dalam kalender Jawa, sehari setelah peringatan Tingalan Dalem Jumenengan Dalem, hari kenaikan tahta Sultan Hamengku Buwono X. Dilaksanakan di lereng Gunung Merapi, ritual dimulai dengan arak-arakan persembahan (uborampe) dari Keraton menuju Bangsal Srimanganti di hutan lereng Merapi. Selain pemberian sesaji, prosesi ini mencakup macapat, doa bersama, kenduri, dan pertunjukan wayang kulit, menjadikannya sebuah festival budaya. Upacara yang dimulai pagi hari ini dipenuhi dengan kesakralan dan dihormati oleh ratusan peserta, baik masyarakat lokal maupun wisatawan.', 'Merapi', NULL, NULL, '2026-01-06 12:45:00', '2026-01-06 12:45:00', NULL, NULL, '/assets/uploads/evt_695b5003e1f8d8.41346681.png', 'publish', 8, '2026-01-05 05:45:39', NULL),
 (12, NULL, NULL, 'Gamelan Jawa', 'gamelan-jawa', 'Gamelan Jawa di Pendopo Keraton Ngayogyakarta Hadiningrat adalah ekspresi budaya karawitan tradisional yang ikonik dan bersejarah di Yogyakarta. Gamelan, yang terdiri dari alat musik logam seperti gong, kenong, bonang, saron, dan kendang, menghasilkan harmoni khas Jawa yang mendalam dan penuh makna. Di Keraton, gamelan tidak hanya berfungsi sebagai musik pengiring, tetapi juga mencerminkan nilai spiritual dan filosofi hidup Jawa, sering digunakan untuk mengiringi tarian klasik, upacara kerajaan, dan pertunjukan wayang kulit.\r\n\r\nDi Pendopo Keraton, gamelan dimainkan oleh abdi dalem atau kelompok karawitan yang terlatih, membawa suasana yang menggetarkan batin. Keraton Yogyakarta memiliki koleksi gamelan pusaka dengan nilai sejarah tinggi, yang hanya dimainkan pada acara-acara khusus. Pertunjukan gamelan menjadi bagian penting dari kegiatan budaya harian di keraton, memberikan pengalaman budaya otentik bagi wisatawan dan memperkenalkan filosofi serta estetika kehidupan masyarakat Jawa.', NULL, NULL, NULL, '2026-01-07 12:46:00', '2026-01-07 12:46:00', NULL, NULL, '/assets/uploads/evt_695b504815b9b1.68396510.png', 'publish', 8, '2026-01-05 05:46:48', NULL),
 (13, NULL, NULL, 'Festival Sekaten', 'festival-sekaten', 'Festival Sekaten adalah tradisi budaya dan keagamaan yang telah berlangsung ratusan tahun di Yogyakarta, dimulai pada masa Kesultanan Mataram Islam. Festival ini diselenggarakan untuk memperingati Maulid Nabi Muhammad SAW dan sebagai sarana dakwah Islam yang dikemas dalam budaya Jawa. Sekaten, yang nama nya berasal dari kata syahadatain (dua kalimat syahadat), dimulai dengan gamelan untuk menarik perhatian masyarakat agar mendengarkan dakwah.', NULL, NULL, NULL, '2026-01-08 12:47:00', '2026-01-08 12:47:00', NULL, NULL, '/assets/uploads/evt_695b5092b06e84.87205575.png', 'publish', 8, '2026-01-05 05:48:02', NULL),
-(14, NULL, NULL, 'Batik Tulis Yogyakarta', 'batik-tulis-yogyakarta', 'Kampung Batik Giriloyo adalah pusat batik tulis tradisional yang terletak di Wukirsari, Imogiri, Bantul, Yogyakarta. Kampung ini telah menjadi bagian dari budaya Kerajaan Mataram sejak abad ke-17, dengan pengrajin yang masih mempertahankan teknik membatik tulis manual menggunakan canting dan lilin malam. Batik Giriloyo terkenal dengan warna alami seperti soga (cokelat) dan bahan pewarna alami lainnya, menciptakan palet warna lembut khas batik Jawa klasik. Motif batiknya, seperti Parang dan Sidomukti, mengandung filosofi dan nilai budaya yang mendalam.', 'Kampung Batik Giriloyo', NULL, NULL, '2026-01-09 12:48:00', '2026-01-09 12:48:00', NULL, NULL, '/assets/uploads/evt_695b50e727e852.17208106.png', 'publish', 8, '2026-01-05 05:49:27', NULL);
+(14, NULL, NULL, 'Batik Tulis Yogyakarta', 'batik-tulis-yogyakarta', 'Kampung Batik Giriloyo adalah pusat batik tulis tradisional yang terletak di Wukirsari, Imogiri, Bantul, Yogyakarta. Kampung ini telah menjadi bagian dari budaya Kerajaan Mataram sejak abad ke-17, dengan pengrajin yang masih mempertahankan teknik membatik tulis manual menggunakan canting dan lilin malam. Batik Giriloyo terkenal dengan warna alami seperti soga (cokelat) dan bahan pewarna alami lainnya, menciptakan palet warna lembut khas batik Jawa klasik. Motif batiknya, seperti Parang dan Sidomukti, mengandung filosofi dan nilai budaya yang mendalam.', 'Kampung Batik Giriloyo', NULL, NULL, '2026-01-09 12:48:00', '2026-01-09 12:48:00', NULL, NULL, '/assets/uploads/evt_695b50e727e852.17208106.png', 'publish', 8, '2026-01-05 05:49:27', NULL),
+(15, 22, 3, 'Sintha Obong Prambanan', 'sintha-obong-prambanan', 'Shinta Obong Prambanan merupakan salah satu bagian paling terkenal dan sakral dari kisah **Sendratari Ramayana** yang dipentaskan di kompleks Candi Prambanan, Yogyakarta. Pertunjukan ini mengangkat episode ketika Dewi Shinta harus membuktikan kesucian dan kesetiaannya kepada Rama setelah berhasil diselamatkan dari penculikan Rahwana, raja Alengka. Adegan “Shinta Obong” menggambarkan momen ketika Dewi Shinta dengan penuh keteguhan hati rela membakar dirinya di atas api suci sebagai bentuk ujian kebenaran.\r\n\r\nDalam pementasannya, Shinta Obong ditampilkan melalui tarian klasik Jawa yang anggun, penuh makna, dan sarat simbolisme. Gerak tari yang lembut mencerminkan kesucian, ketulusan, serta kekuatan batin Dewi Shinta. Api yang menyala di tengah panggung menjadi simbol ujian moral dan spiritual, sementara iringan gamelan serta tata cahaya dramatis memperkuat suasana haru dan sakral. Menurut kisah Ramayana, Dewi Shinta tidak terbakar oleh api karena kemurnian hatinya, sehingga membuktikan bahwa ia tetap setia dan suci.\r\n\r\nShinta Obong Prambanan tidak hanya menjadi tontonan seni, tetapi juga sarana pelestarian nilai budaya dan filosofi Jawa. Kisah ini mengajarkan tentang kejujuran, pengorbanan, kesetiaan, serta keberanian mempertahankan kebenaran. Hingga kini, Shinta Obong menjadi salah satu daya tarik utama pertunjukan Sendratari Ramayana Prambanan yang memikat wisatawan lokal maupun mancanegara.', 'Candi Prambanan', NULL, NULL, '2026-01-09 19:30:00', '2026-01-09 21:00:00', 44, 150000, '/assets/uploads/evt_695bbd02c091c7.76915047.jpg', 'publish', 8, '2026-01-05 13:30:42', '2026-01-05 13:46:17');
 
 -- --------------------------------------------------------
 
@@ -152,9 +154,7 @@ CREATE TABLE `galeri` (
 
 INSERT INTO `galeri` (`id_galeri`, `jenis_target`, `id_target`, `gambar_url`, `keterangan`, `urutan`, `dibuat_pada`) VALUES
 (4, 'atraksi', 2, '/assets/uploads/detail/atr_detail_69592c40bd07a5.16727415.jpg', NULL, 1, '2026-01-03 14:48:32'),
-(16, 'kuliner', 7, '/assets/uploads/detail/kul_detail_695b4277cbe467.77584243.png', NULL, 1, '2026-01-05 04:47:51'),
 (17, 'kuliner', 7, '/assets/uploads/detail/kul_detail_695b4277d0c878.43830659.png', NULL, 2, '2026-01-05 04:47:51'),
-(18, 'kuliner', 7, '/assets/uploads/detail/kul_detail_695b4277d54859.70289814.jpg', NULL, 3, '2026-01-05 04:47:51'),
 (28, 'kuliner', 8, '/assets/uploads/detail/kul_detail_695b433e1cb6b6.14180838.png', NULL, 1, '2026-01-05 04:51:10'),
 (29, 'kuliner', 8, '/assets/uploads/detail/kul_detail_695b433e209291.13804364.png', NULL, 2, '2026-01-05 04:51:10'),
 (30, 'kuliner', 8, '/assets/uploads/detail/kul_detail_695b433e23ac81.71203895.png', NULL, 3, '2026-01-05 04:51:10'),
@@ -179,11 +179,9 @@ INSERT INTO `galeri` (`id_galeri`, `jenis_target`, `id_target`, `gambar_url`, `k
 (49, 'kuliner', 15, '/assets/uploads/detail/kul_detail_695b44ca725436.69940017.png', NULL, 1, '2026-01-05 04:57:46'),
 (50, 'kuliner', 15, '/assets/uploads/detail/kul_detail_695b44ca753156.15791619.png', NULL, 2, '2026-01-05 04:57:46'),
 (51, 'kuliner', 15, '/assets/uploads/detail/kul_detail_695b44ca778a49.37782306.png', NULL, 3, '2026-01-05 04:57:46'),
-(52, 'kuliner', 16, '/assets/uploads/detail/kul_detail_695b4502b20990.66800831.png', NULL, 1, '2026-01-05 04:58:42'),
 (53, 'kuliner', 16, '/assets/uploads/detail/kul_detail_695b4502b51556.26841856.png', NULL, 2, '2026-01-05 04:58:42'),
 (54, 'kuliner', 16, '/assets/uploads/detail/kul_detail_695b4502b8d931.81070593.png', NULL, 3, '2026-01-05 04:58:42'),
 (55, 'kuliner', 17, '/assets/uploads/detail/kul_detail_695b4532143cd8.28716666.png', NULL, 1, '2026-01-05 04:59:30'),
-(56, 'kuliner', 17, '/assets/uploads/detail/kul_detail_695b4532168408.26085348.png', NULL, 2, '2026-01-05 04:59:30'),
 (57, 'kuliner', 17, '/assets/uploads/detail/kul_detail_695b45321a6f12.98156670.png', NULL, 3, '2026-01-05 04:59:30'),
 (58, 'destinasi', 12, '/assets/uploads/detail/dest_detail_695b46e4243309.51386502.png', NULL, 1, '2026-01-05 05:06:44'),
 (59, 'destinasi', 12, '/assets/uploads/detail/dest_detail_695b46e4277197.84101994.png', NULL, 2, '2026-01-05 05:06:44'),
@@ -229,7 +227,8 @@ INSERT INTO `galeri` (`id_galeri`, `jenis_target`, `id_target`, `gambar_url`, `k
 (99, 'event', 13, '/assets/uploads/detail/evt_detail_695b5092bc14e2.77464261.png', NULL, 3, '2026-01-05 05:48:02'),
 (100, 'event', 14, '/assets/uploads/detail/evt_detail_695b50e72c94d1.76494579.png', NULL, 1, '2026-01-05 05:49:27'),
 (101, 'event', 14, '/assets/uploads/detail/evt_detail_695b50e731c1b0.56403478.png', NULL, 2, '2026-01-05 05:49:27'),
-(102, 'event', 14, '/assets/uploads/detail/evt_detail_695b50e7364d06.84497321.png', NULL, 3, '2026-01-05 05:49:27');
+(102, 'event', 14, '/assets/uploads/detail/evt_detail_695b50e7364d06.84497321.png', NULL, 3, '2026-01-05 05:49:27'),
+(103, 'destinasi', 22, '/assets/uploads/detail/dest_detail_695bba9d5c5f89.33774452.jpg', NULL, 1, '2026-01-05 13:20:29');
 
 -- --------------------------------------------------------
 
@@ -250,7 +249,8 @@ CREATE TABLE `kategori` (
 
 INSERT INTO `kategori` (`id_kategori`, `nama`, `tipe`, `dibuat_pada`) VALUES
 (1, 'Sejarah', 'destinasi', '2025-12-15 14:52:05'),
-(2, 'Pegunungan', 'destinasi', '2025-12-15 14:52:05');
+(2, 'Pegunungan', 'destinasi', '2025-12-15 14:52:05'),
+(3, 'Budaya', 'event', '2026-01-05 13:06:45');
 
 -- --------------------------------------------------------
 
@@ -339,7 +339,15 @@ INSERT INTO `kunjungan` (`id_kunjungan`, `id_pengguna`, `jenis_halaman`, `id_tar
 (5, 8, 'destinasi', 9, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-04 17:49:33'),
 (6, 8, 'beranda', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-04 17:53:24'),
 (7, 8, 'destinasi', 9, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-04 18:35:02'),
-(8, 8, 'destinasi', 11, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 03:53:56');
+(8, 8, 'destinasi', 11, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 03:53:56'),
+(9, 8, 'destinasi', 19, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 10:21:49'),
+(10, 8, 'destinasi', 19, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 10:47:01'),
+(11, 8, 'destinasi', 18, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 10:47:17'),
+(12, 8, 'destinasi', 22, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 13:20:37'),
+(13, 8, 'destinasi', 22, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 13:30:46'),
+(14, 8, 'destinasi', 12, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 13:35:12'),
+(15, 9, 'destinasi', 22, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 13:39:29'),
+(16, 13, 'destinasi', 22, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 13:45:36');
 
 -- --------------------------------------------------------
 
@@ -412,6 +420,15 @@ CREATE TABLE `pembayaran` (
   `dibuat_pada` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `pembayaran`
+--
+
+INSERT INTO `pembayaran` (`id_pembayaran`, `id_reservasi`, `metode`, `jumlah`, `status`, `bukti_bayar_url`, `dibayar_pada`, `dibuat_pada`) VALUES
+(4, 9, 'gateway', 300000, 'SUDAH_BAYAR', NULL, '2026-01-05 13:35:57', '2026-01-05 13:35:54'),
+(5, 10, 'gateway', 300000, 'SUDAH_BAYAR', NULL, '2026-01-05 13:40:11', '2026-01-05 13:40:08'),
+(6, 11, 'gateway', 300000, 'SUDAH_BAYAR', NULL, '2026-01-05 13:46:17', '2026-01-05 13:46:13');
+
 -- --------------------------------------------------------
 
 --
@@ -437,10 +454,12 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `username`, `email`, `kata_sandi_hash`, `peran`, `nomor_hp`, `foto_profil_url`, `status_aktif`, `dibuat_pada`, `diubah_pada`) VALUES
-(8, 'Administrator', 'admin', 'admin@jogjaverse.com', '0192023a7bbd73250516f069df18b500', 'admin', '081234567890', '/public/user/img/profile/profile_8_1767534950.jpg', 1, '2025-12-16 15:17:22', '2026-01-05 04:44:43'),
-(9, 'User Example', 'user', 'user@jogjaverse.com', '6ad14ba9986e3615423dfca256d04e3f', 'user', '081234567891', NULL, 1, '2025-12-16 15:17:22', '2026-01-04 14:04:17'),
+(8, 'Administrator', 'admin', 'admin@jogjaverse.com', '0192023a7bbd73250516f069df18b500', 'admin', '081234567890', '/public/user/img/profile/profile_8_1767534950.jpg', 1, '2025-12-16 15:17:22', '2026-01-05 12:59:57'),
+(9, 'User', 'user', 'user@jogjaverse.com', '6ad14ba9986e3615423dfca256d04e3f', 'user', '081234567891', NULL, 1, '2025-12-16 15:17:22', '2026-01-05 13:41:32'),
 (10, 'adminn', 'adminn', 'uadyi@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin', '09123456789', NULL, 1, '2025-12-18 17:42:59', '2026-01-03 02:09:02'),
-(11, 'userrr', 'userrr', 'user@113.com', '96e79218965eb72c92a549dd5a330112', 'user', '0887982747214', NULL, 1, '2025-12-26 18:35:30', '2025-12-26 18:35:58');
+(11, 'userrr', 'userrr', 'user@113.com', '96e79218965eb72c92a549dd5a330112', 'user', '0887982747214', NULL, 1, '2025-12-26 18:35:30', '2025-12-26 18:35:58'),
+(12, 'eja engkol', 'eja', 'ejaengkol@email.com', '0603a3bce7c5288c1445c4ba1a5916c4', 'user', '', NULL, 1, '2026-01-05 13:42:55', '2026-01-05 13:42:55'),
+(13, 'yusril', 'yusril', 'yusril@gmail.com', 'f486144d6ec1952bcc438fae0bb8ba4a', 'user', '08123456789', NULL, 1, '2026-01-05 13:44:48', '2026-01-05 13:47:34');
 
 -- --------------------------------------------------------
 
@@ -475,6 +494,15 @@ CREATE TABLE `reservasi_event` (
   `diubah_pada` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `reservasi_event`
+--
+
+INSERT INTO `reservasi_event` (`id_reservasi`, `id_event`, `id_pengguna`, `jumlah_tiket`, `harga_satuan`, `total_harga`, `status`, `kedaluwarsa_pada`, `catatan`, `dibuat_pada`, `diubah_pada`) VALUES
+(9, 15, 8, 2, 150000, 300000, 'DIKONFIRMASI', '2026-01-05 20:50:54', '', '2026-01-05 13:35:54', '2026-01-05 13:35:57'),
+(10, 15, 9, 2, 150000, 300000, 'DIKONFIRMASI', '2026-01-05 20:55:08', '', '2026-01-05 13:40:08', '2026-01-05 13:40:11'),
+(11, 15, 13, 2, 150000, 300000, 'DIKONFIRMASI', '2026-01-05 21:01:13', '', '2026-01-05 13:46:13', '2026-01-05 13:46:17');
+
 -- --------------------------------------------------------
 
 --
@@ -501,6 +529,18 @@ CREATE TABLE `tiket_event` (
   `dibuat_pada` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Dumping data for table `tiket_event`
+--
+
+INSERT INTO `tiket_event` (`id_tiket`, `id_reservasi`, `kode_tiket`, `sudah_dipakai`, `dipakai_pada`, `dibuat_pada`) VALUES
+(4, 9, 'EVT-9-B1427A-1', 0, NULL, '2026-01-05 13:35:54'),
+(5, 9, 'EVT-9-FB65A2-2', 0, NULL, '2026-01-05 13:35:54'),
+(6, 10, 'EVT-10-973190-1', 0, NULL, '2026-01-05 13:40:08'),
+(7, 10, 'EVT-10-CEE55D-2', 0, NULL, '2026-01-05 13:40:08'),
+(8, 11, 'EVT-11-1FE4AA-1', 0, NULL, '2026-01-05 13:46:13'),
+(9, 11, 'EVT-11-F6E60B-2', 0, NULL, '2026-01-05 13:46:13');
+
 -- --------------------------------------------------------
 
 --
@@ -524,7 +564,9 @@ CREATE TABLE `ulasan` (
 
 INSERT INTO `ulasan` (`id_ulasan`, `id_pengguna`, `jenis_target`, `id_target`, `rating`, `komentar`, `status`, `dibuat_pada`) VALUES
 (1, 8, 'event', 8, 5, 'event nya seru', 'tampil', '2026-01-04 12:42:31'),
-(2, 8, 'kuliner', 3, 4, 'makanannya lumayan enak', 'tampil', '2026-01-04 14:45:41');
+(2, 8, 'kuliner', 3, 4, 'makanannya lumayan enak', 'tampil', '2026-01-04 14:45:41'),
+(3, 9, 'kuliner', 16, 5, 'enek betss', 'sembunyi', '2026-01-05 13:40:57'),
+(4, 13, 'kuliner', 13, 5, 'josjis bets kopinya', 'sembunyi', '2026-01-05 13:46:54');
 
 --
 -- Indexes for dumped tables
@@ -695,25 +737,25 @@ ALTER TABLE `atraksi`
 -- AUTO_INCREMENT for table `destinasi`
 --
 ALTER TABLE `destinasi`
-  MODIFY `id_destinasi` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_destinasi` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `id_event` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_event` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `galeri`
 --
 ALTER TABLE `galeri`
-  MODIFY `id_galeri` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id_galeri` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_kategori` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kuliner`
@@ -731,7 +773,7 @@ ALTER TABLE `kuliner_kategori`
 -- AUTO_INCREMENT for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
-  MODIFY `id_kunjungan` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_kunjungan` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `log_admin`
@@ -755,13 +797,13 @@ ALTER TABLE `pelaporan`
 -- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pembayaran` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_pengguna` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `relasi_tag`
@@ -773,7 +815,7 @@ ALTER TABLE `relasi_tag`
 -- AUTO_INCREMENT for table `reservasi_event`
 --
 ALTER TABLE `reservasi_event`
-  MODIFY `id_reservasi` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_reservasi` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tag`
@@ -785,13 +827,13 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT for table `tiket_event`
 --
 ALTER TABLE `tiket_event`
-  MODIFY `id_tiket` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_tiket` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `ulasan`
 --
 ALTER TABLE `ulasan`
-  MODIFY `id_ulasan` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_ulasan` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

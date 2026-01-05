@@ -3,11 +3,13 @@
         --primary-nav: #2D1B20; /* Dark Maroon */
         --primary-color: #2D1B20; /* Dark Maroon */
         --secondary-color: #C69C6D; /* Gold */
+        --navbar-height: 68px;
     }
     
     body {
         font-family: 'Plus Jakarta Sans', sans-serif;
         background-color: #FDFBF7;
+        padding-top: var(--navbar-height);
     }
 
     h1, h2, h3, .navbar-brand, .font-serif {
@@ -17,7 +19,8 @@
     /* 2. NAVBAR (UKURAN DIPERKECIL) */
     .navbar {
         transition: all 0.4s ease;
-        padding: 0.75rem 0; /* DIUBAH: Padding diperkecil */
+        padding: 0.6rem 0; /* DIUBAH: Padding diperkecil */
+        min-height: var(--navbar-height);
     }
     
     .navbar-brand { 
@@ -64,7 +67,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 80px; /* DIUBAH: Disesuaikan dengan tinggi navbar baru */
+        margin-top: 0;
     }
 
     /* 4. CARD STYLE KHUSUS DESTINASI (TETAP DIPERTAHANKAN) */

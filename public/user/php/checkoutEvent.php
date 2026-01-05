@@ -49,6 +49,31 @@ function log_error($msg, array $context = []) {
   file_put_contents($logFile, json_encode($payload, JSON_UNESCAPED_SLASHES) . PHP_EOL, FILE_APPEND);
 }
 
+function hitung_kuota_tersisa(mysqli $koneksi, int $id_event, ?int $total_kuota, bool $for_update = false): ?int {
+  if ($total_kuota === null) {
+    return null;
+  }
+  if ($total_kuota < 0) {
+    $total_kuota = 0;
+  }
+  $lock = $for_update ? " FOR UPDATE" : "";
+  $stmtKuota = $koneksi->prepare("
+    SELECT COALESCE(SUM(jumlah_tiket), 0) AS terpakai
+    FROM reservasi_event
+    WHERE id_event = ?
+      AND status NOT IN ('DIBATALKAN', 'KADALUARSA')
+      AND (status != 'PENDING' OR kedaluwarsa_pada IS NULL OR kedaluwarsa_pada > NOW())
+    $lock
+  ");
+  $stmtKuota->bind_param("i", $id_event);
+  $stmtKuota->execute();
+  $rowKuota = $stmtKuota->get_result()->fetch_assoc();
+  $stmtKuota->close();
+
+  $terpakai = (int)($rowKuota['terpakai'] ?? 0);
+  return max(0, $total_kuota - $terpakai);
+}
+
 $session_user_id = 0;
 if (isset($_SESSION['user']['id_pengguna'])) {
   $session_user_id = (int)$_SESSION['user']['id_pengguna'];
@@ -92,23 +117,14 @@ if (!$event) {
   $not_found = false;
 }
 
-$kuota_tersisa = null;
-if (!$not_found && isset($event['kuota']) && is_numeric($event['kuota']) && (int)$event['kuota'] > 0) {
-  $stmtKuota = $koneksi->prepare("
-    SELECT COALESCE(SUM(jumlah_tiket), 0) AS terpakai
-    FROM reservasi_event
-    WHERE id_event = ?
-      AND status IN ('PENDING','DIKONFIRMASI')
-      AND (status != 'PENDING' OR kedaluwarsa_pada IS NULL OR kedaluwarsa_pada > NOW())
-  ");
-  $stmtKuota->bind_param("i", $id_event);
-  $stmtKuota->execute();
-  $rowKuota = $stmtKuota->get_result()->fetch_assoc();
-  $stmtKuota->close();
-
-  $terpakai = (int)($rowKuota['terpakai'] ?? 0);
-  $kuota_tersisa = max(0, (int)$event['kuota'] - $terpakai);
+$total_kuota = null;
+if (!$not_found && isset($event['kuota']) && is_numeric($event['kuota'])) {
+  $total_kuota = (int)$event['kuota'];
+  if ($total_kuota < 0) {
+    $total_kuota = 0;
+  }
 }
+$kuota_tersisa = !$not_found ? hitung_kuota_tersisa($koneksi, $id_event, $total_kuota) : null;
 
 $errors = [];
 $success = "";
@@ -143,6 +159,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$not_found) {
     } else {
       $koneksi->begin_transaction();
       try {
+        if ($total_kuota !== null) {
+          $stmtLock = $koneksi->prepare("SELECT kuota FROM event WHERE id_event = ? FOR UPDATE");
+          $stmtLock->bind_param("i", $id_event);
+          $stmtLock->execute();
+          $rowLock = $stmtLock->get_result()->fetch_assoc();
+          $stmtLock->close();
+
+          $locked_kuota = $total_kuota;
+          if ($rowLock && isset($rowLock['kuota']) && is_numeric($rowLock['kuota'])) {
+            $locked_kuota = (int)$rowLock['kuota'];
+          }
+
+          $kuota_tersisa_tx = hitung_kuota_tersisa($koneksi, $id_event, $locked_kuota, true);
+          if ($kuota_tersisa_tx !== null && $jumlah_tiket > $kuota_tersisa_tx) {
+            throw new RuntimeException('KUOTA_TIDAK_CUKUP');
+          }
+        }
+
         $status_reservasi = 'PENDING';
         $kedaluwarsa_pada = date('Y-m-d H:i:s', time() + (15 * 60));
 
@@ -248,16 +282,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$not_found) {
         exit();
       } catch (Throwable $e) {
         $koneksi->rollback();
-        log_error("Checkout gagal.", [
-          'error' => $e->getMessage(),
-          'db_error' => $koneksi->error,
-          'id_event' => $id_event,
-          'id_pengguna' => $id_pengguna,
-          'jumlah_tiket' => $jumlah_tiket,
-          'harga_satuan' => $harga_satuan,
-          'total_harga' => $total_harga,
-        ]);
-        $errors[] = $app_debug ? "Gagal menyimpan reservasi: " . $e->getMessage() : "Gagal menyimpan reservasi. Coba lagi.";
+        if ($e instanceof RuntimeException && $e->getMessage() === 'KUOTA_TIDAK_CUKUP') {
+          $errors[] = "Jumlah tiket melebihi kuota tersisa.";
+          if (isset($kuota_tersisa_tx)) {
+            $kuota_tersisa = $kuota_tersisa_tx;
+          }
+        } else {
+          log_error("Checkout gagal.", [
+            'error' => $e->getMessage(),
+            'db_error' => $koneksi->error,
+            'id_event' => $id_event,
+            'id_pengguna' => $id_pengguna,
+            'jumlah_tiket' => $jumlah_tiket,
+            'harga_satuan' => $harga_satuan,
+            'total_harga' => $total_harga,
+          ]);
+          $errors[] = $app_debug ? "Gagal menyimpan reservasi: " . $e->getMessage() : "Gagal menyimpan reservasi. Coba lagi.";
+        }
       }
     }
   }

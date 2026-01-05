@@ -151,11 +151,23 @@ if (isset($_GET['qr'])) {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background: #FDFBF7;
       color: #321B1F;
+      padding-top: 0;
+    }
+    .ticket-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
     }
     .ticket-wrap {
       max-width: 720px;
-      margin: 90px auto 40px;
-      padding: 0 16px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
     .ticket-card {
       background: #fff;
@@ -163,6 +175,7 @@ if (isset($_GET['qr'])) {
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       overflow: hidden;
       border: 1px solid rgba(0, 0, 0, 0.06);
+      width: 100%;
     }
     .ticket-header {
       background: #4A1B22;
@@ -219,17 +232,24 @@ if (isset($_GET['qr'])) {
       gap: 10px;
       flex-wrap: wrap;
       margin-top: 16px;
+      justify-content: center;
+      width: 100%;
+    }
+    @page {
+      margin: 0;
     }
     @media print {
-      .no-print { display: none; }
-      body { background: #fff; }
-      .ticket-wrap { margin: 0; }
+      .no-print { display: none !important; }
+      body { background: #fff; margin: 0; }
+      .ticket-page { padding: 0; min-height: auto; }
+      .ticket-wrap { margin: 0; max-width: none; }
+      .ticket-card { box-shadow: none; border: 1px solid #ddd; }
     }
   </style>
 </head>
 <body>
-  <?php include __DIR__ . '/includes/navbar.php'; ?>
-  <div class="ticket-wrap">
+  <main class="ticket-page">
+    <div class="ticket-wrap">
     <?php if ($not_found): ?>
       <div class="ticket-card">
         <div class="ticket-header">
@@ -320,7 +340,7 @@ if (isset($_GET['qr'])) {
         <a href="/public/user.php?tab=bookings" class="btn btn-outline-dark">Kembali</a>
       </div>
     <?php endif; ?>
-  </div>
-  <?php include __DIR__ . '/includes/footer.php'; ?>
+    </div>
+  </main>
 </body>
 </html>

@@ -100,13 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$not_found && !$expired) {
       $stmtRes->execute();
       $stmtRes->close();
 
-      if (isset($data['kuota']) && is_numeric($data['kuota']) && (int)$data['kuota'] > 0) {
-        $stmtKuota = $koneksi->prepare("UPDATE event SET kuota = GREATEST(kuota - ?, 0) WHERE id_event = ?");
-        $stmtKuota->bind_param("ii", $data['jumlah_tiket'], $data['id_event']);
-        $stmtKuota->execute();
-        $stmtKuota->close();
-      }
-
       $koneksi->commit();
       header("Location: suksesPembayaranEvent.php?id_reservasi=" . $id_reservasi);
       exit();

@@ -69,7 +69,7 @@ $is_event = in_array($current_page, $event_pages, true);
 $is_kuliner = in_array($current_page, $kuliner_pages, true);
 ?>
 <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top navbar-dark navbar-transparent">
-  <div class="container">
+  <div class="container navbar-shell">
     <!-- Logo Brand -->
     <a class="navbar-brand fw-bold" href="<?= $base_url ?>/public/user/php/landingpageclean.php">
       Jogja<span style="color: #C69C6D;">Verse.</span>
@@ -82,7 +82,7 @@ $is_kuliner = in_array($current_page, $kuliner_pages, true);
 
     <!-- Menu Links -->
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
+      <ul class="navbar-nav navbar-center mx-auto mb-2 mb-lg-0 text-center">
         <li class="nav-item">
           <a class="nav-link <?= active_class($is_dest) ?>" href="<?= $base_url ?>/public/user/php/destinasiLainnya.php">Destinasi</a>
         </li>
@@ -95,7 +95,7 @@ $is_kuliner = in_array($current_page, $kuliner_pages, true);
       </ul>
 
       <!-- Tombol Login / Akun -->
-      <div class="d-flex justify-content-center align-items-center gap-2">
+      <div class="navbar-account d-flex justify-content-center align-items-center gap-2">
         <?php if ($is_logged_in): ?>
           <a href="<?= $base_url ?>/public/user.php?tab=overview" class="d-flex align-items-center text-decoration-none">
             <?php if ($avatar_url !== ''): ?>

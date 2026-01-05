@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Jan 03, 2026 at 04:09 PM
+-- Generation Time: Jan 05, 2026 at 04:20 AM
 -- Server version: 8.0.44
 -- PHP Version: 8.3.26
 
@@ -83,7 +83,7 @@ CREATE TABLE `destinasi` (
 INSERT INTO `destinasi` (`id_destinasi`, `id_kategori`, `nama`, `slug`, `deskripsi`, `alamat`, `kota`, `latitude`, `longitude`, `jam_operasional`, `harga_tiket`, `nomor_kontak`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
 (7, 2, 'Heha Sky View', 'dest_693f08c738b2d4.35672802.jpg', 'lorem ipsum dolor sit amet', NULL, NULL, -7.7956000, 110.3695000, '9:00 - 21:00', NULL, NULL, '/assets/uploads/dest_694eef2eec2ec2.01692125.jpg', 'publish', NULL, '2025-12-18 17:51:55', '2025-12-26 20:25:19'),
 (9, 1, 'Pantai Drini', '.', 'Pantai yang indah dengan suarah tabrakn ombak ', NULL, 'Sleman', -7.7956000, 110.3695000, '7:00 - 16:00', NULL, NULL, '/assets/uploads/dest_694eefe2878625.49001356.jpg', 'publish', NULL, '2025-12-26 20:28:18', '2026-01-02 13:29:03'),
-(11, 1, 'Candi Prambanan', 'candi_prambanan', 'Candi Prambanan merupakan salah satu peninggalan sejarah dan kebudayaan terbesar di Indonesia yang menjadi simbol kejayaan peradaban Hindu di Pulau Jawa. Kompleks candi ini terletak di Kecamatan Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta, meskipun sebagian wilayahnya juga masuk ke dalam Kabupaten Klaten, Jawa Tengah. Dengan arsitektur yang megah dan nilai sejarah yang tinggi, Candi Prambanan telah ditetapkan sebagai Situs Warisan Dunia oleh UNESCO pada tahun 1991. Keberadaan candi ini tidak hanya mencerminkan keindahan seni bangunan masa lampau, tetapi juga menggambarkan kemajuan teknologi, kepercayaan, serta kehidupan sosial masyarakat Jawa Kuno.\r\nCandi Prambanan dibangun pada abad ke-9 Masehi, pada masa pemerintahan Dinasti Sanjaya yang menganut agama Hindu. Candi ini didedikasikan untuk Trimurti, yaitu tiga dewa utama dalam ajaran Hindu, yakni Dewa Brahma sebagai pencipta, Dewa Wisnu sebagai pemelihara, dan Dewa Siwa sebagai pelebur. Dari ketiga dewa tersebut, Dewa Siwa menempati posisi paling utama, yang tercermin dari Candi Siwa sebagai bangunan tertinggi dan terbesar di kompleks Prambanan, dengan ketinggian mencapai sekitar 47 meter. Hal ini menunjukkan bahwa aliran Hindu Siwaisme memiliki pengaruh yang sangat kuat pada masa itu.\r\nSecara keseluruhan, kompleks Candi Prambanan terdiri atas ratusan bangunan candi, meskipun tidak semuanya masih berdiri utuh hingga saat ini. Kompleks ini tersusun dalam tiga zona utama, yaitu zona luar, zona tengah, dan zona inti. Zona inti merupakan bagian terpenting yang berisi delapan candi utama dan delapan candi pendamping. Di antara candi utama tersebut, tiga candi besar didedikasikan untuk Dewa Siwa, Brahma, dan Wisnu, serta tiga candi wahana yang masing-masing diperuntukkan bagi kendaraan dewa, yaitu Nandi (lembu) untuk Siwa, Angsa untuk Brahma, dan Garuda untuk Wisnu.\r\nKeindahan Candi Prambanan tidak hanya terlihat dari kemegahan bangunannya, tetapi juga dari relief-relief yang terukir di dinding candi. Relief tersebut menceritakan kisah epik Ramayana dan Krishnayana, yang dipahat dengan sangat detail dan artistik. Relief Ramayana yang terdapat pada Candi Siwa dan Candi Brahma menggambarkan perjalanan hidup Rama, Sinta, dan Rahwana, serta nilai-nilai moral seperti kesetiaan, keberanian, dan pengorbanan. Relief-relief ini tidak hanya berfungsi sebagai hiasan, tetapi juga sebagai media pendidikan dan penyebaran ajaran agama Hindu kepada masyarakat pada masa itu.\r\nArsitektur Candi Prambanan mencerminkan konsep kosmologi Hindu, di mana bangunan candi dianggap sebagai representasi Gunung Meru, tempat bersemayamnya para dewa. Bentuk bangunan yang menjulang tinggi dengan struktur berundak melambangkan tingkatan alam semesta, mulai dari dunia manusia hingga alam para dewa. Setiap bagian candi dirancang dengan perhitungan yang matang, baik dari segi proporsi, orientasi, maupun simbolisme religius. Hal ini menunjukkan tingkat pengetahuan dan keterampilan yang tinggi dari para arsitek dan pemahat pada masa Jawa Kuno.\r\nSeiring berjalannya waktu, Candi Prambanan sempat mengalami masa kemunduran dan kerusakan, terutama akibat perpindahan pusat kekuasaan ke Jawa Timur serta bencana alam seperti gempa bumi dan letusan gunung berapi. Pada abad ke-16, kompleks candi ini mulai ditinggalkan dan tertutup oleh semak belukar. Upaya pemugaran baru dilakukan secara serius pada abad ke-20 oleh pemerintah Hindia Belanda dan dilanjutkan oleh pemerintah Indonesia setelah kemerdekaan. Proses restorasi ini memerlukan waktu yang panjang dan ketelitian tinggi untuk menjaga keaslian struktur bangunan.\r\nSaat ini, Candi Prambanan tidak hanya berfungsi sebagai situs sejarah dan tempat ibadah umat Hindu, tetapi juga sebagai destinasi wisata budaya yang menarik wisatawan domestik maupun mancanegara. Berbagai kegiatan budaya sering diselenggarakan di kawasan ini, salah satunya adalah Sendratari Ramayana Prambanan, sebuah pertunjukan seni yang menggabungkan tari, musik, dan drama dengan latar belakang Candi Prambanan yang megah. Pertunjukan ini menjadi daya tarik tersendiri karena mampu menghidupkan kembali kisah Ramayana dalam bentuk seni pertunjukan yang memukau.\r\nDengan segala keindahan, nilai sejarah, dan makna filosofis yang dimilikinya, Candi Prambanan merupakan warisan budaya yang sangat berharga bagi bangsa Indonesia. Keberadaan candi ini menjadi bukti nyata bahwa nenek moyang bangsa Indonesia memiliki peradaban yang maju, kreatif, dan berlandaskan nilai-nilai spiritual yang kuat. Oleh karena itu, pelestarian dan perawatan Candi Prambanan merupakan tanggung jawab bersama agar warisan budaya ini dapat terus dinikmati dan dipelajari oleh generasi mendatang.\r\n', 'Jl. Raya Solo - Yogyakarta No.16, Kranggan, Bokoharjo, Kecamatan Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571', 'Sleman', -7.7520370, 110.4914550, '08:00-16:00', 50, '+62 811 2688 000', '/assets/uploads/dest_695924f477ec29.72712864.jpg', 'publish', 8, '2026-01-03 14:17:24', NULL);
+(11, 1, 'Candi Prambanan', 'candi_prambanan', 'Candi Prambanan merupakan salah satu peninggalan sejarah dan kebudayaan terbesar di Indonesia yang menjadi simbol kejayaan peradaban Hindu di Pulau Jawa. Kompleks candi ini terletak di Kecamatan Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta, meskipun sebagian wilayahnya juga masuk ke dalam Kabupaten Klaten, Jawa Tengah. Dengan arsitektur yang megah dan nilai sejarah yang tinggi, Candi Prambanan telah ditetapkan sebagai Situs Warisan Dunia oleh UNESCO pada tahun 1991. Keberadaan candi ini tidak hanya mencerminkan keindahan seni bangunan masa lampau, tetapi juga menggambarkan kemajuan teknologi, kepercayaan, serta kehidupan sosial masyarakat Jawa Kuno.\r\nCandi Prambanan dibangun pada abad ke-9 Masehi, pada masa pemerintahan Dinasti Sanjaya yang menganut agama Hindu. Candi ini didedikasikan untuk Trimurti, yaitu tiga dewa utama dalam ajaran Hindu, yakni Dewa Brahma sebagai pencipta, Dewa Wisnu sebagai pemelihara, dan Dewa Siwa sebagai pelebur. Dari ketiga dewa tersebut, Dewa Siwa menempati posisi paling utama, yang tercermin dari Candi Siwa sebagai bangunan tertinggi dan terbesar di kompleks Prambanan, dengan ketinggian mencapai sekitar 47 meter. Hal ini menunjukkan bahwa aliran Hindu Siwaisme memiliki pengaruh yang sangat kuat pada masa itu.\r\nSecara keseluruhan, kompleks Candi Prambanan terdiri atas ratusan bangunan candi, meskipun tidak semuanya masih berdiri utuh hingga saat ini. Kompleks ini tersusun dalam tiga zona utama, yaitu zona luar, zona tengah, dan zona inti. Zona inti merupakan bagian terpenting yang berisi delapan candi utama dan delapan candi pendamping. Di antara candi utama tersebut, tiga candi besar didedikasikan untuk Dewa Siwa, Brahma, dan Wisnu, serta tiga candi wahana yang masing-masing diperuntukkan bagi kendaraan dewa, yaitu Nandi (lembu) untuk Siwa, Angsa untuk Brahma, dan Garuda untuk Wisnu.\r\nKeindahan Candi Prambanan tidak hanya terlihat dari kemegahan bangunannya, tetapi juga dari relief-relief yang terukir di dinding candi. Relief tersebut menceritakan kisah epik Ramayana dan Krishnayana, yang dipahat dengan sangat detail dan artistik. Relief Ramayana yang terdapat pada Candi Siwa dan Candi Brahma menggambarkan perjalanan hidup Rama, Sinta, dan Rahwana, serta nilai-nilai moral seperti kesetiaan, keberanian, dan pengorbanan. Relief-relief ini tidak hanya berfungsi sebagai hiasan, tetapi juga sebagai media pendidikan dan penyebaran ajaran agama Hindu kepada masyarakat pada masa itu.\r\nArsitektur Candi Prambanan mencerminkan konsep kosmologi Hindu, di mana bangunan candi dianggap sebagai representasi Gunung Meru, tempat bersemayamnya para dewa. Bentuk bangunan yang menjulang tinggi dengan struktur berundak melambangkan tingkatan alam semesta, mulai dari dunia manusia hingga alam para dewa. Setiap bagian candi dirancang dengan perhitungan yang matang, baik dari segi proporsi, orientasi, maupun simbolisme religius. Hal ini menunjukkan tingkat pengetahuan dan keterampilan yang tinggi dari para arsitek dan pemahat pada masa Jawa Kuno.\r\nSeiring berjalannya waktu, Candi Prambanan sempat mengalami masa kemunduran dan kerusakan, terutama akibat perpindahan pusat kekuasaan ke Jawa Timur serta bencana alam seperti gempa bumi dan letusan gunung berapi. Pada abad ke-16, kompleks candi ini mulai ditinggalkan dan tertutup oleh semak belukar. Upaya pemugaran baru dilakukan secara serius pada abad ke-20 oleh pemerintah Hindia Belanda dan dilanjutkan oleh pemerintah Indonesia setelah kemerdekaan. Proses restorasi ini memerlukan waktu yang panjang dan ketelitian tinggi untuk menjaga keaslian struktur bangunan.\r\nSaat ini, Candi Prambanan tidak hanya berfungsi sebagai situs sejarah dan tempat ibadah umat Hindu, tetapi juga sebagai destinasi wisata budaya yang menarik wisatawan domestik maupun mancanegara. Berbagai kegiatan budaya sering diselenggarakan di kawasan ini, salah satunya adalah Sendratari Ramayana Prambanan, sebuah pertunjukan seni yang menggabungkan tari, musik, dan drama dengan latar belakang Candi Prambanan yang megah. Pertunjukan ini menjadi daya tarik tersendiri karena mampu menghidupkan kembali kisah Ramayana dalam bentuk seni pertunjukan yang memukau.\r\nDengan segala keindahan, nilai sejarah, dan makna filosofis yang dimilikinya, Candi Prambanan merupakan warisan budaya yang sangat berharga bagi bangsa Indonesia. Keberadaan candi ini menjadi bukti nyata bahwa nenek moyang bangsa Indonesia memiliki peradaban yang maju, kreatif, dan berlandaskan nilai-nilai spiritual yang kuat. Oleh karena itu, pelestarian dan perawatan Candi Prambanan merupakan tanggung jawab bersama agar warisan budaya ini dapat terus dinikmati dan dipelajari oleh generasi mendatang.\r\n', 'Jl. Raya Solo - Yogyakarta No.16, Kranggan, Bokoharjo, Kecamatan Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571', 'Sleman', -7.7520370, 110.4914550, '08:00-16:00', 50000, '+62 811 2688 000', '/assets/uploads/dest_695924f477ec29.72712864.jpg', 'publish', 8, '2026-01-03 14:17:24', '2026-01-04 10:12:26');
 
 -- --------------------------------------------------------
 
@@ -120,7 +120,8 @@ INSERT INTO `event` (`id_event`, `id_destinasi`, `id_kategori`, `judul`, `slug`,
 (2, NULL, NULL, 'Konser ', '.', NULL, 'Prambanan', NULL, NULL, '2026-01-02 03:02:00', '2026-01-02 03:02:00', 200, 75, '/assets/uploads/evt_6957b4a30ce3e8.54306731.png', 'publish', NULL, '2026-01-01 20:03:24', '2026-01-02 12:05:55'),
 (4, NULL, NULL, 'Teater', '-', NULL, 'Malioboro', NULL, NULL, '2026-01-02 14:50:00', '2026-01-02 21:50:00', NULL, NULL, NULL, 'publish', NULL, '2026-01-02 07:51:15', '2026-01-02 11:20:41'),
 (7, NULL, NULL, 'Pagelaran Wayang', '---', NULL, 'Alun-Alun Utara', NULL, NULL, '2026-01-03 19:07:00', '2026-01-03 22:07:00', NULL, NULL, NULL, 'publish', NULL, '2026-01-02 12:07:50', NULL),
-(8, 11, 1, 'Wayang Kulit', 'wayang_kulit', 'faefafcecveaffevavrdvrvae', 'Jln Nglanjaran', NULL, NULL, '2026-01-03 21:48:00', '2026-01-03 23:00:00', 99, 150000, '/assets/uploads/evt_69593a884593b6.93284992.png', 'publish', 8, '2026-01-03 15:49:28', '2026-01-03 16:06:16');
+(8, 11, 1, 'Wayang Kulit', 'wayang_kulit', 'faefafcecveaffevavrdvrvae', 'Jln Nglanjaran', NULL, NULL, '2026-01-03 21:48:00', '2026-01-03 23:00:00', 99, 150000, '/assets/uploads/evt_69593a884593b6.93284992.png', 'publish', 8, '2026-01-03 15:49:28', '2026-01-03 16:06:16'),
+(9, 9, 2, 'Voli Pantai', 'voli_pantai', 'voli pantai', 'jln kaliurang', NULL, NULL, '2026-01-05 03:22:00', '2026-01-05 17:30:00', 200, NULL, '/assets/uploads/evt_695b2084e45025.23790586.jpg', 'publish', 8, '2026-01-05 02:23:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -148,7 +149,11 @@ INSERT INTO `galeri` (`id_galeri`, `jenis_target`, `id_target`, `gambar_url`, `k
 (3, 'destinasi', 11, '/assets/uploads/detail/dest_detail_695924f4a02048.75763247.jpg', NULL, 3, '2026-01-03 14:17:24'),
 (4, 'atraksi', 2, '/assets/uploads/detail/atr_detail_69592c40bd07a5.16727415.jpg', NULL, 1, '2026-01-03 14:48:32'),
 (5, 'event', 8, '/assets/uploads/detail/evt_detail_69593a88517a13.88091287.png', NULL, 1, '2026-01-03 15:49:28'),
-(6, 'event', 8, '/assets/uploads/detail/evt_detail_69593a885cea90.02199455.png', NULL, 2, '2026-01-03 15:49:28');
+(6, 'event', 8, '/assets/uploads/detail/evt_detail_69593a885cea90.02199455.png', NULL, 2, '2026-01-03 15:49:28'),
+(9, 'event', 9, '/assets/uploads/detail/evt_detail_695b2084ec8aa3.73105548.jpg', NULL, 1, '2026-01-05 02:23:01'),
+(10, 'event', 9, '/assets/uploads/detail/evt_detail_695b20850128f6.49600130.jpg', NULL, 2, '2026-01-05 02:23:01'),
+(14, 'kuliner', 6, '/assets/uploads/detail/kul_detail_695b2e47e86477.50975319.png', NULL, 1, '2026-01-05 03:21:44'),
+(15, 'kuliner', 6, '/assets/uploads/detail/kul_detail_695b2e481a2eb9.13823811.png', NULL, 2, '2026-01-05 03:21:44');
 
 -- --------------------------------------------------------
 
@@ -179,16 +184,9 @@ INSERT INTO `kategori` (`id_kategori`, `nama`, `tipe`, `dibuat_pada`) VALUES
 
 CREATE TABLE `kuliner` (
   `id_kuliner` bigint UNSIGNED NOT NULL,
-  `id_destinasi` bigint UNSIGNED DEFAULT NULL,
-  `id_kategori` bigint UNSIGNED DEFAULT NULL,
+  `kuliner_kategori_id` bigint UNSIGNED DEFAULT NULL,
   `nama` varchar(160) NOT NULL,
   `deskripsi` text,
-  `alamat` varchar(255) DEFAULT NULL,
-  `latitude` decimal(10,7) DEFAULT NULL,
-  `longitude` decimal(10,7) DEFAULT NULL,
-  `rentang_harga` varchar(40) DEFAULT NULL,
-  `jam_operasional` varchar(120) DEFAULT NULL,
-  `nomor_kontak` varchar(30) DEFAULT NULL,
   `gambar_sampul_url` varchar(255) DEFAULT NULL,
   `status` enum('draft','publish','arsip') NOT NULL DEFAULT 'draft',
   `dibuat_oleh` bigint UNSIGNED DEFAULT NULL,
@@ -200,10 +198,32 @@ CREATE TABLE `kuliner` (
 -- Dumping data for table `kuliner`
 --
 
-INSERT INTO `kuliner` (`id_kuliner`, `id_destinasi`, `id_kategori`, `nama`, `deskripsi`, `alamat`, `latitude`, `longitude`, `rentang_harga`, `jam_operasional`, `nomor_kontak`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
-(1, NULL, NULL, 'Gudeg Bu Yuyun', 'Gudeg enak', 'Yogyakarta', NULL, NULL, '25.000', NULL, NULL, '/assets/uploads/kul_695774de70cd97.21269305.jpg', 'publish', NULL, '2026-01-02 07:33:50', '2026-01-02 11:46:38'),
-(2, NULL, 1, 'Bakpia Patok', 'Bakpia kukus', 'Malioboro', NULL, NULL, '20.000 ', NULL, NULL, '/assets/uploads/kul_6957a9e8b4a3c8.71126961.jpg', 'publish', NULL, '2026-01-02 11:20:08', '2026-01-02 11:49:35'),
-(3, NULL, NULL, 'Lupis mba setimen', 'Lupis', 'Klaten', NULL, NULL, '15.000', NULL, NULL, '/assets/uploads/kul_6957b564bf8679.52669425.jpg', 'publish', NULL, '2026-01-02 12:09:08', '2026-01-02 12:10:18');
+INSERT INTO `kuliner` (`id_kuliner`, `kuliner_kategori_id`, `nama`, `deskripsi`, `gambar_sampul_url`, `status`, `dibuat_oleh`, `dibuat_pada`, `diubah_pada`) VALUES
+(6, 1, 'Seblak Mas Yusril', 'seblak enak sekali ', '/assets/uploads/kul_695b2e47d59ed1.24694722.png', 'publish', 8, '2026-01-05 03:21:43', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kuliner_kategori`
+--
+
+CREATE TABLE `kuliner_kategori` (
+  `id` bigint UNSIGNED NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `slug` varchar(120) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `kuliner_kategori`
+--
+
+INSERT INTO `kuliner_kategori` (`id`, `nama`, `slug`, `created_at`) VALUES
+(1, 'Makanan Tradisional', 'makanan-tradisional', '2026-01-05 03:20:12'),
+(2, 'Street Food', 'street-food', '2026-01-05 03:20:12'),
+(3, 'Jajanan Pasar', 'jajanan-pasar', '2026-01-05 03:20:12'),
+(4, 'Minuman', 'minuman', '2026-01-05 03:20:12'),
+(5, 'Oleh-oleh', 'oleh-oleh', '2026-01-05 03:20:12');
 
 -- --------------------------------------------------------
 
@@ -226,7 +246,14 @@ CREATE TABLE `kunjungan` (
 --
 
 INSERT INTO `kunjungan` (`id_kunjungan`, `id_pengguna`, `jenis_halaman`, `id_target`, `user_agent`, `ip_hash`, `dibuat_pada`) VALUES
-(1, 1, 'beranda', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2025-12-14 19:18:56');
+(1, 1, 'beranda', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2025-12-14 19:18:56'),
+(2, 8, 'beranda', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-04 17:44:40'),
+(3, 8, 'beranda', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-04 17:44:59'),
+(4, 8, 'destinasi', 11, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-04 17:49:16'),
+(5, 8, 'destinasi', 9, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-04 17:49:33'),
+(6, 8, 'beranda', NULL, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-04 17:53:24'),
+(7, 8, 'destinasi', 9, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-04 18:35:02'),
+(8, 8, 'destinasi', 11, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '79f1ed7c3831720253675dcf97a9714711e3e0ec94b6abf77f5bbf0280dc9c0d', '2026-01-05 03:53:56');
 
 -- --------------------------------------------------------
 
@@ -247,6 +274,20 @@ CREATE TABLE `log_admin` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `id` bigint UNSIGNED NOT NULL,
+  `id_pengguna` bigint UNSIGNED NOT NULL,
+  `token` varchar(100) NOT NULL,
+  `expires_at` datetime NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pelaporan`
 --
 
@@ -260,6 +301,13 @@ CREATE TABLE `pelaporan` (
   `status` enum('baru','diproses','selesai','ditolak') NOT NULL DEFAULT 'baru',
   `dibuat_pada` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `pelaporan`
+--
+
+INSERT INTO `pelaporan` (`id_pelaporan`, `id_pengguna`, `jenis_target`, `id_target`, `judul`, `deskripsi`, `status`, `dibuat_pada`) VALUES
+(1, 8, 'event', 4, 'Pelaporan', 'loading nya lama banget', 'selesai', '2026-01-04 14:44:50');
 
 -- --------------------------------------------------------
 
@@ -312,8 +360,8 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `username`, `email`, `kata_sandi_hash`, `peran`, `nomor_hp`, `foto_profil_url`, `status_aktif`, `dibuat_pada`, `diubah_pada`) VALUES
-(8, 'Administrator', 'admin', 'admin@jogjaverse.com', '0192023a7bbd73250516f069df18b500', 'admin', '081234567890', NULL, 1, '2025-12-16 15:17:22', '2026-01-03 13:26:52'),
-(9, 'User Example', 'user', 'user@jogjaverse.com', '6ad14ba9986e3615423dfca256d04e3f', 'user', '081234567891', NULL, 1, '2025-12-16 15:17:22', '2026-01-03 13:25:19'),
+(8, 'Administrator', 'admin', 'admin@jogjaverse.com', '0192023a7bbd73250516f069df18b500', 'admin', '081234567890', '/public/user/img/profile/profile_8_1767534950.jpg', 1, '2025-12-16 15:17:22', '2026-01-05 02:26:54'),
+(9, 'User Example', 'user', 'user@jogjaverse.com', '6ad14ba9986e3615423dfca256d04e3f', 'user', '081234567891', NULL, 1, '2025-12-16 15:17:22', '2026-01-04 14:04:17'),
 (10, 'adminn', 'adminn', 'uadyi@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', 'admin', '09123456789', NULL, 1, '2025-12-18 17:42:59', '2026-01-03 02:09:02'),
 (11, 'userrr', 'userrr', 'user@113.com', '96e79218965eb72c92a549dd5a330112', 'user', '0887982747214', NULL, 1, '2025-12-26 18:35:30', '2025-12-26 18:35:58');
 
@@ -412,6 +460,14 @@ CREATE TABLE `ulasan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
+-- Dumping data for table `ulasan`
+--
+
+INSERT INTO `ulasan` (`id_ulasan`, `id_pengguna`, `jenis_target`, `id_target`, `rating`, `komentar`, `status`, `dibuat_pada`) VALUES
+(1, 8, 'event', 8, 5, 'event nya seru', 'tampil', '2026-01-04 12:42:31'),
+(2, 8, 'kuliner', 3, 4, 'makanannya lumayan enak', 'tampil', '2026-01-04 14:45:41');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -467,10 +523,16 @@ ALTER TABLE `kategori`
 --
 ALTER TABLE `kuliner`
   ADD PRIMARY KEY (`id_kuliner`),
-  ADD KEY `fk_kul_kategori` (`id_kategori`),
   ADD KEY `fk_kul_dibuat_oleh` (`dibuat_oleh`),
-  ADD KEY `idx_kul_destinasi` (`id_destinasi`),
-  ADD KEY `idx_kul_status` (`status`);
+  ADD KEY `idx_kul_status` (`status`),
+  ADD KEY `idx_kuliner_kategori_id` (`kuliner_kategori_id`);
+
+--
+-- Indexes for table `kuliner_kategori`
+--
+ALTER TABLE `kuliner_kategori`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uk_kuliner_kategori_slug` (`slug`);
 
 --
 -- Indexes for table `kunjungan`
@@ -487,6 +549,14 @@ ALTER TABLE `log_admin`
   ADD PRIMARY KEY (`id_log`),
   ADD KEY `idx_log_target` (`jenis_target`,`id_target`),
   ADD KEY `idx_log_admin` (`id_admin`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_password_resets_pengguna` (`id_pengguna`),
+  ADD KEY `idx_password_resets_token` (`token`);
 
 --
 -- Indexes for table `pelaporan`
@@ -572,13 +642,13 @@ ALTER TABLE `destinasi`
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
-  MODIFY `id_event` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_event` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `galeri`
 --
 ALTER TABLE `galeri`
-  MODIFY `id_galeri` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_galeri` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -590,13 +660,19 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `kuliner`
 --
 ALTER TABLE `kuliner`
-  MODIFY `id_kuliner` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kuliner` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `kuliner_kategori`
+--
+ALTER TABLE `kuliner_kategori`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `kunjungan`
 --
 ALTER TABLE `kunjungan`
-  MODIFY `id_kunjungan` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_kunjungan` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `log_admin`
@@ -605,10 +681,16 @@ ALTER TABLE `log_admin`
   MODIFY `id_log` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `pelaporan`
 --
 ALTER TABLE `pelaporan`
-  MODIFY `id_pelaporan` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pelaporan` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pembayaran`
@@ -650,7 +732,7 @@ ALTER TABLE `tiket_event`
 -- AUTO_INCREMENT for table `ulasan`
 --
 ALTER TABLE `ulasan`
-  MODIFY `id_ulasan` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ulasan` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -683,15 +765,20 @@ ALTER TABLE `event`
 -- Constraints for table `kuliner`
 --
 ALTER TABLE `kuliner`
-  ADD CONSTRAINT `fk_kul_destinasi` FOREIGN KEY (`id_destinasi`) REFERENCES `destinasi` (`id_destinasi`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_kul_dibuat_oleh` FOREIGN KEY (`dibuat_oleh`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_kul_kategori` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_kuliner_kategori` FOREIGN KEY (`kuliner_kategori_id`) REFERENCES `kuliner_kategori` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `log_admin`
 --
 ALTER TABLE `log_admin`
   ADD CONSTRAINT `fk_log_admin` FOREIGN KEY (`id_admin`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD CONSTRAINT `fk_password_resets_pengguna` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `pembayaran`

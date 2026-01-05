@@ -8,6 +8,41 @@ function h($value) {
   return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
 }
 
+function table_exists(mysqli $koneksi, string $table): bool {
+  $stmt = $koneksi->prepare("
+    SELECT COUNT(*) as total
+    FROM information_schema.tables
+    WHERE table_schema = DATABASE()
+      AND table_name = ?
+  ");
+  if (!$stmt) {
+    return false;
+  }
+  $stmt->bind_param("s", $table);
+  $stmt->execute();
+  $row = $stmt->get_result()->fetch_assoc();
+  $stmt->close();
+  return ((int)($row['total'] ?? 0)) > 0;
+}
+
+function table_has_column(mysqli $koneksi, string $table, string $column): bool {
+  $stmt = $koneksi->prepare("
+    SELECT COUNT(*) as total
+    FROM information_schema.columns
+    WHERE table_schema = DATABASE()
+      AND table_name = ?
+      AND column_name = ?
+  ");
+  if (!$stmt) {
+    return false;
+  }
+  $stmt->bind_param("ss", $table, $column);
+  $stmt->execute();
+  $row = $stmt->get_result()->fetch_assoc();
+  $stmt->close();
+  return ((int)($row['total'] ?? 0)) > 0;
+}
+
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id) {
   $id = filter_input(INPUT_GET, 'id_kuliner', FILTER_VALIDATE_INT);
@@ -15,6 +50,14 @@ if (!$id) {
 $kuliner = null;
 $ulasan_error = '';
 $ulasan_success = '';
+$hasKulinerKategoriTable = table_exists($koneksi, 'kuliner_kategori');
+$hasKulinerKategoriCol = table_has_column($koneksi, 'kuliner', 'kuliner_kategori_id');
+$kategoriSelect = 'NULL AS kategori';
+$kategoriJoin = '';
+if ($hasKulinerKategoriTable && $hasKulinerKategoriCol) {
+  $kategoriSelect = 'kk.nama AS kategori';
+  $kategoriJoin = 'LEFT JOIN kuliner_kategori kk ON kln.kuliner_kategori_id = kk.id';
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'submit_ulasan') {
   if (empty($_SESSION['login']) || $_SESSION['login'] !== true) {
@@ -53,9 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'submi
 
 if ($id) {
   $stmt = $koneksi->prepare("
-    SELECT kln.*, kt.nama AS kategori
+    SELECT kln.*, $kategoriSelect
     FROM kuliner kln
-    LEFT JOIN kategori kt ON kln.id_kategori = kt.id_kategori AND kt.tipe = 'kuliner'
+    $kategoriJoin
     WHERE kln.id_kuliner = ? AND kln.status = 'publish'
     LIMIT 1
   ");
@@ -128,31 +171,15 @@ if (!$not_found && !empty($kuliner['gambar_sampul_url'])) {
 }
 
 $kategori_label = $kuliner ? ($kuliner['kategori'] ?? 'Kuliner') : 'Kuliner';
-$alamat_label = $kuliner ? trim((string)($kuliner['alamat'] ?? '')) : '';
-$alamat_display = $alamat_label !== '' ? $alamat_label : 'Yogyakarta';
-$harga_label = $kuliner && trim((string)($kuliner['rentang_harga'] ?? '')) !== ''
-  ? $kuliner['rentang_harga']
-  : 'Belum tersedia';
-$jam_label = $kuliner && trim((string)($kuliner['jam_operasional'] ?? '')) !== ''
-  ? $kuliner['jam_operasional']
-  : 'Belum tersedia';
-$kontak_label = $kuliner && trim((string)($kuliner['nomor_kontak'] ?? '')) !== ''
-  ? $kuliner['nomor_kontak']
-  : 'Belum tersedia';
 
 $deskripsi_display = $kuliner && trim((string)($kuliner['deskripsi'] ?? '')) !== ''
   ? $kuliner['deskripsi']
-  : 'Deskripsi belum tersedia.';
+  : 'Belum ada deskripsi.';
 
-$lat_raw = $kuliner['latitude'] ?? '';
-$lng_raw = $kuliner['longitude'] ?? '';
-$has_map = $kuliner
-  && is_numeric($lat_raw)
-  && is_numeric($lng_raw)
-  && (float)$lat_raw != 0.0
-  && (float)$lng_raw != 0.0;
-$map_lat = $has_map ? (float)$lat_raw : null;
-$map_lng = $has_map ? (float)$lng_raw : null;
+$desc_plain = trim(strip_tags((string)$deskripsi_display));
+$is_long_desc = strlen($desc_plain) > 600;
+$detail_class = $is_long_desc ? 'is-long' : 'is-short';
+
 ?>
 
 <!DOCTYPE html>
@@ -166,8 +193,6 @@ $map_lng = $has_map ? (float)$lng_raw : null;
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style2.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="/assets/css/leaflet.css">
 
   <style>
     :root {
@@ -219,10 +244,74 @@ $map_lng = $has_map ? (float)$lng_raw : null;
     .detail-gambar img:last-child {
         margin-bottom: 0;
     }
-    #mapKuliner {
+    .detail-wrapper {
+        display: flex;
+        gap: 24px;
+        align-items: stretch;
+    }
+    .detail-col {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+    .detail-card {
+        height: 100%;
+    }
+    .media-column {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .media-main {
+        flex: 0 0 auto;
+        min-height: 320px;
+    }
+    .detail-wrapper.is-long .media-main {
+        min-height: 420px;
+    }
+    .media-main img {
         width: 100%;
-        height: 300px;
+        height: 100%;
+        object-fit: cover;
         border-radius: 16px;
+        display: block;
+    }
+    .media-gallery {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        align-content: start;
+    }
+    .detail-wrapper.is-long .media-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        flex: 1 1 auto;
+    }
+    .detail-wrapper.is-short .media-gallery {
+        max-height: 260px;
+        overflow: auto;
+        flex: 0 0 auto;
+    }
+    .media-gallery img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 12px;
+        cursor: pointer;
+        display: block;
+    }
+    .media-gallery.is-empty {
+        display: block;
+    }
+    @media (max-width: 991.98px) {
+        .detail-wrapper {
+            flex-direction: column;
+        }
+        .detail-card {
+            height: auto;
+        }
+        .detail-wrapper.is-short .media-gallery {
+            max-height: none;
+        }
     }
   </style>
 </head>
@@ -252,7 +341,6 @@ $map_lng = $has_map ? (float)$lng_raw : null;
     <div class="hero-overlay">
       <div class="text-center">
         <h1 class="fw-bold display-4 mb-2"><?= h($kuliner['nama']) ?></h1>
-        <p class="text-white-50 fs-5"><?= h($alamat_display) ?></p>
       </div>
     </div>
   </div>
@@ -271,79 +359,41 @@ $map_lng = $has_map ? (float)$lng_raw : null;
 
   <section class="pb-5">
     <div class="container">
-      <div class="row g-4 align-items-start">
-        <div class="col-lg-8">
-          <div class="mb-4">
-            <div class="d-flex flex-wrap gap-2 mb-3">
-              <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-tag text-warning"></i>
-                <?= h($kategori_label) ?>
-              </span>
-              <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-geo-alt text-warning"></i>
-                <?= h($alamat_display) ?>
-              </span>
-              <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-cash text-warning"></i>
-                <?= h($harga_label) ?>
-              </span>
-              <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-clock text-warning"></i>
-                <?= h($jam_label) ?>
-              </span>
-              <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-telephone text-warning"></i>
-                <?= h($kontak_label) ?>
-              </span>
-            </div>
-          </div>
+      <div class="mb-4">
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
+            <i class="bi bi-tag text-warning"></i>
+            <?= h($kategori_label) ?>
+          </span>
+        </div>
+      </div>
 
-          <div class="bg-white rounded-4 p-4 shadow-sm mb-4">
-            <h2 class="fw-bold font-serif mb-3">Deskripsi</h2>
+      <div class="detail-wrapper <?= $detail_class ?>">
+        <div class="detail-col desc-column">
+          <div class="detail-card bg-white rounded-4 p-4 shadow-sm">
             <div class="text-muted" style="line-height:1.8;">
               <?= nl2br(h($deskripsi_display)) ?>
             </div>
           </div>
-
-          <div class="bg-white rounded-4 p-4 shadow-sm">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <h3 class="fw-bold font-serif mb-0">Peta Lokasi</h3>
-              <span class="text-muted small"><?= h($alamat_display) ?></span>
-            </div>
-            <?php if ($has_map): ?>
-              <div class="rounded-4 overflow-hidden shadow-sm">
-                <div id="mapKuliner"></div>
-              </div>
-            <?php else: ?>
-              <div class="text-muted">Lokasi peta belum tersedia.</div>
-            <?php endif; ?>
-          </div>
         </div>
 
-        <div class="col-lg-4">
-          <div class="card border-0 shadow-sm rounded-4 mb-4">
-            <div class="card-body">
-              <h5 class="fw-bold font-serif mb-3">Informasi</h5>
-              <ul class="list-unstyled text-muted small mb-0">
-                <li class="mb-2"><i class="bi bi-geo-alt me-2 text-warning"></i><?= h($alamat_display) ?></li>
-                <li class="mb-2"><i class="bi bi-cash me-2 text-warning"></i><?= h($harga_label) ?></li>
-                <li class="mb-2"><i class="bi bi-clock me-2 text-warning"></i><?= h($jam_label) ?></li>
-                <li class="mb-2"><i class="bi bi-telephone me-2 text-warning"></i><?= h($kontak_label) ?></li>
-                <li><i class="bi bi-tag me-2 text-warning"></i><?= h($kategori_label) ?></li>
-              </ul>
+        <div class="detail-col">
+          <div class="detail-card media-column bg-white rounded-4 p-4 shadow-sm">
+            <div class="media-main">
+              <img src="<?= h($hero_image) ?>" alt="<?= h($kuliner['nama']) ?>">
             </div>
-          </div>
-
-          <section class="detail-gambar">
-            <h5 class="fw-bold font-serif mb-3">Detail Gambar</h5>
             <?php if (!empty($detailGallery)): ?>
-              <?php foreach ($detailGallery as $img): ?>
-                <img src="<?= h($img['gambar_url']) ?>" alt="<?= h($img['keterangan'] ?? $kuliner['nama']) ?>" loading="lazy">
-              <?php endforeach; ?>
+              <div class="media-gallery">
+                <?php foreach ($detailGallery as $img): ?>
+                  <img src="<?= h($img['gambar_url']) ?>" alt="<?= h($img['keterangan'] ?? $kuliner['nama']) ?>" loading="lazy">
+                <?php endforeach; ?>
+              </div>
             <?php else: ?>
-              <small class="text-muted">Belum ada gambar detail.</small>
+              <div class="media-gallery is-empty">
+                <small class="text-muted">Belum ada gambar tambahan.</small>
+              </div>
             <?php endif; ?>
-          </section>
+          </div>
         </div>
       </div>
     </div>
@@ -418,28 +468,6 @@ $map_lng = $has_map ? (float)$lng_raw : null;
 <?php endif; ?>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>
-<?php if (!$not_found && $has_map): ?>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const lat = parseFloat(<?= json_encode($map_lat) ?>);
-      const lng = parseFloat(<?= json_encode($map_lng) ?>);
-      const mapEl = document.getElementById('mapKuliner');
-      if (!mapEl || Number.isNaN(lat) || Number.isNaN(lng)) {
-        return;
-      }
-      if (window._mapKuliner) {
-        return;
-      }
-      window._mapKuliner = L.map('mapKuliner').setView([lat, lng], 14);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap'
-      }).addTo(window._mapKuliner);
-      L.marker([lat, lng]).addTo(window._mapKuliner);
-    });
-  </script>
-<?php endif; ?>
 
 </body>
 </html>

@@ -80,6 +80,26 @@ if (isset($payload['selesai_pada']) && $payload['selesai_pada']) {
 if (array_key_exists("status", $payload) && $payload["status"] === null) {
   $payload["status"] = "draft";
 }
+if (table_has_column($koneksi, $table, 'slug')) {
+  $nameSource = '';
+  foreach (['judul', 'nama_event', 'nama', 'title'] as $key) {
+    if (isset($_POST[$key]) && trim((string)$_POST[$key]) !== '') {
+      $nameSource = trim((string)$_POST[$key]);
+      break;
+    }
+  }
+  if ($nameSource !== '') {
+    $baseSlug = slugify($nameSource);
+    $payload['slug'] = generate_unique_slug(
+      $koneksi,
+      $table,
+      'slug',
+      $baseSlug,
+      $id !== "" ? (string)$id : null,
+      $pk
+    );
+  }
+}
 
 // upload poster
 if (isset($_FILES['gambar_sampul_url']) && is_uploaded_file($_FILES['gambar_sampul_url']['tmp_name'])) {
@@ -367,10 +387,6 @@ $penggunaOptions = fetch_options_by_table(
         <div class="full">
           <label>judul *</label>
           <input type="text" name="judul" required value="<?= h($edit['judul'] ?? '') ?>">
-        </div>
-        <div>
-          <label>slug *</label>
-          <input type="text" name="slug" required value="<?= h($edit['slug'] ?? '') ?>">
         </div>
         <div>
           <label>lokasi</label>

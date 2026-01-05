@@ -32,6 +32,85 @@ function pick_col(array $colNames, array $candidates): ?string {
   return null;
 }
 
+if (!function_exists('table_has_column')) {
+  function table_has_column(mysqli $koneksi, string $table, string $column): bool {
+    $stmt = $koneksi->prepare("
+      SELECT COUNT(*) as total
+      FROM information_schema.columns
+      WHERE table_schema = DATABASE()
+        AND table_name = ?
+        AND column_name = ?
+    ");
+    if (!$stmt) {
+      return false;
+    }
+    $stmt->bind_param("ss", $table, $column);
+    $stmt->execute();
+    $row = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    return ((int)($row['total'] ?? 0)) > 0;
+  }
+}
+
+if (!function_exists('slugify')) {
+  function slugify(string $text): string {
+    $text = trim($text);
+    if ($text === '') {
+      return '';
+    }
+    if (function_exists('iconv')) {
+      $converted = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $text);
+      if ($converted !== false) {
+        $text = $converted;
+      }
+    }
+    $text = strtolower($text);
+    $text = preg_replace('/[^a-z0-9\\s-]/', '', $text);
+    $text = preg_replace('/[\\s-]+/', '-', $text);
+    $text = trim($text, '-');
+    return $text;
+  }
+}
+
+if (!function_exists('generate_unique_slug')) {
+  function generate_unique_slug(
+    mysqli $koneksi,
+    string $table,
+    string $slugCol,
+    string $baseSlug,
+    ?string $excludeId = null,
+    string $idCol = 'id'
+  ): string {
+    $baseSlug = $baseSlug !== '' ? $baseSlug : 'item';
+    $candidate = $baseSlug;
+    $suffix = 1;
+
+    while (true) {
+      if ($excludeId !== null && $excludeId !== '') {
+        $stmt = $koneksi->prepare("SELECT COUNT(*) as total FROM `$table` WHERE `$slugCol` = ? AND `$idCol` <> ?");
+        if (!$stmt) {
+          return $candidate;
+        }
+        $stmt->bind_param("ss", $candidate, $excludeId);
+      } else {
+        $stmt = $koneksi->prepare("SELECT COUNT(*) as total FROM `$table` WHERE `$slugCol` = ?");
+        if (!$stmt) {
+          return $candidate;
+        }
+        $stmt->bind_param("s", $candidate);
+      }
+      $stmt->execute();
+      $row = $stmt->get_result()->fetch_assoc();
+      $stmt->close();
+      if (((int)($row['total'] ?? 0)) === 0) {
+        return $candidate;
+      }
+      $suffix++;
+      $candidate = $baseSlug . "-" . $suffix;
+    }
+  }
+}
+
 function guess_time_col(array $colNames): ?string {
   foreach ($colNames as $n) {
     $ln = strtolower($n);

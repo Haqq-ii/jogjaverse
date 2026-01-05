@@ -4,6 +4,41 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
+function table_exists(mysqli $koneksi, string $table): bool {
+  $stmt = $koneksi->prepare("
+    SELECT COUNT(*) as total
+    FROM information_schema.tables
+    WHERE table_schema = DATABASE()
+      AND table_name = ?
+  ");
+  if (!$stmt) {
+    return false;
+  }
+  $stmt->bind_param("s", $table);
+  $stmt->execute();
+  $row = $stmt->get_result()->fetch_assoc();
+  $stmt->close();
+  return ((int)($row['total'] ?? 0)) > 0;
+}
+
+function table_has_column(mysqli $koneksi, string $table, string $column): bool {
+  $stmt = $koneksi->prepare("
+    SELECT COUNT(*) as total
+    FROM information_schema.columns
+    WHERE table_schema = DATABASE()
+      AND table_name = ?
+      AND column_name = ?
+  ");
+  if (!$stmt) {
+    return false;
+  }
+  $stmt->bind_param("ss", $table, $column);
+  $stmt->execute();
+  $row = $stmt->get_result()->fetch_assoc();
+  $stmt->close();
+  return ((int)($row['total'] ?? 0)) > 0;
+}
+
 // -----------------------------------------------------------
 // 1. LOGIKA FILTER & PAGINATION
 // -----------------------------------------------------------
@@ -16,20 +51,28 @@ $offset = ($page - 1) * $limit;
 
 // B. Tangkap Filter Kategori
 $kategori_id = isset($_GET['kategori']) ? (int)$_GET['kategori'] : 0;
+$hasKulinerKategoriTable = table_exists($koneksi, 'kuliner_kategori');
+$hasKulinerKategoriCol = table_has_column($koneksi, 'kuliner', 'kuliner_kategori_id');
+$kategori_ready = $hasKulinerKategoriTable && $hasKulinerKategoriCol;
+if (!$kategori_ready) {
+    $kategori_id = 0;
+}
 
 // C. Query Dasar (Base Query)
 // Menggunakan LEFT JOIN agar data tetap muncul meski kategori tidak valid/kosong
 $where_clause = "WHERE k.status = 'publish'";
 
-if ($kategori_id > 0) {
-    $where_clause .= " AND k.id_kategori = $kategori_id";
+if ($kategori_ready && $kategori_id > 0) {
+    $where_clause .= " AND k.kuliner_kategori_id = $kategori_id";
 }
+$join_kategori = $kategori_ready ? "LEFT JOIN kuliner_kategori kk ON k.kuliner_kategori_id = kk.id" : "";
+$select_kategori = $kategori_ready ? "kk.nama AS kategori" : "NULL AS kategori";
 
 // D. Hitung Total Data
 $query_count = "
     SELECT COUNT(*) as total 
     FROM kuliner k
-    LEFT JOIN kategori c ON k.id_kategori = c.id_kategori
+    $join_kategori
     $where_clause
 ";
 $result_count = mysqli_query($koneksi, $query_count);
@@ -43,12 +86,10 @@ $query_data = "
         k.id_kuliner,
         k.nama,
         k.deskripsi,
-        c.nama AS kategori,
-        k.gambar_sampul_url,
-        k.alamat,
-        k.rentang_harga
+        $select_kategori,
+        k.gambar_sampul_url
     FROM kuliner k
-    LEFT JOIN kategori c ON k.id_kategori = c.id_kategori
+    $join_kategori
     $where_clause
     ORDER BY k.dibuat_pada DESC
     LIMIT $limit OFFSET $offset
@@ -60,8 +101,28 @@ if (!$result) {
 }
 
 // F. Ambil Daftar Kategori untuk Dropdown
-$query_kategori = "SELECT * FROM kategori WHERE tipe = 'kuliner' ORDER BY nama ASC";
-$result_kategori = mysqli_query($koneksi, $query_kategori);
+$kategori_options = [];
+$kategori_message = '';
+if ($kategori_ready) {
+    $query_kategori = "SELECT id, nama FROM kuliner_kategori ORDER BY nama ASC";
+    $result_kategori = mysqli_query($koneksi, $query_kategori);
+    if ($result_kategori) {
+        while ($row = mysqli_fetch_assoc($result_kategori)) {
+            $kategori_options[] = $row;
+        }
+    } else {
+        $kategori_message = 'Gagal memuat kategori.';
+    }
+    if (empty($kategori_options) && $kategori_message === '') {
+        $kategori_message = 'Kategori belum tersedia.';
+    }
+} else {
+    if (!$hasKulinerKategoriCol) {
+        $kategori_message = 'Kolom kuliner_kategori_id belum tersedia. Jalankan migrasi.';
+    } elseif (!$hasKulinerKategoriTable) {
+        $kategori_message = 'Tabel kuliner_kategori belum tersedia. Jalankan migrasi.';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -109,7 +170,7 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
           <!-- Dropdown Filter -->
           <div class="dropdown">
             <button class="btn btn-outline-secondary dropdown-toggle rounded-pill px-4 text-dark border-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-funnel me-2"></i><?= ($kategori_id > 0) ? 'Kategori Terpilih' : 'Semua Kuliner' ?>
+                <i class="bi bi-funnel me-2"></i><?= ($kategori_ready && $kategori_id > 0) ? 'Kategori Terpilih' : 'Semua Kuliner' ?>
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2">
                 <li>
@@ -118,15 +179,20 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
                     </a>
                 </li>
                 <li><hr class="dropdown-divider"></li>
-                <?php while($kat = mysqli_fetch_assoc($result_kategori)): ?>
-                    <li>
-                        <a class="dropdown-item rounded-2 <?= ($kategori_id == $kat['id_kategori']) ? 'active' : '' ?>" 
-                           href="?kategori=<?= $kat['id_kategori'] ?>">
-                           <?= htmlspecialchars($kat['nama']) ?>
-                        </a>
-                    </li>
-                <?php endwhile; ?>
+                <?php if (!empty($kategori_options)): ?>
+                    <?php foreach ($kategori_options as $kat): ?>
+                        <li>
+                            <a class="dropdown-item rounded-2 <?= ($kategori_id == (int)$kat['id']) ? 'active' : '' ?>"
+                               href="?kategori=<?= (int)$kat['id'] ?>">
+                               <?= htmlspecialchars($kat['nama']) ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </ul>
+            <?php if ($kategori_message !== ''): ?>
+              <div class="text-muted small mt-2"><?= htmlspecialchars($kategori_message) ?></div>
+            <?php endif; ?>
           </div>
       </div>
 
@@ -135,6 +201,8 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
         <?php if (mysqli_num_rows($result) > 0): ?>
             <?php while ($row = mysqli_fetch_assoc($result)): 
                 $img_url = !empty($row['gambar_sampul_url']) ? $row['gambar_sampul_url'] : 'https://placehold.co/600x400?text=Kuliner';
+                $kategoriLabel = trim((string)($row['kategori'] ?? ''));
+                $kategoriLabel = $kategoriLabel !== '' ? $kategoriLabel : '-';
             ?>
             <div class="col-sm-6 col-md-4 col-lg-3">
               <!-- CARD KULINER -->
@@ -154,7 +222,7 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
                   <!-- Kategori Badge -->
                   <div class="mb-2">
                       <span class="badge bg-light text-dark border border-secondary border-opacity-25 rounded-pill px-3" style="font-size: 0.75rem;">
-                          <?= htmlspecialchars($row['kategori'] ?? 'Umum') ?>
+                          <?= htmlspecialchars($kategoriLabel) ?>
                       </span>
                   </div>
 
@@ -168,19 +236,7 @@ $result_kategori = mysqli_query($koneksi, $query_kategori);
                     <?= htmlspecialchars(substr(strip_tags($row['deskripsi']), 0, 100)) ?>...
                   </p>
 
-                  <div class="border-top pt-3">
-                    <div class="d-flex justify-content-between align-items-center mb-3 card-meta">
-                        <!-- Lokasi -->
-                        <span class="text-muted d-flex align-items-center" style="max-width: 60%;">
-                            <i class="bi bi-geo-alt me-1 text-warning"></i> 
-                            <span class="text-truncate"><?= htmlspecialchars($row['alamat']) ?></span>
-                        </span>
-                        <!-- Harga -->
-                        <span class="fw-bold text-dark">
-                            Rp <?= number_format($row['rentang_harga'], 0, ',', '.') ?>
-                        </span>
-                    </div>
-
+                  <div class="border-top pt-3 mt-auto">
                     <div class="text-center">
                         <a href="detailKuliner.php?id=<?= $row['id_kuliner'] ?>" class="link-gold-animated">
                            Lihat Menu <i class="bi bi-arrow-right"></i>

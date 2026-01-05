@@ -6,6 +6,45 @@ require_once __DIR__ . "/../config/upload.php";
 require_once __DIR__ . "/_crud_helper.php";
 wajib_admin();
 
+if (!function_exists('table_exists')) {
+  function table_exists(mysqli $koneksi, string $table): bool {
+    $stmt = $koneksi->prepare("
+      SELECT COUNT(*) as total
+      FROM information_schema.tables
+      WHERE table_schema = DATABASE()
+        AND table_name = ?
+    ");
+    if (!$stmt) {
+      return false;
+    }
+    $stmt->bind_param("s", $table);
+    $stmt->execute();
+    $row = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    return ((int)($row['total'] ?? 0)) > 0;
+  }
+}
+
+if (!function_exists('table_has_column')) {
+  function table_has_column(mysqli $koneksi, string $table, string $column): bool {
+    $stmt = $koneksi->prepare("
+      SELECT COUNT(*) as total
+      FROM information_schema.columns
+      WHERE table_schema = DATABASE()
+        AND table_name = ?
+        AND column_name = ?
+    ");
+    if (!$stmt) {
+      return false;
+    }
+    $stmt->bind_param("ss", $table, $column);
+    $stmt->execute();
+    $row = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    return ((int)($row['total'] ?? 0)) > 0;
+  }
+}
+
 $table = "kuliner";
 $galeriTable = "galeri";
 $galeriJenis = "kuliner";
@@ -17,9 +56,9 @@ if (!$pk) die("PK tidak ditemukan di tabel $table");
 $colNames = array_map(fn($c) => $c['Field'], $cols);
 
 $colNama     = pick_col($colNames, ["nama_kuliner", "nama", "judul"]);
-$colLok      = pick_col($colNames, ["alamat", "lokasi", "kecamatan", "kota", "kabupaten"]);
-$colHarga    = pick_col($colNames, ["rentang_harga", "harga", "harga_rata", "harga_mulai"]);
 $colFoto     = pick_col($colNames, ["gambar_sampul_url","foto_url", "gambar_url", "thumbnail", "image_url", "cover"]);
+$hasKulinerKategoriCol = table_has_column($koneksi, $table, "kuliner_kategori_id");
+$hasKulinerKategoriTable = table_exists($koneksi, "kuliner_kategori");
 
 $flash = $_SESSION['flash'] ?? "";
 unset($_SESSION['flash']);
@@ -61,6 +100,27 @@ if (isset($_GET['hapus'])) {
 // handle save (add/edit)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $id = $_POST['id'] ?? "";
+
+$errors = [];
+$namaInput = trim((string)($_POST['nama'] ?? ''));
+if ($namaInput === '') {
+  $errors[] = "Nama wajib diisi.";
+}
+if ($hasKulinerKategoriCol && $hasKulinerKategoriTable) {
+  $kategoriInput = trim((string)($_POST['kuliner_kategori_id'] ?? ''));
+  if ($kategoriInput === '' || (int)$kategoriInput <= 0) {
+    $errors[] = "Kategori wajib dipilih.";
+  }
+}
+if (!empty($errors)) {
+  $_SESSION['flash'] = implode(' ', $errors);
+  $redirect = BASE_URL . "/admin/kuliner.php";
+  if ($id !== "") {
+    $redirect .= "?edit=" . urlencode((string)$id);
+  }
+  header("Location: " . $redirect);
+  exit();
+}
 
 $skip = [$pk, "dibuat_pada", "diubah_pada"];
 $payload = [];
@@ -200,21 +260,21 @@ if ($edit) {
 
 
 $data = fetch_rows($koneksi, $table, $pk, $q, $cols);
-$destinasiOptions = fetch_options_by_table(
-  $koneksi,
-  ["destinasi"],
-  ["nama_destinasi", "nama", "judul"]
-);
 $kategoriOptions = fetch_options_by_table(
   $koneksi,
-  ["kategori", "kategori_kuliner", "kategori_destinasi"],
-  ["nama", "nama_kategori", "judul", "label"]
+  ["kuliner_kategori"],
+  ["nama", "judul", "label"]
 );
 $penggunaOptions = fetch_options_by_table(
   $koneksi,
   ["pengguna"],
   ["nama_lengkap", "username", "email", "nama"]
 );
+$kategoriTableMissing = !$hasKulinerKategoriTable;
+$kulinerKategoriMap = [];
+foreach ($kategoriOptions as $opt) {
+  $kulinerKategoriMap[(string)$opt['id']] = $opt['label'];
+}
 ?>
 
 <?php require_once __DIR__ . "/partials/header.php"; ?>
@@ -245,8 +305,7 @@ $penggunaOptions = fetch_options_by_table(
         <tr>
           <th>ID</th>
           <th>Nama</th>
-          <th>Alamat</th>
-          <th>Rentang Harga</th>
+          <th>Kategori</th>
           <th>Status</th>
           <th>Foto</th>
           <th>Aksi</th>
@@ -257,8 +316,16 @@ $penggunaOptions = fetch_options_by_table(
         <tr>
           <td><?= h($row[$pk]) ?></td>
           <td><b><?= h($colNama ? ($row[$colNama] ?? '-') : '-') ?></b></td>
-          <td><?= h($colLok ? ($row[$colLok] ?? '-') : '-') ?></td>
-          <td><?= h($colHarga ? ($row[$colHarga] ?? '-') : '-') ?></td>
+          <?php
+            $kategoriLabel = '-';
+            if ($hasKulinerKategoriCol) {
+              $kategoriId = (string)($row['kuliner_kategori_id'] ?? '');
+              if ($kategoriId !== '' && isset($kulinerKategoriMap[$kategoriId])) {
+                $kategoriLabel = $kulinerKategoriMap[$kategoriId];
+              }
+            }
+          ?>
+          <td><?= h($kategoriLabel) ?></td>
           <td><span class="pill"><?= h($row['status'] ?? '-') ?></span></td>
           <td>
             <?php if ($colFoto && !empty($row[$colFoto])): ?>
@@ -294,43 +361,20 @@ $penggunaOptions = fetch_options_by_table(
       <?php $statusVal = $edit['status'] ?? 'draft'; ?>
       <div class="form-grid">
         <div>
-          <label>Destinasi</label>
-          <?php
-            $selectedDestinasi = $edit['id_destinasi'] ?? '';
-            $destinasiHasSelected = $selectedDestinasi !== '' && in_array(
-              (string)$selectedDestinasi,
-              array_map(fn($o) => (string)$o['id'], $destinasiOptions),
-              true
-            );
-          ?>
-          <?php if (count($destinasiOptions) > 0): ?>
-            <select name="id_destinasi">
-              <option value="">-- Pilih destinasi --</option>
-              <?php foreach ($destinasiOptions as $opt): ?>
-                <option value="<?= h($opt['id']) ?>" <?= ((string)$selectedDestinasi === (string)$opt['id']) ? 'selected' : '' ?>>
-                  <?= h($opt['label']) ?>
-                </option>
-              <?php endforeach; ?>
-              <?php if ($selectedDestinasi !== "" && !$destinasiHasSelected): ?>
-                <option value="<?= h($selectedDestinasi) ?>" selected>ID: <?= h($selectedDestinasi) ?> (tidak ditemukan)</option>
-              <?php endif; ?>
-            </select>
-          <?php else: ?>
-            <input type="number" name="id_destinasi" value="<?= h($selectedDestinasi) ?>" placeholder="Belum ada destinasi, isi ID">
-          <?php endif; ?>
-        </div>
-        <div>
           <label>Kategori</label>
           <?php
-            $selectedKategori = $edit['id_kategori'] ?? '';
+            $selectedKategori = $edit['kuliner_kategori_id'] ?? '';
             $kategoriHasSelected = $selectedKategori !== '' && in_array(
               (string)$selectedKategori,
               array_map(fn($o) => (string)$o['id'], $kategoriOptions),
               true
             );
           ?>
-          <?php if (count($kategoriOptions) > 0): ?>
-            <select name="id_kategori">
+          <?php if (!$hasKulinerKategoriCol): ?>
+            <input type="text" value="-" disabled>
+            <small class="text-muted">Kolom kuliner_kategori_id belum tersedia. Jalankan migrasi.</small>
+          <?php elseif (count($kategoriOptions) > 0): ?>
+            <select name="kuliner_kategori_id" required>
               <option value="">-- Pilih kategori --</option>
               <?php foreach ($kategoriOptions as $opt): ?>
                 <option value="<?= h($opt['id']) ?>" <?= ((string)$selectedKategori === (string)$opt['id']) ? 'selected' : '' ?>>
@@ -342,7 +386,14 @@ $penggunaOptions = fetch_options_by_table(
               <?php endif; ?>
             </select>
           <?php else: ?>
-            <input type="number" name="id_kategori" value="<?= h($selectedKategori) ?>" placeholder="Belum ada kategori, isi ID">
+            <select name="kuliner_kategori_id" disabled>
+              <option value="">-- Kategori belum tersedia --</option>
+            </select>
+            <?php if ($kategoriTableMissing): ?>
+              <small class="text-muted">Tabel kuliner_kategori belum tersedia. Jalankan migrasi.</small>
+            <?php else: ?>
+              <small class="text-muted">Kategori belum tersedia.</small>
+            <?php endif; ?>
           <?php endif; ?>
         </div>
         <div class="full">
@@ -352,30 +403,6 @@ $penggunaOptions = fetch_options_by_table(
         <div class="full">
           <label>deskripsi</label>
           <textarea name="deskripsi"><?= h($edit['deskripsi'] ?? '') ?></textarea>
-        </div>
-        <div class="full">
-          <label>alamat</label>
-          <input type="text" name="alamat" value="<?= h($edit['alamat'] ?? '') ?>">
-        </div>
-        <div>
-          <label>latitude</label>
-          <input type="number" step="0.000001" name="latitude" value="<?= h($edit['latitude'] ?? '') ?>">
-        </div>
-        <div>
-          <label>longitude</label>
-          <input type="number" step="0.000001" name="longitude" value="<?= h($edit['longitude'] ?? '') ?>">
-        </div>
-        <div>
-          <label>rentang_harga</label>
-          <input type="text" name="rentang_harga" value="<?= h($edit['rentang_harga'] ?? '') ?>">
-        </div>
-        <div>
-          <label>jam_operasional</label>
-          <input type="text" name="jam_operasional" value="<?= h($edit['jam_operasional'] ?? '') ?>">
-        </div>
-        <div>
-          <label>nomor_kontak</label>
-          <input type="text" name="nomor_kontak" value="<?= h($edit['nomor_kontak'] ?? '') ?>">
         </div>
         <div class="full">
           <label>gambar_sampul_url</label>

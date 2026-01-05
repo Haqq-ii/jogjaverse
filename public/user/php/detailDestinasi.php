@@ -224,7 +224,11 @@ if ($alamat_label !== '' && $kota_label !== '' && stripos($alamat_label, $kota_l
 
 $deskripsi_display = $destinasi && trim((string)($destinasi['deskripsi'] ?? '')) !== ''
   ? $destinasi['deskripsi']
-  : 'Deskripsi belum tersedia.';
+  : 'Belum ada deskripsi.';
+
+$desc_plain = trim(strip_tags((string)$deskripsi_display));
+$is_long_desc = strlen($desc_plain) > 600;
+$detail_class = $is_long_desc ? 'is-long' : 'is-short';
 
 $lat_raw = $destinasi['latitude'] ?? '';
 $lng_raw = $destinasi['longitude'] ?? '';
@@ -345,6 +349,64 @@ $map_lng = $has_map ? (float)$lng_raw : null;
     .detail-gambar img:last-child {
         margin-bottom: 0;
     }
+    .detail-wrapper {
+        display: flex;
+        gap: 24px;
+        align-items: stretch;
+    }
+    .detail-col {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+    .detail-card {
+        height: 100%;
+    }
+    .media-column {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .media-main {
+        flex: 0 0 auto;
+        min-height: 320px;
+    }
+    .detail-wrapper.is-long .media-main {
+        min-height: 420px;
+    }
+    .media-main img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 16px;
+        display: block;
+    }
+    .media-gallery {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        align-content: start;
+    }
+    .detail-wrapper.is-long .media-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        flex: 1 1 auto;
+    }
+    .detail-wrapper.is-short .media-gallery {
+        max-height: 260px;
+        overflow: auto;
+        flex: 0 0 auto;
+    }
+    .media-gallery img {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 12px;
+        cursor: pointer;
+        display: block;
+    }
+    .media-gallery.is-empty {
+        display: block;
+    }
     #mapDestinasi {
         width: 100%;
         height: 280px;
@@ -354,6 +416,17 @@ $map_lng = $has_map ? (float)$lng_raw : null;
     }
     .leaflet-container {
         z-index: 1;
+    }
+    @media (max-width: 991.98px) {
+        .detail-wrapper {
+            flex-direction: column;
+        }
+        .detail-card {
+            height: auto;
+        }
+        .detail-wrapper.is-short .media-gallery {
+            max-height: none;
+        }
     }
   </style>
 
@@ -408,42 +481,63 @@ $map_lng = $has_map ? (float)$lng_raw : null;
   <!-- CONTENT SECTION -->
   <section class="pb-5">
     <div class="container">
-      <div class="row g-4 align-items-start">
-        <div class="col-lg-8">
-          <div class="mb-4">
-            <div class="d-flex flex-wrap gap-2 mb-3">
-              <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-tag text-warning"></i>
-                <?= h($kategori_label) ?>
-              </span>
-              <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-geo-alt text-warning"></i>
-                <?= h($kota_display) ?>
-              </span>
-              <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-clock text-warning"></i>
-                <?= h($jam_display) ?>
-              </span>
-              <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-ticket-perforated text-warning"></i>
-                <?= h($harga_label) ?>
-              </span>
-              <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
-                <i class="bi bi-telephone text-warning"></i>
-                <?= h($kontak_display) ?>
-              </span>
-            </div>
-          </div>
+      <div class="mb-4">
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
+            <i class="bi bi-tag text-warning"></i>
+            <?= h($kategori_label) ?>
+          </span>
+          <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
+            <i class="bi bi-geo-alt text-warning"></i>
+            <?= h($kota_display) ?>
+          </span>
+          <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
+            <i class="bi bi-clock text-warning"></i>
+            <?= h($jam_display) ?>
+          </span>
+          <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
+            <i class="bi bi-ticket-perforated text-warning"></i>
+            <?= h($harga_label) ?>
+          </span>
+          <span class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-2 shadow-sm small">
+            <i class="bi bi-telephone text-warning"></i>
+            <?= h($kontak_display) ?>
+          </span>
+        </div>
+      </div>
 
-          <div class="bg-white rounded-4 p-4 shadow-sm mb-4">
-            <h2 class="fw-bold font-serif mb-3">Deskripsi</h2>
+      <div class="detail-wrapper <?= $detail_class ?>">
+        <div class="detail-col desc-column">
+          <div class="detail-card bg-white rounded-4 p-4 shadow-sm">
             <div class="text-muted" style="line-height:1.8;">
               <?= nl2br(h($deskripsi_display)) ?>
             </div>
           </div>
+        </div>
 
+        <div class="detail-col">
+          <div class="detail-card media-column bg-white rounded-4 p-4 shadow-sm">
+            <div class="media-main">
+              <img src="<?= h($hero_image) ?>" alt="<?= h($destinasi['nama']) ?>">
+            </div>
+            <?php if (!empty($detailGallery)): ?>
+              <div class="media-gallery">
+                <?php foreach ($detailGallery as $img): ?>
+                  <img src="<?= h($img['gambar_url']) ?>" alt="<?= h($img['keterangan'] ?? $destinasi['nama']) ?>" loading="lazy">
+                <?php endforeach; ?>
+              </div>
+            <?php else: ?>
+              <div class="media-gallery is-empty">
+                <small class="text-muted">Belum ada gambar tambahan.</small>
+              </div>
+            <?php endif; ?>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 align-items-start mt-1">
+        <div class="col-lg-8">
           <div class="bg-white rounded-4 p-4 shadow-sm">
-
             <div class="d-flex align-items-center justify-content-between mb-3">
               <h3 class="fw-bold font-serif mb-0">Peta Lokasi</h3>
               <span class="text-muted small"><?= h($alamat_display) ?></span>
@@ -471,17 +565,6 @@ $map_lng = $has_map ? (float)$lng_raw : null;
               </ul>
             </div>
           </div>
-
-          <section class="detail-gambar">
-            <h5 class="fw-bold font-serif mb-3">Detail Gambar</h5>
-            <?php if (!empty($detailGallery)): ?>
-              <?php foreach ($detailGallery as $img): ?>
-                <img src="<?= h($img['gambar_url']) ?>" alt="<?= h($img['keterangan'] ?? $destinasi['nama']) ?>" loading="lazy">
-              <?php endforeach; ?>
-            <?php else: ?>
-              <small class="text-muted">Belum ada gambar detail.</small>
-            <?php endif; ?>
-          </section>
         </div>
       </div>
     </div>

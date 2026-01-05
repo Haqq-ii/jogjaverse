@@ -116,7 +116,7 @@ function formatTanggal($date) {
 <!-- HEADER BACKGROUND -->
 <section id="background">
   <div class="text-center" data-aos="fade-up">
-    <h1 class="fw-bold text-white display-4 mb-2">Agenda & Atraksi</h1>
+    <h1 class="fw-bold text-white display-4 mb-2">Event & Atraksi</h1>
     <p class="text-white-50 fs-5">Saksikan kemeriahan budaya dan hiburan di Yogyakarta</p>
   </div>
 </section>
@@ -155,60 +155,57 @@ function formatTanggal($date) {
       <div class="row g-4">
         <?php if (mysqli_num_rows($result) > 0): ?>
             <?php while ($row = mysqli_fetch_assoc($result)): 
-                $date_info = formatTanggal($row['mulai_pada']);
+                $date_info = formatTanggal($row['mulai_pada'] ?? '');
                 $img_url = !empty($row['gambar_sampul_url']) ? $row['gambar_sampul_url'] : 'https://placehold.co/600x400?text=Event+Jogja';
-                $price_display = ($row['harga'] == 0) ? 'Gratis' : 'Rp ' . number_format($row['harga'], 0, ',', '.');
+                $kategori_label = trim((string)($row['kategori'] ?? ''));
+                $kategori_label = $kategori_label !== '' ? $kategori_label : 'Event';
+                $judul = $row['nama_event'] ?? 'Event';
+                $deskripsi = trim((string)($row['deskripsi_singkat'] ?? ''));
+                $deskripsi = $deskripsi !== '' ? $deskripsi : 'Belum ada deskripsi.';
+                $lokasi = trim((string)($row['lokasi'] ?? ''));
+                $lokasi = $lokasi !== '' ? $lokasi : '-';
+                $tanggal = trim((string)($date_info['full'] ?? ''));
+                $tanggal = $tanggal !== '' ? $tanggal : '-';
             ?>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="card card-event h-100 bg-white">
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+              <div class="card card-event h-100">
                 
-                <!-- Gambar & Badge Tanggal -->
-                <div class="position-relative overflow-hidden" style="height: 220px;">
-                  <img src="<?= htmlspecialchars($img_url) ?>"
+                <div class="position-relative overflow-hidden card-media">
+                  <img src="<?= htmlspecialchars($img_url, ENT_QUOTES, 'UTF-8') ?>"
                        class="w-100 h-100 object-fit-cover"
-                       alt="<?= htmlspecialchars($row['nama_event']) ?>"
+                       alt="<?= htmlspecialchars($judul, ENT_QUOTES, 'UTF-8') ?>"
                        onerror="this.src='https://placehold.co/600x400?text=No+Image'">
-                  
-                  <!-- Badge Tanggal Khas Event -->
-                  <div class="date-badge">
-                      <span class="day"><?= $date_info['hari'] ?></span>
-                      <span class="month"><?= $date_info['bulan'] ?></span>
-                  </div>
 
-                  <!-- Badge Harga di Kanan Bawah Gambar -->
-                  <div class="price-tag shadow-sm">
-                      <?= $price_display ?>
-                  </div>
+                  <span class="position-absolute top-0 start-0 m-3 px-3 py-1 bg-white rounded-pill fw-bold shadow-sm text-dark"
+                        style="font-size:0.7rem;">
+                    <?= htmlspecialchars($kategori_label, ENT_QUOTES, 'UTF-8') ?>
+                  </span>
                 </div>
 
                 <div class="card-body p-4 d-flex flex-column">
-                  <!-- Kategori Kecil -->
-                  <div class="mb-2">
-                      <span class="badge bg-light text-secondary border fw-normal">
-                          <?= htmlspecialchars($row['kategori'] ?? 'Umum') ?>
-                      </span>
-                  </div>
-
-                  <h5 class="fw-bold mb-2 fs-5 font-serif text-dark lh-sm">
-                    <?= htmlspecialchars($row['nama_event']) ?>
+                  <h5 class="fw-bold mb-2 fs-5 font-serif text-dark">
+                    <?= htmlspecialchars($judul, ENT_QUOTES, 'UTF-8') ?>
                   </h5>
 
-                  <!-- Info Lokasi & Waktu -->
-                  <div class="text-muted small mb-3 flex-grow-1">
-                      <div class="d-flex align-items-center mb-1">
-                          <i class="bi bi-geo-alt-fill text-warning me-2"></i>
-                          <span class="text-truncate"><?= htmlspecialchars($row['lokasi']) ?></span>
+                  <p class="text-muted mb-3 flex-grow-1 small"
+                     style="line-height:1.5; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">
+                    <?= htmlspecialchars($deskripsi, ENT_QUOTES, 'UTF-8') ?>
+                  </p>
+
+                  <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                    <div class="text-muted small">
+                      <div class="d-flex align-items-center">
+                        <i class="bi bi-geo-alt me-1 text-warning"></i>
+                        <span class="text-truncate"><?= htmlspecialchars($lokasi, ENT_QUOTES, 'UTF-8') ?></span>
                       </div>
                       <div class="d-flex align-items-center">
-                          <i class="bi bi-calendar-event text-warning me-2"></i>
-                          <span><?= $date_info['full'] ?></span>
+                        <i class="bi bi-calendar-event me-1 text-warning"></i>
+                        <span><?= htmlspecialchars($tanggal, ENT_QUOTES, 'UTF-8') ?></span>
                       </div>
-                  </div>
+                    </div>
 
-                  <!-- Tombol Detail -->
-                  <div class="pt-3 border-top text-center">
-                    <a href="detailEvent.php?id=<?= $row['id_event'] ?>" class="link-gold-animated">
-                       Lihat Detail <i class="bi bi-arrow-right"></i>
+                    <a href="detailEvent.php?id=<?= (int)$row['id_event'] ?>" class="link-gold-animated">
+                       Detail <i class="bi bi-arrow-right"></i>
                     </a>
                   </div>
                 </div>

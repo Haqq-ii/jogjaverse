@@ -512,9 +512,6 @@ $trend_top = $trend_data['top'] ?? [];
       $kategori = $k['kategori'] ?? 'Kuliner';
       $nama = $k['nama'] ?? 'Kuliner';
       $alamat = trim((string)($k['alamat'] ?? ''));
-      $alamat = $alamat !== '' ? $alamat : '-';
-      $harga_raw = $k['rentang_harga'] ?? '';
-      $harga = $harga_raw !== '' ? number_format((float)$harga_raw, 0, ',', '.') : '-';
       $gambar = $k['gambar_sampul_url'] ?? '';
     ?>
     <div class="col-6 col-md-4 col-lg-3">
@@ -533,13 +530,11 @@ $trend_top = $trend_data['top'] ?? [];
             &nbsp;
           </p>
 
-          <div class="d-flex justify-content-between small">
-            <!-- Menggunakan 'lokasi' dan 'harga_min' sesuai table -->
-            <span><i class="bi bi-geo-alt"></i> <?= $alamat ?></span>
-            <span class="fw-bold">
-              Rp <?= $harga ?>
-            </span>
-          </div>
+          <?php if ($alamat !== ''): ?>
+            <div class="small">
+              <span><i class="bi bi-geo-alt"></i> <?= $alamat ?></span>
+            </div>
+          <?php endif; ?>
 
         </div>
       </a>

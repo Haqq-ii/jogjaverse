@@ -642,7 +642,7 @@ $trend_top = $trend_data['top'] ?? [];
   <div class="container">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
       <h2 class="fw-bold mb-0" style="color: #321B1F;">Ulasan Pengunjung</h2>
-      <span class="text-muted small">Hanya ulasan yang sudah disetujui</span>
+      
     </div>
 
     <?php if (empty($ulasan_terbaru)): ?>
